@@ -35,6 +35,7 @@
       <a class="choice" href="./Main.dc.html"><span class="lbl wine">Phone</span><span class="ttl" style="font-size: 18px">Open the mobile app</span><span class="sm">Best on a phone. Start at Home and tap through a booking.</span></a>
       <a class="choice" href="./d01-home.dc.html"><span class="lbl wine">Laptop</span><span class="ttl" style="font-size: 18px">Open the desktop site</span><span class="sm">The same flows as a full website.</span></a>
       <a class="choice" href="./m16-signup.dc.html"><span class="lbl wine">For nail techs</span><span class="ttl" style="font-size: 18px">See the tech side</span><span class="sm">Sign-up, booking rules, requests and payouts.</span></a>
+      <a class="choice" href="./demo.html" style="background: #C49A45"><span class="lbl" style="color: #3B0D13">For the pitch</span><span class="ttl" style="font-size: 18px">Live demo, both sides</span><span class="sm" style="color: #3B0D13">Book on the customer phone and watch it arrive on the nail tech's phone. Laptop only.</span></a>
     </div>
   </div></header>
 
@@ -73,7 +74,24 @@
         <li><a href="./m24-insights.dc.html">Insights + boost</a><a class="alt" href="./d24-insights.dc.html">desktop</a></li>
       </ol>
     </section>
+    <section class="col" style="gap: 12px">
+      <h2 class="h2">Phase 2: Post a design</h2>
+      <ol start="25">
+        <li><a href="./m25-post-design.dc.html">Post a design</a><a class="alt" href="./d25-post-design.dc.html">desktop</a></li>
+        <li><a href="./m26-offers.dc.html">Your offers</a><a class="alt" href="./d26-offers.dc.html">desktop</a></li>
+        <li><a href="./m27-design-requests.dc.html">Design requests (tech)</a><a class="alt" href="./d27-design-requests.dc.html">desktop</a></li>
+        <li><a href="./m28-make-offer.dc.html">Make an offer (tech)</a><a class="alt" href="./d28-make-offer.dc.html">desktop</a></li>
+      </ol>
+      <p class="cap">Screens share one demo booking in this browser. <a href="#" id="reset" style="color: #5E1720; font-weight: 600">Reset the demo</a></p>
+    </section>
   </main>
+  <script>
+    document.getElementById('reset').addEventListener('click', function (e) {
+      e.preventDefault();
+      try { Object.keys(localStorage).filter(function (k) { return k.indexOf('kuarte.') === 0; }).forEach(function (k) { localStorage.removeItem(k); }); } catch (err) {}
+      this.textContent = 'Demo reset';
+    });
+  </script>
   <footer class="dfoot"><div class="in"><span class="wm" style="color: #FCF8F7; font-size: 20px">KUARTE</span><span>Ku, from kuko. Arte, for art.</span><span>Prototype · sample data only</span></div></footer>
 </body>
 </html>

@@ -53,11 +53,11 @@
       </div>
       <aside class="dside">
         <div class="card pad-l shadow" style="display: flex; flex-direction: column; gap: 14px">
-          <div class="row" style="gap: 12px"><div class="ph" style="width: 56px; height: 56px; border-radius: 12px"><img src="./assets/n1-burgundy-chrome.svg" alt=""></div><div class="col" style="gap: 0"><span class="sm strong">Gel extensions + chrome art</span><span class="cap">Viper Cullen · Walk-in</span></div></div>
+          <div class="row" style="gap: 12px"><div class="ph" style="width: 56px; height: 56px; border-radius: 12px"><img src="./assets/n1-burgundy-chrome.svg" alt=""></div><div class="col" style="gap: 0"><span class="sm strong">{{svcName}}</span><span class="cap">Viper Cullen · {{mode}}</span></div></div>
           <div class="hr"></div>
-          <div class="row between sm"><span>When</span><span class="strong">Wed, Nov 4 · 2:30 PM</span></div>
-          <div class="row between sm"><span>Starts at</span><b class="price">₱550</b></div>
-          <a class="btn bp full" href="d11-deposit.dc.html">Continue to deposit</a>
+          <div class="row between sm"><span>When</span><span class="strong">{{when}}</span></div>
+          <div class="row between sm"><span>Starts at</span><b class="price">₱{{total}}</b></div>
+          <a class="btn bp full" href="d11-deposit.dc.html" onClick="{{save}}">Continue to deposit</a>
         </div>
       </aside>
     </div>
@@ -67,7 +67,11 @@
 <div id="dc-root"></div>
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1100}}'>
 class Component extends DCLogic {
-  renderVals() { return {}; }
+  renderVals() {
+    const KU = window.KU; const d = KU ? KU.get('draft', {}) : {};
+    const svcName = d.svc || 'Gel extensions + chrome nail art', mode = d.mode || 'Walk-in', when = d.when || 'Wed, Nov 4 · 2:30 PM', total = d.total || 550, dur = d.dur || '2 hr';
+    return { svcName, mode, when, total, save: () => { if (!KU) return; const v = (id) => { const el = document.getElementById(id); return el ? el.value.trim() : ''; }; KU.draft({ name: v('dg-name') || 'Maria Santos', phone: v('dg-phone'), note: v('dg-note') }); } };
+  }
 }
 </script>
 </body>

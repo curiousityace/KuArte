@@ -81,7 +81,7 @@
           <div class="hr"></div>
           <div class="row between"><span class="sm strong">Starts at</span><b class="price" style="font-size: 20px">₱{{total}}</b></div>
           <span class="cap">About {{dur}} · final price set at your visit</span>
-          <a class="btn bp full" href="d09-book-time.dc.html">Choose date and time</a>
+          <a class="btn bp full" href="d09-book-time.dc.html" onClick="{{save}}">Choose date and time</a>
         </div>
       </aside>
     </div>
@@ -114,7 +114,12 @@ class Component extends DCLogic {
       m0: st.mode === 0 ? 'on' : '', m1: st.mode === 1 ? 'on' : '', isHome: st.mode === 1,
       walkIn: () => this.setState({ mode: 0 }), homeSvc: () => this.setState({ mode: 1 }),
       modeNote: st.mode === 0 ? 'At the studio in Gredu, Panabo. The exact address shows after Viper confirms.' : 'Viper covers Panabo and Carmen. ₱50 travel fee. You add your address in step 3.',
-      total, dur: h + ' hr' + (m ? ' ' + m + ' min' : '')
+      total, dur: h + ' hr' + (m ? ' ' + m + ' min' : ''),
+      save: () => {
+        if (!window.KU) return;
+        const add = A.filter((a) => st.add[a.id]).map((a) => a.name.toLowerCase());
+        window.KU.draft({ svc: S[st.svc].name + (add.length ? ' + ' + add.join(' + ') : ''), mode: st.mode === 0 ? 'Walk-in' : 'Home service', total, dur: h + ' hr' + (m ? ' ' + m + ' min' : '') });
+      }
     };
   }
 }

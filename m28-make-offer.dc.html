@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#5E1720">
+<link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+<title>KuArte for techs · Make an offer</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./kuarte.css">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Marcellus&amp;family=Playfair+Display:wght@600;700&amp;display=swap" rel="stylesheet">
+<style>body{margin:0}a{color:inherit}a:hover{color:inherit}</style>
+<link rel="stylesheet" href="./site.css">
+</head>
+<body>
+<template id="dc-tpl">
+<div class="scr">
+  <div class="top" style="padding-bottom: 8px">
+    <a class="ib" href="m27-design-requests.dc.html" aria-label="Back to design requests"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></a>
+    <div class="col grow" style="gap: 0"><h1 class="h1">Make an offer</h1><span class="cap">Posted 25 min ago · 3 offers so far</span></div>
+  </div>
+  <div class="scroll" style="gap: 16px">
+    <div class="row" style="gap: 12px; align-items: stretch">
+      <div class="ph" style="width: 120px; height: 120px; border-radius: 14px"><img src="./assets/n7-noir-gold.svg" alt="Requested design: black nails with gold lines"></div>
+      <div class="col grow" style="gap: 4px">
+        <span class="ttl" style="font-size: 15px">Noir and gold</span>
+        <span class="cap">Gel extensions · Almond, medium</span>
+        <span class="cap">This weekend · Walk-in · 1.4 km away</span>
+        <span class="cap">Budget <b class="strong">₱400–600</b></span>
+      </div>
+    </div>
+    <div class="tint" style="padding: 12px 14px"><span class="cap strong wine">Note from the customer</span><p class="sm" style="color: #22161A; margin-top: 2px">Matte black with thin gold lines, like the photo. No glitter please.</p></div>
+
+    <sc-if value="{{editing}}" hint-placeholder-val="{{ true }}">
+      <div class="col" style="gap: 16px">
+        <div class="col" style="gap: 8px">
+          <span class="lbl">Your quote</span>
+          <div class="card" style="display: flex; align-items: center; gap: 12px; padding: 10px 14px">
+            <button class="ib" onClick="{{minus}}" aria-label="Lower quote by 20"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/></svg></button>
+            <span class="grow" style="text-align: center; font: 700 28px/1 'DM Sans', system-ui, sans-serif; color: #5E1720; font-variant-numeric: tabular-nums">₱{{price}}</span>
+            <button class="ib" onClick="{{plus}}" aria-label="Raise quote by 20"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+          </div>
+          <span class="cap" style="color: {{budgetColor}}">{{budgetNote}}</span>
+        </div>
+        <div class="col" style="gap: 8px">
+          <div class="row between"><span class="lbl">Times you can do</span><span class="cap">{{slotCount}} of 3</span></div>
+          <div class="wrap-row" style="gap: 6px"><sc-for list="{{slots}}" as="s" hint-placeholder-count="5"><button class="chip {{s.cls}}" onClick="{{s.pick}}">{{s.label}}</button></sc-for></div>
+        </div>
+        <div class="col" style="gap: 8px">
+          <div class="row between"><span class="lbl">Sample photos</span><span class="cap">{{photoCount}} of 3 · Verified only</span></div>
+          <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px">
+            <sc-for list="{{photos}}" as="p" hint-placeholder-count="4">
+              <button onClick="{{p.pick}}" class="ph" aria-pressed="{{p.pressed}}" aria-label="{{p.alt}}" style="height: 76px; border: 0; padding: 0; cursor: pointer; border-radius: 10px; box-shadow: {{p.ring}}"><img src="{{p.img}}" alt=""><span class="ver" style="left: 4px; top: 4px; padding: 0 5px; background: {{p.chip}}; color: {{p.chipText}}"><svg class="i xs" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg></span></button>
+            </sc-for>
+          </div>
+        </div>
+        <div class="field"><label for="mo-note">Note (optional)</label><textarea id="mo-note" class="inp" style="min-height: 72px">I did this exact set last month. Matte top coat, hand-drawn gold.</textarea></div>
+        <p class="cap">Your deposit setting applies: ₱150. Other techs can't see your price.</p>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{sent}}" hint-placeholder-val="{{ false }}">
+      <div class="banner" role="status" style="padding: 16px; border-radius: 16px; background: #E3F2E8; display: flex; flex-direction: column; gap: 6px">
+        <span class="pill ok" style="align-self: flex-start; background: #FFFFFF">Offer sent</span>
+        <p class="ttl">₱{{price}} · {{slotSummary}}</p>
+        <p class="sm" style="color: #1F4D33">The customer sees your offer next to the others. You'll get a notification if she picks you, and the booking lands in Upcoming with the deposit paid.</p>
+        <a class="lnk" href="m27-design-requests.dc.html">Back to design requests</a>
+      </div>
+    </sc-if>
+  </div>
+  <sc-if value="{{editing}}" hint-placeholder-val="{{ true }}">
+    <div class="foot">
+      <sc-if value="{{showHint}}" hint-placeholder-val="{{ false }}"><span class="cap" role="alert" style="color: #B42335; text-align: center">{{hint}}</span></sc-if>
+      <button class="btn bp full" onClick="{{send}}" style="opacity: {{btnOpacity}}">Send offer · ₱{{price}}</button>
+    </div>
+  </sc-if>
+</div>
+</template>
+<div id="dc-root"></div>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { price: 480, slots: { 'Sat 10:00 AM': true, 'Sat 2:30 PM': true }, photos: { 0: true, 1: true }, sent: false, tried: false }; }
+  renderVals() {
+    const B = './assets/';
+    const st = this.state;
+    const S = ['Sat 10:00 AM', 'Sat 2:30 PM', 'Sat 5:00 PM', 'Sun 1:00 PM', 'Sun 3:30 PM'];
+    const P = [
+      { id: 'n7-noir-gold.svg', alt: 'Noir and gold' },
+      { id: 'n1-burgundy-chrome.svg', alt: 'Burgundy chrome' },
+      { id: 'n6-emerald-cateye.svg', alt: 'Emerald cat-eye' },
+      { id: 'n2-gold-leaf.svg', alt: 'Gold leaf nude' }
+    ];
+    const nSlots = S.filter((s) => st.slots[s]).length;
+    const nPhotos = P.filter((p, i) => st.photos[i]).length;
+    const ok = nSlots > 0 && nPhotos > 0;
+    const inBudget = st.price >= 400 && st.price <= 600;
+    return {
+      editing: !st.sent, sent: st.sent, price: st.price,
+      budgetNote: inBudget ? 'Within the customer\'s budget' : (st.price > 600 ? 'Above the customer\'s budget of ₱400–600' : 'Below the customer\'s budget'),
+      budgetColor: inBudget ? '#2F7A4E' : '#8A5212',
+      slotCount: nSlots, photoCount: nPhotos,
+      slots: S.map((label) => ({ label, cls: st.slots[label] ? 'on' : '', pick: () => {
+        const on = !st.slots[label];
+        if (on && nSlots >= 3) return;
+        this.setState({ slots: { ...st.slots, [label]: on } });
+      } })),
+      photos: P.map((p, i) => ({
+        img: B + p.id, alt: p.alt + (st.photos[i] ? ', selected' : ''), pressed: st.photos[i] ? 'true' : 'false',
+        ring: st.photos[i] ? '0 0 0 3px #5E1720' : 'none',
+        chip: st.photos[i] ? '#5E1720' : 'rgba(255,255,255,.94)', chipText: st.photos[i] ? '#FFFFFF' : '#5E1720',
+        pick: () => {
+          const on = !st.photos[i];
+          if (on && nPhotos >= 3) return;
+          this.setState({ photos: { ...st.photos, [i]: on } });
+        }
+      })),
+      slotSummary: S.filter((s) => st.slots[s]).join(', '),
+      showHint: st.tried && !ok,
+      hint: nSlots === 0 ? 'Pick at least one time you can do.' : 'Add at least one Verified sample photo.',
+      btnOpacity: ok ? 1 : 0.55,
+      minus: () => this.setState({ price: Math.max(200, st.price - 20) }),
+      plus: () => this.setState({ price: Math.min(1500, st.price + 20) }),
+      send: () => { if (!ok) { this.setState({ tried: true }); return; } if (window.KU) window.KU.set('offer', { price: st.price, slots: S.filter((s) => st.slots[s]) }); this.setState({ sent: true }); }
+    };
+  }
+}
+</script>
+</body>
+</html>

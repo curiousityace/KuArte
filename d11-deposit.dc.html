@@ -51,14 +51,14 @@
       </div>
       <aside class="dside">
         <div class="card pad-l shadow" style="display: flex; flex-direction: column; gap: 12px">
-          <div class="row" style="gap: 12px"><div class="ph" style="width: 56px; height: 56px; border-radius: 12px"><img src="./assets/n1-burgundy-chrome.svg" alt=""></div><div class="col" style="gap: 0"><span class="sm strong">Gel extensions + chrome art</span><span class="cap">Viper Cullen · Wed, Nov 4 · 2:30 PM</span></div></div>
+          <div class="row" style="gap: 12px"><div class="ph" style="width: 56px; height: 56px; border-radius: 12px"><img src="./assets/n1-burgundy-chrome.svg" alt=""></div><div class="col" style="gap: 0"><span class="sm strong">{{svcName}}</span><span class="cap">Viper Cullen · {{when}}</span></div></div>
           <div class="hr"></div>
-          <div class="row between sm"><span>Estimated price</span><span>₱550</span></div>
-          <div class="row between sm"><span>First booking · KUARTE10</span><span style="color: #2F7A4E">−₱55</span></div>
+          <div class="row between sm"><span>Estimated price</span><span>₱{{total}}</span></div>
+          <div class="row between sm"><span>First booking · KUARTE10</span><span style="color: #2F7A4E">−₱{{disc}}</span></div>
           <div class="hr"></div>
           <div class="row between"><span class="sm strong">Deposit now</span><b class="price" style="font-size: 22px">₱150</b></div>
-          <div class="row between sm"><span>Pay at your visit</span><span>about ₱345</span></div>
-          <a class="btn bp full" href="d12-status.dc.html"><svg class="i s" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Pay ₱150 with {{methodName}}</a>
+          <div class="row between sm"><span>Pay at your visit</span><span>about ₱{{rest}}</span></div>
+          <a class="btn bp full" href="d12-status.dc.html?toast=Deposit%20paid.%20Your%20request%20is%20with%20Viper." onClick="{{pay}}"><svg class="i s" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Pay ₱150 with {{methodName}}</a>
           <p class="cap" style="text-align: center">This sends your request to Viper</p>
         </div>
       </aside>
@@ -71,12 +71,17 @@
 class Component extends DCLogic {
   constructor(p) { super(p); this.state = { m: 0 }; }
   renderVals() {
-    const M = [
+    const KU = window.KU; const d = KU ? KU.get('draft', {}) : {};
+    const svcName = d.svc || 'Gel extensions + chrome nail art', mode = d.mode || 'Walk-in', when = d.when || 'Wed, Nov 4 · 2:30 PM', total = d.total || 550, dur = d.dur || '2 hr';
+    const disc = Math.round(total * 0.1), rest = total - disc - 150;
+        const M = [
       { name: 'GCash', note: 'Scan the QR or pay in the GCash app', tint: '#2F5FB3' },
       { name: 'Maya', note: 'Scan the QR or pay in the Maya app', tint: '#2F7A4E' }
     ];
     return {
-      methods: M.map((m, i) => ({ ...m, cls: this.state.m === i ? 'on' : '', pick: () => this.setState({ m: i }) })),
+      svcName, mode, when, total, disc, rest,
+      pay: () => { if (KU) KU.create({ source: 'booking', tech: 'viper', techName: 'Viper Cullen', customer: d.name || 'Maria Santos', phone: d.phone || '', note: d.note || '', svc: svcName, mode, when, total, deposit: 150, rest, img: './assets/n1-burgundy-chrome.svg', status: 'requested' }); },
+            methods: M.map((m, i) => ({ ...m, cls: this.state.m === i ? 'on' : '', pick: () => this.setState({ m: i }) })),
       methodName: M[this.state.m].name
     };
   }

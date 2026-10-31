@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#5E1720">
+<link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+<title>KuArte · Post a design</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./kuarte.css">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Marcellus&amp;family=Playfair+Display:wght@600;700&amp;display=swap" rel="stylesheet">
+<style>body{margin:0}a{color:inherit}a:hover{color:inherit}</style>
+<link rel="stylesheet" href="./site.css">
+</head>
+<body>
+<template id="dc-tpl">
+<div class="scr">
+  <div class="top" style="padding-bottom: 8px">
+    <a class="ib" href="Main.dc.html" aria-label="Back"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></a>
+    <div class="col grow" style="gap: 0"><h1 class="h1">Post a design</h1><span class="cap">Nearby techs send you offers with a fixed price</span></div>
+  </div>
+  <div class="scroll" style="gap: 18px">
+    <div class="card" style="display: flex; gap: 12px; padding: 10px; align-items: center">
+      <div class="ph" style="width: 72px; height: 72px; border-radius: 12px"><img src="./assets/n7-noir-gold.svg" alt="Your design: black nails with gold lines"></div>
+      <div class="col grow" style="gap: 2px"><span class="sm strong">Noir and gold</span><span class="cap">From your saved designs</span></div>
+      <a class="btn sm bg" href="m04-designs.dc.html">Change</a>
+    </div>
+    <div class="col" style="gap: 8px">
+      <span class="lbl">Service</span>
+      <div class="seg"><sc-for list="{{svc}}" as="o" hint-placeholder-count="3"><button class="{{o.cls}}" onClick="{{o.pick}}">{{o.name}}</button></sc-for></div>
+    </div>
+    <div class="col" style="gap: 8px">
+      <span class="lbl">Shape</span>
+      <div class="wrap-row"><sc-for list="{{shape}}" as="o" hint-placeholder-count="4"><button class="chip {{o.cls}}" onClick="{{o.pick}}">{{o.name}}</button></sc-for></div>
+    </div>
+    <div class="col" style="gap: 8px">
+      <span class="lbl">Length</span>
+      <div class="seg"><sc-for list="{{len}}" as="o" hint-placeholder-count="3"><button class="{{o.cls}}" onClick="{{o.pick}}">{{o.name}}</button></sc-for></div>
+    </div>
+    <div class="col" style="gap: 8px">
+      <span class="lbl">Where</span>
+      <div class="seg"><sc-for list="{{mode}}" as="o" hint-placeholder-count="2"><button class="{{o.cls}}" onClick="{{o.pick}}">{{o.name}}</button></sc-for></div>
+    </div>
+    <div class="col" style="gap: 8px">
+      <span class="lbl">When</span>
+      <div class="wrap-row"><sc-for list="{{when}}" as="o" hint-placeholder-count="3"><button class="chip {{o.cls}}" onClick="{{o.pick}}">{{o.name}}</button></sc-for></div>
+    </div>
+    <div class="col" style="gap: 8px">
+      <span class="lbl">Budget (optional)</span>
+      <div class="wrap-row"><sc-for list="{{budget}}" as="o" hint-placeholder-count="4"><button class="chip {{o.cls}}" onClick="{{o.pick}}">{{o.name}}</button></sc-for></div>
+    </div>
+    <div class="field"><label for="pd-note">Note for techs (optional)</label><textarea id="pd-note" class="inp">Matte black with thin gold lines, like the photo. No glitter please.</textarea></div>
+  </div>
+  <div class="foot">
+    <div class="row" style="gap: 8px"><svg class="i s" viewBox="0 0 24 24" aria-hidden="true" style="color: #2F7A4E"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span class="cap">Requests like this usually get 3–5 offers within 2 hours</span></div>
+    <a class="btn bp full" href="m26-offers.dc.html?toast=Request%20posted.%20Offers%20usually%20arrive%20within%202%20hours.">Post request to techs within 5 km</a>
+  </div>
+</div>
+</template>
+<div id="dc-root"></div>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { svc: 0, shape: 1, len: 1, mode: 0, when: 0, budget: 1 }; }
+  renderVals() {
+    const st = this.state;
+    const group = (key, names) => names.map((name, i) => ({ name, cls: st[key] === i ? 'on' : '', pick: () => this.setState({ [key]: i }) }));
+    return {
+      svc: group('svc', ['Gel extensions', 'Gel manicure', 'Acrylic']),
+      shape: group('shape', ['Square', 'Almond', 'Oval', 'Coffin']),
+      len: group('len', ['Short', 'Medium', 'Long']),
+      mode: group('mode', ['Walk-in', 'Home service']),
+      when: group('when', ['This weekend', 'Next week', 'Pick dates']),
+      budget: group('budget', ['Up to ₱400', '₱400–600', '₱600+', 'No limit'])
+    };
+  }
+}
+</script>
+</body>
+</html>

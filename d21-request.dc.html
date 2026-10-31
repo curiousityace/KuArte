@@ -17,46 +17,47 @@
 <div class="dpage">
   <header class="dhead"><div class="in">
     <a class="wm" href="d22-dashboard.dc.html">KUARTE</a><span class="badge">For nail techs</span>
-    <nav class="dnav grow" aria-label="Tech"><a href="d22-dashboard.dc.html">Bookings</a><a class="on" href="d21-request.dc.html">Requests</a><a href="d19-camera.dc.html">Portfolio</a><a href="d20-availability.dc.html">Availability</a><a href="d24-insights.dc.html">Insights</a></nav>
+    <nav class="dnav grow" aria-label="Tech"><a href="d22-dashboard.dc.html">Bookings</a><a class="on" href="d21-request.dc.html">Requests</a><a href="d27-design-requests.dc.html">Design requests</a><a href="d19-camera.dc.html">Portfolio</a><a href="d24-insights.dc.html">Insights</a></nav>
     <span class="av s">VC</span>
   </div></header>
   <div class="dwrap">
-    <h1 class="dtitle">Requests</h1>
+    <div class="row between" style="flex-wrap: wrap; gap: 12px"><h1 class="dtitle">{{title}}</h1>
+      <sc-if value="{{isLive}}" hint-placeholder-val="{{ false }}"><span class="pill info"><span style="width: 6px; height: 6px; border-radius: 3px; background: #2F7A4E"></span>Live from the customer app · {{b.created}}</span></sc-if>
+    </div>
     <div class="dsplit">
       <aside class="dside" style="flex: 1 1 280px; max-width: 360px">
         <div class="card" style="display: flex; gap: 12px; padding: 14px; align-items: center; box-shadow: inset 0 0 0 1.5px #5E1720">
-          <span class="av e">MS</span>
-          <div class="col grow" style="gap: 1px"><span class="sm strong">Maria Santos</span><span class="cap">Wed, Nov 4 · 2:30 PM</span></div>
-          <span class="pill {{pill}}">{{pillText}}</span>
+          <span class="av e">{{ini}}</span>
+          <div class="col grow" style="gap: 1px"><span class="sm strong">{{b.customer}}</span><span class="cap">{{b.when}}</span></div>
         </div>
         <p class="cap" style="padding: 4px 2px">Requests you don't answer within 4 hours expire and the customer is refunded.</p>
       </aside>
       <div class="dmain">
         <div class="card pad-l" style="display: flex; flex-direction: column; gap: 20px">
           <div class="row" style="gap: 14px; flex-wrap: wrap">
-            <span class="av e">MS</span>
-            <div class="col grow" style="gap: 1px"><span class="ttl">Maria Santos</span><span class="cap">Guest · phone verified · first booking with you</span></div>
-            <span class="cap" style="color: #8A5212; font-weight: 600">Reply within 3 hr 52 min</span>
+            <span class="av e">{{ini}}</span>
+            <div class="col grow" style="gap: 1px"><span class="ttl">{{b.customer}}</span><span class="cap">Phone verified · first booking with you</span></div>
+            <span class="cap" style="color: {{subColor}}; font-weight: 600">{{sub}}</span>
             <a class="btn sm bs" href="d15-chat.dc.html">Message</a>
           </div>
           <div class="row" style="gap: 24px; flex-wrap: wrap; align-items: flex-start">
-            <div class="col" style="gap: 6px"><div class="ph" style="width: 240px; height: 240px; border-radius: 18px"><img src="./assets/n1-burgundy-chrome.svg" alt="Customer reference: burgundy chrome almond nails"></div><span class="lbl">Her reference</span></div>
+            <div class="col" style="gap: 6px"><div class="ph" style="width: 240px; height: 240px; border-radius: 18px"><img src="{{b.img}}" alt="Customer's reference photo"></div><span class="lbl">Her reference</span></div>
             <div class="col grow" style="gap: 12px; min-width: 260px">
               <div class="tbox"><table class="dtable"><tbody>
-                <tr><td class="cap">Service</td><td class="strong">Gel extensions + chrome nail art</td></tr>
-                <tr><td class="cap">When</td><td class="strong">Wed, Nov 4 · 2:30 – 4:30 PM</td></tr>
-                <tr><td class="cap">Where</td><td class="strong">Walk-in at your studio</td></tr>
-                <tr><td class="cap">Estimated</td><td class="price">₱550</td></tr>
-                <tr><td class="cap">Deposit</td><td><span class="pill ok">₱150 paid · held by KuArte</span></td></tr>
+                <tr><td class="cap">Service</td><td class="strong">{{b.svc}}</td></tr>
+                <tr><td class="cap">When</td><td class="strong">{{b.when}}</td></tr>
+                <tr><td class="cap">Where</td><td class="strong">{{b.mode}}</td></tr>
+                <tr><td class="cap">Estimated</td><td class="price">₱{{b.total}}</td></tr>
+                <tr><td class="cap">Deposit</td><td><span class="pill ok">₱{{b.deposit}} paid · held by KuArte</span></td></tr>
               </tbody></table></div>
-              <div class="tint" style="padding: 12px 14px"><span class="cap strong wine">Note from Maria</span><p class="sm" style="color: #22161A; margin-top: 2px">Same length as the photo please. A little darker chrome if possible.</p></div>
+              <sc-if value="{{hasNote}}" hint-placeholder-val="{{ true }}"><div class="tint" style="padding: 12px 14px"><span class="cap strong wine">Note from {{first}}</span><p class="sm" style="color: #22161A; margin-top: 2px">{{b.note}}</p></div></sc-if>
             </div>
           </div>
           <sc-if value="{{pending}}" hint-placeholder-val="{{ true }}">
-            <div class="row" style="gap: 12px; flex-wrap: wrap"><button class="btn bp" onClick="{{accept}}">Accept request</button><button class="btn bs">Suggest another time</button><button class="btn bd">Decline</button></div>
+            <div class="row" style="gap: 12px; flex-wrap: wrap"><button class="btn bp" onClick="{{accept}}">Accept request</button><button class="btn bs">Suggest another time</button><button class="btn bd" onClick="{{decline}}">Decline</button></div>
           </sc-if>
-          <sc-if value="{{accepted}}" hint-placeholder-val="{{ false }}">
-            <div style="padding: 14px 16px; border-radius: 14px; background: #E3F2E8; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between"><span class="sm strong" style="color: #1F4D33">Accepted. Waiting for Maria to confirm.</span><a class="lnk" href="d22-dashboard.dc.html">Back to bookings</a></div>
+          <sc-if value="{{hasOutcome}}" hint-placeholder-val="{{ false }}">
+            <div class="banner" role="status" style="padding: 14px 16px; border-radius: 14px; background: {{outBg}}; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between"><span class="sm strong" style="color: {{outInk}}">{{outcome}}</span><a class="lnk" href="d22-dashboard.dc.html">Back to bookings</a></div>
           </sc-if>
         </div>
       </div>
@@ -67,10 +68,37 @@
 <div id="dc-root"></div>
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1100}}'>
 class Component extends DCLogic {
-  constructor(p) { super(p); this.state = { ok: false }; }
+  constructor(p) {
+    super(p);
+    this.state = { sample: { customer: 'Maria Santos', svc: 'Gel extensions + chrome nail art', when: 'Wed, Nov 4 · 2:30 PM', mode: 'Walk-in', total: 550, deposit: 150, created: '9:12 AM',
+      note: 'Same length as the photo please. A little darker chrome if possible.', img: './assets/n1-burgundy-chrome.svg', status: 'requested', log: [] } };
+  }
   renderVals() {
-    const ok = this.state.ok;
-    return { pending: !ok, accepted: ok, pill: ok ? 'ok' : 'wait', pillText: ok ? 'Accepted' : 'New', accept: () => this.setState({ ok: true }) };
+    const KU = window.KU;
+    const stored = KU ? KU.booking() : null;
+    const live = !!(stored && stored.source === 'booking' && stored.tech === 'viper');
+    const b = live ? stored : this.state.sample;
+    const upd = (patch, note) => { if (live) KU.update(patch, note); else this.setState({ sample: Object.assign({}, b, patch) }); };
+    const first = (b.customer || 'Customer').split(' ')[0];
+    const ini = (b.customer || 'C').split(' ').map((w) => w[0]).join('').slice(0, 2).toUpperCase();
+    const s = b.status;
+    const OUT = {
+      accepted: ['Accepted. Waiting for ' + first + ' to confirm.', '#E3F2E8', '#1F4D33'],
+      confirmed: [first + ' confirmed. It\'s in your Upcoming bookings.', '#E3F2E8', '#1F4D33'],
+      declined: ['You declined. ' + first + '\'s deposit is refunded.', '#FBE4E6', '#8A1B29'],
+      cancelled: [first + ' cancelled. Her deposit was refunded.', '#FBE4E6', '#8A1B29']
+    }[s];
+    return {
+      b, first, ini, isLive: live,
+      title: s === 'requested' ? 'New request' : 'Booking request',
+      sub: s === 'requested' ? 'Reply within 3 hr 59 min' : (s === 'confirmed' ? 'Confirmed by both sides' : (s === 'accepted' ? 'Waiting for the customer' : 'Closed')),
+      subColor: s === 'requested' ? '#8A5212' : '#6B5A5E',
+      hasNote: !!b.note,
+      pending: s === 'requested', hasOutcome: !!OUT,
+      outcome: OUT ? OUT[0] : '', outBg: OUT ? OUT[1] : '', outInk: OUT ? OUT[2] : '',
+      accept: () => upd({ status: 'accepted' }, 'Accepted by Viper'),
+      decline: () => upd({ status: 'declined' }, 'Declined by Viper')
+    };
   }
 }
 </script>

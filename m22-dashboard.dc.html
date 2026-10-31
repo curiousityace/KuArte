@@ -23,15 +23,22 @@
     </div>
     <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
       <div style="padding: 10px 12px; border-radius: 12px; background: rgba(255,255,255,.1)"><span style="font: 700 22px/1 'DM Sans', system-ui, sans-serif">4</span><p style="font-size: 11px; color: #E9D3D5; margin-top: 4px">today</p></div>
-      <div style="padding: 10px 12px; border-radius: 12px; background: rgba(255,255,255,.1)"><span style="font: 700 22px/1 'DM Sans', system-ui, sans-serif">1</span><p style="font-size: 11px; color: #E9D3D5; margin-top: 4px">to answer</p></div>
+      <div style="padding: 10px 12px; border-radius: 12px; background: rgba(255,255,255,.1)"><span style="font: 700 22px/1 'DM Sans', system-ui, sans-serif">{{toAnswer}}</span><p style="font-size: 11px; color: #E9D3D5; margin-top: 4px">to answer</p></div>
       <div style="padding: 10px 12px; border-radius: 12px; background: rgba(255,255,255,.1)"><span style="font: 700 22px/1 'DM Sans', system-ui, sans-serif">₱405</span><p style="font-size: 11px; color: #E9D3D5; margin-top: 4px">payout pending</p></div>
     </div>
   </div>
   <div style="padding: 14px 20px 10px; flex: none" class="col">
-    <a href="m21-request.dc.html" class="row" style="gap: 10px; padding: 12px 14px; border-radius: 14px; background: #FBEFD9; text-decoration: none">
-      <svg class="i s" viewBox="0 0 24 24" aria-hidden="true" style="color: #8A5212"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-      <span class="sm grow" style="color: #5A3A0E"><b>Maria S.</b> wants Nov 4, 2:30 PM. Reply in 3 hr.</span>
-      <svg class="i s" viewBox="0 0 24 24" aria-hidden="true" style="color: #8A5212"><path d="m9 18 6-6-6-6"/></svg>
+    <sc-if value="{{hasRequest}}" hint-placeholder-val="{{ true }}">
+      <a href="m21-request.dc.html" class="row" style="gap: 10px; padding: 12px 14px; border-radius: 14px; background: #FBEFD9; text-decoration: none">
+        <svg class="i s" viewBox="0 0 24 24" aria-hidden="true" style="color: #8A5212"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        <span class="sm grow" style="color: #5A3A0E"><b>{{reqName}}</b> wants {{reqWhen}}. Reply within 4 hr.</span>
+        <svg class="i s" viewBox="0 0 24 24" aria-hidden="true" style="color: #8A5212"><path d="m9 18 6-6-6-6"/></svg>
+      </a>
+    </sc-if>
+    <a href="m27-design-requests.dc.html" class="row" style="gap: 10px; padding: 12px 14px; border-radius: 14px; background: #F6ECED; text-decoration: none; margin-top: 6px">
+      <svg class="i s wine" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg>
+      <span class="sm grow" style="color: #5E1720"><b>3 design requests</b> near you. Send an offer.</span>
+      <svg class="i s wine" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
     </a>
     <div class="seg" style="margin-top: 6px">
       <sc-for list="{{tabs}}" as="t" hint-placeholder-count="3"><button class="{{t.cls}}" onClick="{{t.pick}}">{{t.name}}</button></sc-for>
@@ -59,9 +66,20 @@
 <div id="dc-root"></div>
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
 class Component extends DCLogic {
-  constructor(p) { super(p); this.state = { tab: 0 }; }
+  constructor(p) { super(p); this.state = { tab: null }; }
   renderVals() {
     const T = ['Today', 'Upcoming', 'Past'];
+    const KU = window.KU;
+    const bk = KU ? KU.booking() : null;
+    const mine = bk && bk.tech === 'viper' ? bk : null;
+    const short = (n) => { const p = (n || '').split(' '); return p[0] + (p[1] ? ' ' + p[1][0] + '.' : ''); };
+    const reqLive = !!(mine && mine.status === 'requested');
+    const hasRequest = reqLive || !bk;
+    const req = reqLive ? mine : { customer: 'Maria Santos', when: 'Wed, Nov 4 · 2:30 PM', svc: 'Gel extensions + chrome nail art' };
+    const split = (w) => w.indexOf(' · ') > -1 ? [w.split(' · ')[0].replace(/^\w+, /, ''), w.split(' · ')[1]] : [w.split(' ')[0], w.split(' ').slice(1).join(' ')];
+    const ST = { accepted: ['Waiting for customer', 'wait'], confirmed: ['Confirmed', 'ok'], cancelled: ['Cancelled', 'bad'] };
+    const showRow = !!(mine && ST[mine.status]);
+    const tab = this.state.tab == null ? (showRow ? 1 : 0) : this.state.tab;
     const D = [
       [
         { start: '10:00', end: '11:30', name: 'Aria M.', svc: 'Gel extensions · Walk-in', status: 'Completed', pill: 'ok', href: 'm23-complete.dc.html' },
@@ -79,8 +97,9 @@ class Component extends DCLogic {
       ]
     ];
     return {
-      tabs: T.map((n, i) => ({ name: n, cls: this.state.tab === i ? 'on' : '', pick: () => this.setState({ tab: i }) })),
-      rows: D[this.state.tab]
+      tabs: T.map((n, i) => ({ name: n, cls: tab === i ? 'on' : '', pick: () => this.setState({ tab: i }) })),
+      rows: tab === 1 && showRow ? [{ start: split(mine.when)[0], end: split(mine.when)[1], name: short(mine.customer), svc: (mine.source === 'design' ? 'Design offer · ' : '') + mine.svc.split(' + ')[0] + ' · ' + mine.mode, status: ST[mine.status][0], pill: ST[mine.status][1], href: mine.source === 'design' ? 'm27-design-requests.dc.html' : 'm21-request.dc.html' }].concat(D[1]) : D[tab],
+      hasRequest, toAnswer: hasRequest ? 1 : 0, reqName: short(req.customer), reqWhen: req.when
     };
   }
 }

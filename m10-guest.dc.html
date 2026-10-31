@@ -46,14 +46,17 @@
     </div>
   </div>
   <div class="foot">
-    <a class="btn bp full" href="m11-deposit.dc.html">Continue to deposit</a>
+    <a class="btn bp full" href="m11-deposit.dc.html" onClick="{{save}}">Continue to deposit</a>
   </div>
 </div>
 </template>
 <div id="dc-root"></div>
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
 class Component extends DCLogic {
-  renderVals() { return {}; }
+  renderVals() {
+    const KU = window.KU;
+    return { save: () => { if (!KU) return; const v = (id) => { const el = document.getElementById(id); return el ? el.value.trim() : ''; }; KU.draft({ name: v('g-name') || 'Maria Santos', phone: v('g-phone'), note: v('g-note') }); } };
+  }
 }
 </script>
 </body>

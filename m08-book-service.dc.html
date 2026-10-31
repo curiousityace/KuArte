@@ -63,7 +63,7 @@
   </div>
   <div class="foot">
     <div class="row between"><span class="sm">Starts at <b class="price" style="font-size: 17px">₱{{total}}</b></span><span class="cap">About {{dur}}</span></div>
-    <a class="btn bp full" href="m09-book-time.dc.html">Choose date and time</a>
+    <a class="btn bp full" href="m09-book-time.dc.html" onClick="{{save}}">Choose date and time</a>
   </div>
 </div>
 </template>
@@ -93,7 +93,12 @@ class Component extends DCLogic {
       walkIn: () => this.setState({ mode: 0 }),
       homeSvc: () => this.setState({ mode: 1 }),
       modeNote: st.mode === 0 ? 'At the studio in Gredu, Panabo. Exact address shows after the tech confirms.' : 'Travel fee ₱50 within Panabo. You add your address in step 3.',
-      total, dur: h + ' hr' + (m ? ' ' + m + ' min' : '')
+      total, dur: h + ' hr' + (m ? ' ' + m + ' min' : ''),
+      save: () => {
+        if (!window.KU) return;
+        const add = A.filter((a) => st.add[a.id]).map((a) => a.name.toLowerCase());
+        window.KU.draft({ svc: S[st.svc].name + (add.length ? ' + ' + add.join(' + ') : ''), mode: st.mode === 0 ? 'Walk-in' : 'Home service', total, dur: h + ' hr' + (m ? ' ' + m + ' min' : '') });
+      }
     };
   }
 }

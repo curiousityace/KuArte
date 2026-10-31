@@ -17,7 +17,7 @@
 <div class="scr">
   <div class="top" style="padding-bottom: 8px">
     <a class="ib" href="m08-book-service.dc.html" aria-label="Back"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></a>
-    <div class="col grow" style="gap: 0"><h1 class="h1">Pick a time</h1><span class="cap">Gel extensions + chrome art · about 2 hr</span></div>
+    <div class="col grow" style="gap: 0"><h1 class="h1">Pick a time</h1><span class="cap">{{svcName}} · about {{dur}}</span></div>
   </div>
   <div style="padding: 0 20px 12px; flex: none" class="col">
     <div class="steps"><i class="on"></i><i class="on"></i><i></i><i></i></div>
@@ -42,7 +42,7 @@
       </div>
     </div>
     <div class="col" style="gap: 10px">
-      <div class="row between"><span class="lbl">{{dayLabel}}</span><span class="cap">Start times that fit 2 hr</span></div>
+      <div class="row between"><span class="lbl">{{dayLabel}}</span><span class="cap">Start times that fit {{dur}}</span></div>
       <div class="slots">
         <sc-for list="{{slots}}" as="s" hint-placeholder-count="6">
           <button class="slot {{s.cls}}" onClick="{{s.pick}}" style="font-family: 'DM Sans', system-ui, sans-serif">{{s.t}}</button>
@@ -51,8 +51,8 @@
     </div>
   </div>
   <div class="foot">
-    <div class="row between"><span class="sm strong">{{summary}}</span><span class="cap">from ₱550</span></div>
-    <a class="btn bp full" href="m10-guest.dc.html">Continue</a>
+    <div class="row between"><span class="sm strong">{{summary}}</span><span class="cap">from ₱{{total}}</span></div>
+    <a class="btn bp full" href="m10-guest.dc.html" onClick="{{save}}">Continue</a>
   </div>
 </div>
 </template>
@@ -87,9 +87,12 @@ class Component extends DCLogic {
     });
     const dow = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][new Date(2026, 10, this.state.day).getDay()];
     const label = dow + ', Nov ' + this.state.day;
+    const KU = window.KU; const d = KU ? KU.get('draft', {}) : {};
+    const svcName = d.svc || 'Gel extensions + chrome nail art', mode = d.mode || 'Walk-in', when = d.when || 'Wed, Nov 4 · 2:30 PM', total = d.total || 550, dur = d.dur || '2 hr';
     return {
-      days, slots, dayLabel: label,
-      summary: this.state.slot > -1 ? label + ' · ' + times[this.state.slot] : 'Pick a start time'
+      days, slots, dayLabel: label, svcName, dur, total,
+      save: (e) => { if (this.state.slot < 0) { if (e && e.preventDefault) e.preventDefault(); this.setState({ need: true }); return; } if (KU) KU.draft({ when: label + ' · ' + times[this.state.slot] }); },
+      summary: this.state.slot > -1 ? label + ' · ' + times[this.state.slot] : (this.state.need ? 'Pick an open time first' : 'Pick a start time')
     };
   }
 }

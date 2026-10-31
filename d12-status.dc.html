@@ -26,8 +26,8 @@
       <aside class="dside" style="flex: 1 1 300px; max-width: 380px">
         <span class="lbl">Upcoming</span>
         <div class="card" style="display: flex; gap: 12px; padding: 12px; align-items: center; box-shadow: inset 0 0 0 1.5px #5E1720">
-          <div class="ph" style="width: 56px; height: 56px; border-radius: 12px"><img src="./assets/n1-burgundy-chrome.svg" alt=""></div>
-          <div class="col grow" style="gap: 2px"><span class="sm strong">Viper Cullen</span><span class="cap">Wed, Nov 4 · 2:30 PM</span></div>
+          <div class="ph" style="width: 56px; height: 56px; border-radius: 12px"><img src="{{b.img}}" alt=""></div>
+          <div class="col grow" style="gap: 2px"><span class="sm strong">Viper Cullen</span><span class="cap">{{b.when}}</span></div>
           <span class="pill {{pill}}">{{pillText}}</span>
         </div>
         <span class="lbl" style="margin-top: 12px">Past</span>
@@ -38,34 +38,54 @@
         </div>
       </aside>
       <div class="dmain" style="gap: 20px">
-        <sc-if value="{{notYet}}" hint-placeholder-val="{{ true }}">
-          <div style="padding: 20px 24px; border-radius: 18px; background: #FBEFD9; display: flex; flex-wrap: wrap; gap: 16px; align-items: center">
+        <sc-if value="{{isRequested}}" hint-placeholder-val="{{ false }}">
+          <div class="banner" role="status" style="padding: 20px 24px; border-radius: 18px; background: #FBEFD9; display: flex; flex-wrap: wrap; gap: 12px; align-items: center">
+            <div class="col grow" style="gap: 4px; min-width: 260px"><span class="ttl">Request sent. Viper has 4 hours to reply.</span><span class="sm" style="color: #5A3A0E">Your ₱{{b.deposit}} deposit is held by KuArte. If Viper can't make it, it comes straight back.</span></div>
+            <a class="btn sm bs" href="d21-request.dc.html">Demo: answer as Viper</a>
+          </div>
+        </sc-if>
+        <sc-if value="{{isAccepted}}" hint-placeholder-val="{{ true }}">
+          <div class="banner" style="padding: 20px 24px; border-radius: 18px; background: #FBEFD9; display: flex; flex-wrap: wrap; gap: 16px; align-items: center">
             <div class="col grow" style="gap: 4px; min-width: 260px"><span class="ttl">Viper accepted. Confirm to lock it in.</span><span class="sm" style="color: #5A3A0E">Both sides confirm so nobody gets surprised. Your slot is held for 2 hours.</span></div>
             <button class="btn bp" onClick="{{confirm}}">Confirm booking</button>
           </div>
         </sc-if>
-        <sc-if value="{{done}}" hint-placeholder-val="{{ false }}">
-          <div style="padding: 20px 24px; border-radius: 18px; background: #E3F2E8; display: flex; flex-wrap: wrap; gap: 16px; align-items: center">
-            <div class="col grow" style="gap: 4px; min-width: 260px"><span class="ttl">You're booked for Wed, Nov 4 at 2:30 PM</span><span class="sm" style="color: #1F4D33">SMS reminders a day before and 2 hours before. Check-in opens 30 minutes before.</span></div>
+        <sc-if value="{{isConfirmed}}" hint-placeholder-val="{{ false }}">
+          <div class="banner" style="padding: 20px 24px; border-radius: 18px; background: #E3F2E8; display: flex; flex-wrap: wrap; gap: 16px; align-items: center">
+            <div class="col grow" style="gap: 4px; min-width: 260px"><span class="ttl">You're booked for {{b.when}}</span><span class="sm" style="color: #1F4D33">SMS reminders a day before and 2 hours before. Check-in opens 30 minutes before.</span></div>
             <a class="btn bp" href="d13-checkin.dc.html">Open check-in (demo)</a>
+          </div>
+        </sc-if>
+        <sc-if value="{{isEnded}}" hint-placeholder-val="{{ false }}">
+          <div class="banner" role="status" style="padding: 16px 20px; border-radius: 16px; background: #FBE4E6; display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: center">
+            <span class="sm grow" style="color: #5E1720"><b style="color: #8A1B29">{{endTitle}}</b> ₱{{b.deposit}} is on its way back to your GCash.</span>
+            <a class="lnk" href="d01-home.dc.html">Find another time</a>
           </div>
         </sc-if>
         <div class="dsplit" style="gap: 20px">
           <div class="card pad-l" style="flex: 1 1 320px; display: flex; flex-direction: column; gap: 14px">
-            <span class="lbl">Booking KA-20491</span>
-            <div class="row" style="gap: 14px"><div class="ph" style="width: 88px; height: 88px; border-radius: 14px"><img src="./assets/n1-burgundy-chrome.svg" alt="Burgundy chrome reference"></div><div class="col" style="gap: 3px"><span class="ttl">Gel extensions + chrome art</span><span class="cap">Viper Cullen Nail Studio · Walk-in, Gredu</span><span class="cap strong wine">Wed, Nov 4 · 2:30 – 4:30 PM</span></div></div>
+            <span class="lbl">Booking {{b.id}}</span>
+            <div class="row" style="gap: 14px"><div class="ph" style="width: 88px; height: 88px; border-radius: 14px"><img src="{{b.img}}" alt="Your reference photo"></div><div class="col" style="gap: 3px"><span class="ttl">{{b.svc}}</span><span class="cap">Viper Cullen Nail Studio · {{b.mode}}</span><span class="cap strong wine">{{b.when}}</span></div></div>
             <div class="hr"></div>
-            <div class="row between sm"><span>Deposit paid (held by KuArte)</span><span>₱150</span></div>
-            <div class="row between sm"><span>Pay at your visit</span><span>about ₱345</span></div>
-            <div class="row" style="gap: 10px; flex-wrap: wrap; padding-top: 4px"><a class="btn sm bs" href="d15-chat.dc.html">Message Viper</a><button class="btn sm bg">Reschedule</button><button class="btn sm bd">Cancel</button></div>
+            <div class="row between sm"><span>Deposit paid (held by KuArte)</span><span>₱{{b.deposit}}</span></div>
+            <div class="row between sm"><span>Pay at your visit</span><span>about ₱{{b.rest}}</span></div>
+            <sc-if value="{{canCancel}}" hint-placeholder-val="{{ true }}">
+              <div class="row" style="gap: 10px; flex-wrap: wrap; padding-top: 4px"><a class="btn sm bs" href="d15-chat.dc.html">Message Viper</a><button class="btn sm bg">Reschedule</button><button class="btn sm bd" onClick="{{askCancel}}">Cancel</button></div>
+            </sc-if>
+            <sc-if value="{{asking}}" hint-placeholder-val="{{ false }}">
+              <div class="banner" role="group" aria-label="Confirm cancellation" style="padding: 16px; border-radius: 14px; border: 1.5px solid #B42335; display: flex; flex-direction: column; gap: 10px">
+                <span class="ttl" style="font-size: 15px">Cancel this booking?</span>
+                <p class="sm">It's more than 24 hours away, so your ₱{{b.deposit}} deposit goes back to your GCash in full.</p>
+                <div class="row" style="gap: 10px; flex-wrap: wrap"><button class="btn sm bg" onClick="{{keep}}">Keep booking</button><button class="btn sm bd" onClick="{{doCancel}}">Yes, cancel</button></div>
+              </div>
+            </sc-if>
           </div>
           <div class="card pad-l" style="flex: 1 1 280px">
             <div class="tl">
-              <div class="st done"><span class="k"><svg class="i xs" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width: 3"><path d="m5 12 5 5L20 7"/></svg></span><div class="col" style="gap: 1px"><span class="sm strong">Requested</span><span class="cap">Today 9:12 AM · deposit held</span></div></div>
-              <div class="st done"><span class="k"><svg class="i xs" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width: 3"><path d="m5 12 5 5L20 7"/></svg></span><div class="col" style="gap: 1px"><span class="sm strong">Accepted by Viper</span><span class="cap">Today 9:40 AM</span></div></div>
-              <div class="st {{c3}}"><span class="k"><sc-if value="{{done}}" hint-placeholder-val="{{ false }}"><svg class="i xs" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width: 3"><path d="m5 12 5 5L20 7"/></svg></sc-if></span><div class="col" style="gap: 1px"><span class="sm strong">Confirmed by you</span><span class="cap">{{confirmNote}}</span></div></div>
-              <div class="st {{c4}}"><span class="k"></span><div class="col" style="gap: 1px"><span class="sm strong">Check in</span><span class="cap">Opens Nov 4, 2:00 PM</span></div></div>
-              <div class="st"><span class="k"></span><div class="col" style="gap: 1px"><span class="sm strong">Completed + review</span><span class="cap">Deposit released to Viper after</span></div></div>
+              <div class="st done"><span class="k"><svg class="i xs" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width: 3"><path d="m5 12 5 5L20 7"/></svg></span><div class="col" style="gap: 1px"><span class="sm strong">Requested</span><span class="cap">Today {{b.created}} · deposit held</span></div></div>
+              <sc-for list="{{steps}}" as="s" hint-placeholder-count="4">
+                <div class="st {{s.cls}}"><span class="k"><sc-if value="{{s.done}}" hint-placeholder-val="{{ false }}"><svg class="i xs" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width: 3"><path d="m5 12 5 5L20 7"/></svg></sc-if></span><div class="col" style="gap: 1px"><span class="sm strong">{{s.title}}</span><span class="cap">{{s.note}}</span></div></div>
+              </sc-for>
             </div>
           </div>
         </div>
@@ -77,14 +97,44 @@
 <div id="dc-root"></div>
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1100}}'>
 class Component extends DCLogic {
-  constructor(p) { super(p); this.state = { c: false }; }
+  constructor(p) {
+    super(p);
+    this.state = { ask: false, sample: { id: 'KA-20491', created: '9:12 AM', svc: 'Gel extensions + chrome nail art', mode: 'Walk-in', when: 'Wed, Nov 4 · 2:30 PM', deposit: 150, rest: 345, img: './assets/n1-burgundy-chrome.svg', status: 'accepted', log: [{ t: '9:40 AM', note: 'Accepted by Viper' }] } };
+  }
   renderVals() {
-    const c = this.state.c;
+    const KU = window.KU;
+    const stored = KU ? KU.booking() : null;
+    const b = stored || this.state.sample;
+    const upd = (patch, note) => {
+      if (stored) KU.update(patch, note);
+      else this.setState({ sample: Object.assign({}, b, patch, { log: (b.log || []).concat(note ? [{ t: 'Just now', note }] : []) }) });
+    };
+    const at = (word) => { const e = (b.log || []).filter((x) => x.note.indexOf(word) > -1).pop(); return e ? 'Today ' + e.t : ''; };
+    const s = b.status;
+    const accepted = s === 'accepted' || s === 'confirmed';
+    const steps = [
+      s === 'declined'
+        ? { title: 'Declined by Viper', note: at('Declined') || 'Deposit refunded', cls: '', done: false }
+        : { title: 'Accepted by Viper', note: accepted ? at('Accepted') : (s === 'requested' ? 'Waiting for her reply' : '—'), cls: accepted ? 'done' : (s === 'requested' ? 'now' : ''), done: accepted },
+      { title: 'Confirmed by you', note: s === 'confirmed' ? at('Confirmed') : (s === 'accepted' ? 'Waiting for you' : '—'), cls: s === 'confirmed' ? 'done' : (s === 'accepted' ? 'now' : ''), done: s === 'confirmed' },
+      { title: 'Check in', note: 'Opens 30 minutes before', cls: s === 'confirmed' ? 'now' : '', done: false },
+      { title: 'Completed + review', note: 'Deposit released to Viper after', cls: '', done: false }
+    ];
+    const live = s === 'requested' || s === 'accepted' || s === 'confirmed';
+    const PL = { requested: ['wait', 'Waiting'], accepted: ['wait', 'Your turn'], confirmed: ['ok', 'Confirmed'], declined: ['bad', 'Declined'], cancelled: ['bad', 'Cancelled'] }[s] || ['info', s];
     return {
-      notYet: !c, done: c, c3: c ? 'done' : 'now', c4: c ? 'now' : '',
-      confirmNote: c ? 'Today 9:45 AM' : 'Waiting for you',
-      pill: c ? 'ok' : 'wait', pillText: c ? 'Confirmed' : 'Your turn',
-      confirm: () => this.setState({ c: true })
+      b, steps, pill: PL[0], pillText: PL[1],
+      isRequested: s === 'requested', isAccepted: s === 'accepted', isConfirmed: s === 'confirmed',
+      isEnded: s === 'declined' || s === 'cancelled',
+      endTitle: s === 'declined' ? 'Viper can\'t take this booking.' : 'Booking cancelled. Viper has been told.',
+      canCancel: live && !this.state.ask, asking: live && this.state.ask,
+      confirm: () => upd({ status: 'confirmed' }, 'Confirmed by customer'),
+      askCancel: () => {
+        this.setState({ ask: true });
+        setTimeout(() => { const g = document.querySelector('[aria-label="Confirm cancellation"]'); if (g) { g.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); const btn = g.querySelector('button'); if (btn) btn.focus({ preventScroll: true }); } }, 0);
+      },
+      keep: () => this.setState({ ask: false }),
+      doCancel: () => { this.setState({ ask: false }); upd({ status: 'cancelled' }, 'Cancelled by customer'); }
     };
   }
 }

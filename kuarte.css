@@ -117,7 +117,7 @@ textarea.inp{padding:12px 14px;min-height:96px;resize:none}
 .tog{width:44px;height:26px;border-radius:13px;background:var(--blush2);position:relative;flex:none}
 .tog::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:10px;background:var(--white);box-shadow:0 1px 3px rgba(0,0,0,.2)}
 .tog.on{background:var(--wine7)}
-.tog.on::after{left:21px}
+.tog.on::after{transform:translateX(18px)}
 
 /* selectable rows / options */
 .opt{display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--white);border:1px solid var(--line);border-radius:14px;text-decoration:none;cursor:pointer}
@@ -160,10 +160,10 @@ textarea.inp{padding:12px 14px;min-height:96px;resize:none}
 .tl .now .k::after{content:"";width:10px;height:10px;border-radius:5px;background:var(--wine7)}
 
 /* map placeholder */
-.map{position:relative;overflow:hidden;background:#EFE7E2;border-radius:16px}
-.map .road{position:absolute;background:#FFFFFF;opacity:.9}
-.map .blk{position:absolute;background:#E4D9D2;border-radius:6px}
-.map .water{position:absolute;background:#D7E3E6}
+.map{position:relative;overflow:hidden;background:#F1E9E3;border-radius:16px;box-shadow:inset 0 0 0 1px #E8DCD5}
+.map .road{position:absolute;background:#FFFFFF;box-shadow:0 0 0 1px #E6D8D0}
+.map .blk{position:absolute;background:#E9DED7;border-radius:8px}
+.map .water{position:absolute;background:#D5E4E8}
 .pin{position:absolute;display:flex;align-items:center;gap:4px;padding:0 10px;height:30px;border-radius:15px;background:var(--white);color:var(--wine7);font-size:12px;font-weight:700;box-shadow:0 4px 12px rgba(59,13,19,.18);white-space:nowrap}
 .pin.on{background:var(--wine7);color:var(--white)}
 .me{position:absolute;width:18px;height:18px;border-radius:9px;background:#3B6FD9;border:3px solid var(--white);box-shadow:0 0 0 6px rgba(59,111,217,.2)}
@@ -212,3 +212,66 @@ textarea.inp{padding:12px 14px;min-height:96px;resize:none}
 .crumb{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink6)}
 .crumb a{color:var(--ink6);text-decoration:none}
 .stack-m{display:flex;flex-wrap:wrap;gap:16px}
+
+/* ============ interaction + motion layer ============
+   Easing: strong ease-out for responses, iOS drawer curve for sheets.
+   Only transform, opacity and colors animate. Durations stay under 250ms
+   except the sheet entrance (seen once per visit). */
+:root{--ease-out:cubic-bezier(.23,1,.32,1);--ease-drawer:cubic-bezier(.32,.72,0,1)}
+html{-webkit-tap-highlight-color:transparent}
+
+/* numbers line up in prices, times, dates and tables */
+.price,.slot,.cal,.otp,.dtable,.tl .cap,.spark,.pin{font-variant-numeric:tabular-nums}
+
+/* selection + press feedback */
+.btn,.ib,.chip,.slot,.opt,.seg a,.seg button,.cal .d,.check,.lnk,a.card,a.ph,.nav a,.dnav a{
+  transition:background-color 150ms ease,border-color 150ms ease,color 150ms ease,box-shadow 150ms ease,transform 160ms var(--ease-out)}
+.tog::after{transition:transform 200ms var(--ease-out)}
+.tog{transition:background-color 200ms ease}
+.btn:active,.ib:active,.chip:active,.seg button:active,.slot:not(.off):active,.cal .d:not(.past):not(.full):active{transform:scale(.97)}
+.opt:active,a.card:active,a.ph:active{transform:scale(.985)}
+.ph img{transition:transform 300ms var(--ease-out)}
+.banner{transition:background-color 240ms ease,border-color 240ms ease}
+
+/* hover only where a real pointer exists */
+@media (hover:hover) and (pointer:fine){
+  .btn.bp:hover{background:var(--wine9)}
+  .btn.bs:hover,.btn.bd:hover{background:var(--blush1)}
+  .btn.bg:hover{background:var(--blush2)}
+  .btn.bgold:hover{background:#D3AB58}
+  .ib:hover{background:var(--blush1)}
+  .ib.dark:hover{background:var(--wine9)}
+  .chip:not(.on):hover,.opt:not(.on):hover{border-color:var(--blush4)}
+  .slot:not(.off):not(.on):hover{border-color:var(--wine5)}
+  .seg button:not(.on):hover{color:var(--wine7)}
+  .cal .d:not(.past):not(.full):not(.on):hover{background:var(--blush1)!important}
+  a.card:hover{box-shadow:0 6px 20px rgba(59,13,19,.10)}
+  a.ph:hover img,a:hover>.ph img{transform:scale(1.04)}
+  .lnk:hover{text-decoration:underline;text-underline-offset:3px}
+  .nav a:hover,.dnav a:hover{color:var(--wine7)}
+}
+
+/* keyboard focus is always visible */
+:focus{outline:none}
+:focus-visible{outline:2px solid var(--wine5);outline-offset:2px;border-radius:inherit}
+
+/* entrances: sheet slides from its edge, dialogs settle in place */
+@keyframes k-sheet{from{transform:translateY(100%)}}
+@keyframes k-fade{from{opacity:0}}
+@keyframes k-pop{from{opacity:0;transform:scale(.96)}}
+.sheet{animation:k-sheet 420ms var(--ease-drawer) both}
+.scrim{animation:k-fade 300ms ease both}
+[role="dialog"]{animation:k-pop 220ms var(--ease-out) both}
+
+@media (prefers-reduced-motion:reduce){
+  .sheet,[role="dialog"]{animation:k-fade 200ms ease both}
+  .btn:active,.ib:active,.chip:active,.seg button:active,.slot:active,.cal .d:active,.opt:active,a.card:active,a.ph:active{transform:none}
+  .tog::after,.ph img{transition:none}
+  a.ph:hover img,a:hover>.ph img{transform:none}
+}
+
+/* link-styled buttons keep their own text color on hover (pages set a:hover{color:inherit}) */
+a.btn.bp,a.btn.bp:hover{color:var(--white)}
+a.btn.bs,a.btn.bs:hover,a.btn.bg,a.btn.bg:hover{color:var(--wine7)}
+a.btn.bd,a.btn.bd:hover{color:var(--bad)}
+a.btn.bgold,a.btn.bgold:hover{color:var(--wine9)}

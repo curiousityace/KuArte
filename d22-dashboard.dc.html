@@ -24,14 +24,21 @@
     <div class="col" style="gap: 4px"><h1 class="dtitle">Good afternoon, Viper</h1><p class="sm">Wednesday, Nov 4</p></div>
     <div class="dgrid" style="gap: 16px">
       <div class="card pad"><span class="cap">Today</span><p style="font: 700 28px/1.2 'DM Sans', system-ui, sans-serif; margin-top: 4px">4 bookings</p></div>
-      <div class="card pad"><span class="cap">To answer</span><p style="font: 700 28px/1.2 'DM Sans', system-ui, sans-serif; margin-top: 4px; color: #8A5212">1 request</p></div>
+      <div class="card pad"><span class="cap">To answer</span><p style="font: 700 28px/1.2 'DM Sans', system-ui, sans-serif; margin-top: 4px; color: #8A5212">{{toAnswer}}</p></div>
       <div class="card pad"><span class="cap">Payout pending</span><p style="font: 700 28px/1.2 'DM Sans', system-ui, sans-serif; margin-top: 4px">₱405</p></div>
       <div class="card pad"><span class="cap">Rating</span><p style="font: 700 28px/1.2 'DM Sans', system-ui, sans-serif; margin-top: 4px">4.9 <span class="cap">(38)</span></p></div>
     </div>
-    <a href="d21-request.dc.html" class="row" style="gap: 12px; padding: 14px 18px; border-radius: 16px; background: #FBEFD9; text-decoration: none">
-      <svg class="i" viewBox="0 0 24 24" aria-hidden="true" style="color: #8A5212"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-      <span class="sm grow" style="color: #5A3A0E"><b>Maria S.</b> requested Wed, Nov 4 at 2:30 PM for gel extensions + chrome. Reply in 3 hr 52 min.</span>
-      <span class="btn sm bp">Review request</span>
+    <sc-if value="{{hasRequest}}" hint-placeholder-val="{{ true }}">
+      <a href="d21-request.dc.html" class="row" style="gap: 12px; padding: 14px 18px; border-radius: 16px; background: #FBEFD9; text-decoration: none">
+        <svg class="i" viewBox="0 0 24 24" aria-hidden="true" style="color: #8A5212"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        <span class="sm grow" style="color: #5A3A0E"><b>{{reqName}}</b> requested {{reqWhen}} for {{reqSvc}}. Reply within 4 hr.</span>
+        <span class="btn sm bp">Review request</span>
+      </a>
+    </sc-if>
+    <a href="d27-design-requests.dc.html" class="row" style="gap: 12px; padding: 14px 18px; border-radius: 16px; background: #F6ECED; text-decoration: none">
+      <svg class="i wine" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg>
+      <span class="sm grow" style="color: #5E1720"><b>3 design requests</b> near you match your style tags.</span>
+      <span class="btn sm bs">Send an offer</span>
     </a>
     <div class="col" style="gap: 12px">
       <div class="seg" style="max-width: 420px"><sc-for list="{{tabs}}" as="t" hint-placeholder-count="3"><button class="{{t.cls}}" onClick="{{t.pick}}">{{t.name}}</button></sc-for></div>
@@ -50,9 +57,20 @@
 <div id="dc-root"></div>
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1100}}'>
 class Component extends DCLogic {
-  constructor(p) { super(p); this.state = { tab: 0 }; }
+  constructor(p) { super(p); this.state = { tab: null }; }
   renderVals() {
     const T = ['Today', 'Upcoming', 'Past'];
+    const KU = window.KU;
+    const bk = KU ? KU.booking() : null;
+    const mine = bk && bk.tech === 'viper' ? bk : null;
+    const short = (n) => { const p = (n || '').split(' '); return p[0] + (p[1] ? ' ' + p[1][0] + '.' : ''); };
+    const reqLive = !!(mine && mine.status === 'requested');
+    const hasRequest = reqLive || !bk;
+    const req = reqLive ? mine : { customer: 'Maria Santos', when: 'Wed, Nov 4 · 2:30 PM', svc: 'Gel extensions + chrome nail art' };
+    const split = (w) => w.indexOf(' · ') > -1 ? [w.split(' · ')[0].replace(/^\w+, /, ''), w.split(' · ')[1]] : [w.split(' ')[0], w.split(' ').slice(1).join(' ')];
+    const ST = { accepted: ['Waiting for customer', 'wait'], confirmed: ['Confirmed', 'ok'], cancelled: ['Cancelled', 'bad'] };
+    const showRow = !!(mine && ST[mine.status]);
+    const tab = this.state.tab == null ? (showRow ? 1 : 0) : this.state.tab;
     const D = [
       [
         { when: '10:00 – 11:30 AM', name: 'Aria M.', ini: 'AM', av: 'b', svc: 'Gel extensions', where: 'Walk-in', pay: 'Paid · ₱450', status: 'Completed', pill: 'ok', href: 'd23-complete.dc.html' },
@@ -70,8 +88,9 @@ class Component extends DCLogic {
       ]
     ];
     return {
-      tabs: T.map((n, i) => ({ name: n, cls: this.state.tab === i ? 'on' : '', pick: () => this.setState({ tab: i }) })),
-      rows: D[this.state.tab]
+      tabs: T.map((n, i) => ({ name: n, cls: tab === i ? 'on' : '', pick: () => this.setState({ tab: i }) })),
+      rows: tab === 1 && showRow ? [{ when: mine.when, name: short(mine.customer), ini: short(mine.customer).replace(/[^A-Z]/g, '').slice(0, 2), av: 'e', svc: (mine.source === 'design' ? 'Design offer · ' : '') + mine.svc, where: mine.mode, pay: mine.deposit ? 'Deposit ₱' + mine.deposit : 'No deposit', status: ST[mine.status][0], pill: ST[mine.status][1], href: mine.source === 'design' ? 'd27-design-requests.dc.html' : 'd21-request.dc.html' }].concat(D[1]) : D[tab],
+      hasRequest, toAnswer: hasRequest ? '1 request' : 'None', reqName: short(req.customer), reqWhen: req.when, reqSvc: req.svc.toLowerCase()
     };
   }
 }

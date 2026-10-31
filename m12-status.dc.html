@@ -16,47 +16,73 @@
 <template id="dc-tpl">
 <div class="scr">
   <div class="top" style="padding-bottom: 8px">
-    <div class="col grow" style="gap: 0"><h1 class="h1">Your booking</h1><span class="cap">Ref KA-20491</span></div>
+    <div class="col grow" style="gap: 0"><h1 class="h1">Your booking</h1><span class="cap">Ref {{b.id}}</span></div>
     <a class="ib" href="m15-chat.dc.html" aria-label="Message Viper"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></a>
   </div>
   <div class="scroll" style="gap: 16px">
-    <sc-if value="{{notYet}}" hint-placeholder-val="{{ true }}">
-      <div style="padding: 16px; border-radius: 16px; background: #FBEFD9; display: flex; flex-direction: column; gap: 10px">
+    <sc-if value="{{isRequested}}" hint-placeholder-val="{{ false }}">
+      <div class="banner" role="status" style="padding: 16px; border-radius: 16px; background: #FBEFD9; display: flex; flex-direction: column; gap: 8px">
+        <span class="pill wait" style="align-self: flex-start; background: #FFFFFF">Waiting for Viper</span>
+        <p class="ttl">Request sent. Viper has 4 hours to reply.</p>
+        <p class="sm" style="color: #5A3A0E">Your ₱{{b.deposit}} deposit is held by KuArte. If Viper can't make it, it comes straight back.</p>
+        <a class="lnk" href="m21-request.dc.html" style="color: #8A5212">Demo: switch to Viper's side to answer</a>
+      </div>
+    </sc-if>
+    <sc-if value="{{isAccepted}}" hint-placeholder-val="{{ true }}">
+      <div class="banner" style="padding: 16px; border-radius: 16px; background: #FBEFD9; display: flex; flex-direction: column; gap: 10px">
         <span class="pill wait" style="align-self: flex-start; background: #FFFFFF">Your turn</span>
         <p class="ttl">Viper accepted. Confirm to lock it in.</p>
         <p class="sm" style="color: #5A3A0E">Both sides confirm, so nobody gets surprised. The slot is held for you for 2 hours.</p>
         <button class="btn bp full" onClick="{{confirm}}">Confirm booking</button>
       </div>
     </sc-if>
-    <sc-if value="{{done}}" hint-placeholder-val="{{ false }}">
-      <div style="padding: 16px; border-radius: 16px; background: #E3F2E8; display: flex; flex-direction: column; gap: 8px">
+    <sc-if value="{{isConfirmed}}" hint-placeholder-val="{{ false }}">
+      <div class="banner" style="padding: 16px; border-radius: 16px; background: #E3F2E8; display: flex; flex-direction: column; gap: 8px">
         <span class="pill ok" style="align-self: flex-start; background: #FFFFFF">Confirmed</span>
-        <p class="ttl">You're booked for Wed, Nov 4 at 2:30 PM</p>
+        <p class="ttl">You're booked for {{b.when}}</p>
         <p class="sm" style="color: #1F4D33">Reminders come by SMS a day before and 2 hours before. Check-in opens 30 minutes before.</p>
         <a class="btn bp full" href="m13-checkin.dc.html">Open check-in (demo)</a>
       </div>
     </sc-if>
+    <sc-if value="{{isEnded}}" hint-placeholder-val="{{ false }}">
+      <div class="banner" role="status" style="padding: 16px; border-radius: 16px; background: #FBE4E6; display: flex; flex-direction: column; gap: 6px">
+        <span class="sm strong" style="color: #8A1B29">{{endTitle}}</span>
+        <span class="sm" style="color: #5E1720">₱{{b.deposit}} is on its way back to your GCash.</span>
+        <a class="lnk" href="Main.dc.html">Find another time</a>
+      </div>
+    </sc-if>
     <div class="card" style="display: flex; gap: 12px; padding: 12px; align-items: center">
-      <div class="ph" style="width: 64px; height: 64px; border-radius: 12px"><img src="./assets/n1-burgundy-chrome.svg" alt="Burgundy chrome reference"></div>
+      <div class="ph" style="width: 64px; height: 64px; border-radius: 12px"><img src="{{b.img}}" alt="Your reference photo"></div>
       <div class="col grow" style="gap: 2px">
-        <span class="sm strong">Gel extensions + chrome art</span>
-        <span class="cap">Viper Cullen · Walk-in, Gredu</span>
-        <span class="cap">Deposit ₱150 held · about ₱345 at visit</span>
+        <span class="sm strong">{{b.svc}}</span>
+        <span class="cap">Viper Cullen · {{b.mode}} · {{b.when}}</span>
+        <span class="cap">Deposit ₱{{b.deposit}} held · about ₱{{b.rest}} at visit</span>
       </div>
     </div>
     <div class="card pad">
       <div class="tl">
-        <div class="st done"><span class="k"><svg class="i xs" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width: 3"><path d="m5 12 5 5L20 7"/></svg></span><div class="col" style="gap: 1px"><span class="sm strong">Requested</span><span class="cap">Today 9:12 AM · deposit held by KuArte</span></div></div>
-        <div class="st done"><span class="k"><svg class="i xs" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width: 3"><path d="m5 12 5 5L20 7"/></svg></span><div class="col" style="gap: 1px"><span class="sm strong">Accepted by Viper</span><span class="cap">Today 9:40 AM</span></div></div>
-        <div class="st {{c3}}"><span class="k"><sc-if value="{{done}}" hint-placeholder-val="{{ false }}"><svg class="i xs" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width: 3"><path d="m5 12 5 5L20 7"/></svg></sc-if></span><div class="col" style="gap: 1px"><span class="sm strong">Confirmed by you</span><span class="cap">{{confirmNote}}</span></div></div>
-        <div class="st {{c4}}"><span class="k"></span><div class="col" style="gap: 1px"><span class="sm strong">Check in</span><span class="cap">Opens Nov 4, 2:00 PM</span></div></div>
-        <div class="st"><span class="k"></span><div class="col" style="gap: 1px"><span class="sm strong">Completed + review</span><span class="cap">Deposit released to Viper after</span></div></div>
+        <div class="st done"><span class="k"><svg class="i xs" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width: 3"><path d="m5 12 5 5L20 7"/></svg></span><div class="col" style="gap: 1px"><span class="sm strong">Requested</span><span class="cap">Today {{b.created}} · deposit held by KuArte</span></div></div>
+        <sc-for list="{{steps}}" as="s" hint-placeholder-count="4">
+          <div class="st {{s.cls}}"><span class="k"><sc-if value="{{s.done}}" hint-placeholder-val="{{ false }}"><svg class="i xs" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width: 3"><path d="m5 12 5 5L20 7"/></svg></sc-if></span><div class="col" style="gap: 1px"><span class="sm strong">{{s.title}}</span><span class="cap">{{s.note}}</span></div></div>
+        </sc-for>
       </div>
     </div>
-    <div class="row" style="gap: 10px">
-      <button class="btn bg" style="flex: 1">Reschedule</button>
-      <button class="btn bd" style="flex: 1">Cancel</button>
-    </div>
+    <sc-if value="{{canCancel}}" hint-placeholder-val="{{ true }}">
+      <div class="row" style="gap: 10px">
+        <button class="btn bg" style="flex: 1">Reschedule</button>
+        <button class="btn bd" style="flex: 1" onClick="{{askCancel}}">Cancel</button>
+      </div>
+    </sc-if>
+    <sc-if value="{{asking}}" hint-placeholder-val="{{ false }}">
+      <div class="card pad banner" role="group" aria-label="Confirm cancellation" style="display: flex; flex-direction: column; gap: 10px; border-color: #B42335">
+        <span class="ttl" style="font-size: 15px">Cancel this booking?</span>
+        <p class="sm">It's more than 24 hours away, so your ₱{{b.deposit}} deposit goes back to your GCash in full.</p>
+        <div class="row" style="gap: 10px">
+          <button class="btn bg" style="flex: 1" onClick="{{keep}}">Keep booking</button>
+          <button class="btn bd" style="flex: 1" onClick="{{doCancel}}">Yes, cancel</button>
+        </div>
+      </div>
+    </sc-if>
   </div>
   <nav class="nav" aria-label="Main">
     <a href="Main.dc.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>Home</a>
@@ -70,14 +96,43 @@
 <div id="dc-root"></div>
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
 class Component extends DCLogic {
-  constructor(p) { super(p); this.state = { confirmed: false }; }
+  constructor(p) {
+    super(p);
+    this.state = { ask: false, sample: { id: 'KA-20491', created: '9:12 AM', svc: 'Gel extensions + chrome nail art', mode: 'Walk-in', when: 'Wed, Nov 4 · 2:30 PM', deposit: 150, rest: 345, img: './assets/n1-burgundy-chrome.svg', status: 'accepted', log: [{ t: '9:40 AM', note: 'Accepted by Viper' }] } };
+  }
   renderVals() {
-    const c = this.state.confirmed;
+    const KU = window.KU;
+    const stored = KU ? KU.booking() : null;
+    const b = stored || this.state.sample;
+    const upd = (patch, note) => {
+      if (stored) KU.update(patch, note);
+      else this.setState({ sample: Object.assign({}, b, patch, { log: (b.log || []).concat(note ? [{ t: 'Just now', note }] : []) }) });
+    };
+    const at = (word) => { const e = (b.log || []).filter((x) => x.note.indexOf(word) > -1).pop(); return e ? 'Today ' + e.t : ''; };
+    const s = b.status;
+    const accepted = s === 'accepted' || s === 'confirmed';
+    const steps = [
+      s === 'declined'
+        ? { title: 'Declined by Viper', note: at('Declined') || 'Deposit refunded', cls: '', done: false }
+        : { title: 'Accepted by Viper', note: accepted ? at('Accepted') : (s === 'requested' ? 'Waiting for her reply' : '—'), cls: accepted ? 'done' : (s === 'requested' ? 'now' : ''), done: accepted },
+      { title: 'Confirmed by you', note: s === 'confirmed' ? at('Confirmed') : (s === 'accepted' ? 'Waiting for you' : '—'), cls: s === 'confirmed' ? 'done' : (s === 'accepted' ? 'now' : ''), done: s === 'confirmed' },
+      { title: 'Check in', note: 'Opens 30 minutes before', cls: s === 'confirmed' ? 'now' : '', done: false },
+      { title: 'Completed + review', note: 'Deposit released to Viper after', cls: '', done: false }
+    ];
+    const live = s === 'requested' || s === 'accepted' || s === 'confirmed';
     return {
-      notYet: !c, done: c,
-      c3: c ? 'done' : 'now', c4: c ? 'now' : '',
-      confirmNote: c ? 'Today 9:45 AM' : 'Waiting for you',
-      confirm: () => this.setState({ confirmed: true })
+      b, steps,
+      isRequested: s === 'requested', isAccepted: s === 'accepted', isConfirmed: s === 'confirmed',
+      isEnded: s === 'declined' || s === 'cancelled',
+      endTitle: s === 'declined' ? 'Viper can\'t take this booking.' : 'Booking cancelled. Viper has been told.',
+      canCancel: live && !this.state.ask, asking: live && this.state.ask,
+      confirm: () => upd({ status: 'confirmed' }, 'Confirmed by customer'),
+      askCancel: () => {
+        this.setState({ ask: true });
+        setTimeout(() => { const g = document.querySelector('[aria-label="Confirm cancellation"]'); if (g) { g.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); const btn = g.querySelector('button'); if (btn) btn.focus({ preventScroll: true }); } }, 0);
+      },
+      keep: () => this.setState({ ask: false }),
+      doCancel: () => { this.setState({ ask: false }); upd({ status: 'cancelled' }, 'Cancelled by customer'); }
     };
   }
 }

@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#5E1720">
+<link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+<title>KuArte for techs · Design requests (desktop)</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./kuarte.css">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Marcellus&amp;family=Playfair+Display:wght@600;700&amp;display=swap" rel="stylesheet">
+<style>body{margin:0}a{color:inherit}a:hover{color:inherit}</style>
+<link rel="stylesheet" href="./site.css">
+</head>
+<body>
+<template id="dc-tpl">
+<div class="dpage">
+  <header class="dhead"><div class="in">
+    <a class="wm" href="d22-dashboard.dc.html">KUARTE</a><span class="badge">For nail techs</span>
+    <nav class="dnav grow" aria-label="Tech"><a href="d22-dashboard.dc.html">Bookings</a><a href="d21-request.dc.html">Requests</a><a class="on" href="d27-design-requests.dc.html">Design requests</a><a href="d19-camera.dc.html">Portfolio</a><a href="d24-insights.dc.html">Insights</a></nav>
+    <span class="av s">VC</span>
+  </div></header>
+  <div class="dwrap">
+    <div class="row between" style="flex-wrap: wrap; gap: 16px">
+      <div class="col" style="gap: 4px"><h1 class="dtitle">Design requests</h1><p class="sm">Customers within 5 km whose design matches your style tags. Names and addresses appear only after a booking exists.</p></div>
+      <div class="seg" style="width: 340px"><sc-for list="{{tabs}}" as="t" hint-placeholder-count="2"><button class="{{t.cls}}" onClick="{{t.pick}}">{{t.name}}</button></sc-for></div>
+    </div>
+    <sc-if value="{{isOpen}}" hint-placeholder-val="{{ true }}">
+      <div class="dgrid l" style="gap: 20px">
+        <sc-for list="{{open}}" as="r" hint-placeholder-count="3">
+          <a class="card" href="d28-make-offer.dc.html" style="overflow: hidden; text-decoration: none; display: flex; flex-direction: column">
+            <div class="ph" style="height: 200px; border-radius: 0"><img src="{{r.img}}" alt="Requested design: {{r.title}}"><span class="tagx">{{r.posted}}</span></div>
+            <div class="col" style="padding: 16px; gap: 4px">
+              <div class="row between"><span class="ttl" style="font-size: 15px">{{r.title}}</span><span class="pill {{r.pill}}">{{r.tag}}</span></div>
+              <span class="cap">{{r.detail}}</span>
+              <span class="cap">{{r.when}} · {{r.mode}} · {{r.km}}</span>
+              <span class="sm" style="margin-top: 4px"><b class="strong">{{r.budget}}</b> · {{r.offers}}</span>
+            </div>
+          </a>
+        </sc-for>
+      </div>
+    </sc-if>
+    <sc-if value="{{isMine}}" hint-placeholder-val="{{ false }}">
+      <div class="card tbox"><table class="dtable"><thead><tr><th>Design</th><th>Your quote</th><th>Times offered</th><th>Status</th></tr></thead><tbody>
+        <tr data-for="{{mine}}" data-as="r"><td><span class="row" style="gap: 12px"><span class="ph" style="width: 48px; height: 48px; border-radius: 10px"><img src="{{r.img}}" alt=""></span><span class="strong">{{r.title}}</span></span></td><td class="price">₱{{r.price}}</td><td>{{r.slots}}</td><td><span class="pill {{r.pill}}">{{r.status}}</span></td></tr>
+      </tbody></table></div>
+    </sc-if>
+  </div>
+</div>
+</template>
+<div id="dc-root"></div>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1100}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { tab: 0 }; }
+  renderVals() {
+    const B = './assets/';
+    const t = this.state.tab;
+    const KU = window.KU;
+    const offer = KU ? KU.get('offer', null) : null;
+    const bk = KU ? KU.booking() : null;
+    const mine = [
+      { title: 'Classic French', img: B + 'n3-classic-french.svg', price: 350, slots: '2 times offered', status: 'Waiting', pill: 'wait' },
+      { title: 'Gold leaf nude', img: B + 'n2-gold-leaf.svg', price: 420, slots: 'Booked Sat 10:00 AM', status: 'Chosen', pill: 'ok' }
+    ];
+    if (offer) {
+      const chosen = bk && bk.source === 'design';
+      const me = chosen && bk.tech === 'viper';
+      mine.unshift({ title: 'Noir and gold', img: B + 'n7-noir-gold.svg', price: offer.price, slots: me ? 'Booked ' + bk.when : offer.slots.join(', '),
+        status: me ? 'Chosen' : (chosen ? 'Not chosen' : 'Waiting'), pill: me ? 'ok' : (chosen ? 'bad' : 'wait') });
+    }
+    return {
+      tabs: ['Open · 3', 'My offers · ' + mine.length].map((name, i) => ({ name, cls: t === i ? 'on' : '', pick: () => this.setState({ tab: i }) })),
+      isOpen: t === 0, isMine: t === 1, mine,
+      open: [
+        { title: 'Noir and gold', img: B + 'n7-noir-gold.svg', detail: 'Gel extensions · Almond, medium', when: 'This weekend', mode: 'Walk-in', km: '1.4 km', budget: '₱400–600', offers: (offer ? 'You offered ₱' + offer.price : '3 offers so far'), posted: '25 min ago', tag: offer ? 'Offered' : 'New', pill: offer ? 'ok' : 'wait' },
+        { title: 'Milky dots', img: B + 'n4-milky-dots.svg', detail: 'Gel manicure · Oval, short', when: 'Next week', mode: 'Home service', km: '2.8 km', budget: 'Up to ₱400', offers: '1 offer so far', posted: '1 hr ago', tag: 'Home', pill: 'info' },
+        { title: 'Autumn florals', img: B + 'n5-autumn-florals.svg', detail: 'Acrylic · Coffin, long', when: 'Sat, Nov 7', mode: 'Walk-in', km: '3.5 km', budget: '₱600+', offers: 'No offers yet', posted: '2 hr ago', tag: 'Open', pill: 'ok' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>
