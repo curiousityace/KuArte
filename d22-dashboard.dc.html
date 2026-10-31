@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#5E1720">
+<link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+<title>KuArte for techs · Bookings (desktop)</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./kuarte.css">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Marcellus&amp;family=Playfair+Display:wght@600;700&amp;display=swap" rel="stylesheet">
+<style>body{margin:0}a{color:inherit}a:hover{color:inherit}</style>
+<link rel="stylesheet" href="./site.css">
+</head>
+<body>
+<template id="dc-tpl">
+<div class="dpage">
+  <header class="dhead"><div class="in">
+    <a class="wm" href="d22-dashboard.dc.html">KUARTE</a><span class="badge">For nail techs</span>
+    <nav class="dnav grow" aria-label="Tech"><a class="on" href="d22-dashboard.dc.html">Bookings</a><a href="d21-request.dc.html">Requests</a><a href="d19-camera.dc.html">Portfolio</a><a href="d20-availability.dc.html">Availability</a><a href="d24-insights.dc.html">Insights</a></nav>
+    <span class="av s">VC</span>
+  </div></header>
+  <div class="dwrap">
+    <div class="col" style="gap: 4px"><h1 class="dtitle">Good afternoon, Viper</h1><p class="sm">Wednesday, Nov 4</p></div>
+    <div class="dgrid" style="gap: 16px">
+      <div class="card pad"><span class="cap">Today</span><p style="font: 700 28px/1.2 'DM Sans', system-ui, sans-serif; margin-top: 4px">4 bookings</p></div>
+      <div class="card pad"><span class="cap">To answer</span><p style="font: 700 28px/1.2 'DM Sans', system-ui, sans-serif; margin-top: 4px; color: #8A5212">1 request</p></div>
+      <div class="card pad"><span class="cap">Payout pending</span><p style="font: 700 28px/1.2 'DM Sans', system-ui, sans-serif; margin-top: 4px">₱405</p></div>
+      <div class="card pad"><span class="cap">Rating</span><p style="font: 700 28px/1.2 'DM Sans', system-ui, sans-serif; margin-top: 4px">4.9 <span class="cap">(38)</span></p></div>
+    </div>
+    <a href="d21-request.dc.html" class="row" style="gap: 12px; padding: 14px 18px; border-radius: 16px; background: #FBEFD9; text-decoration: none">
+      <svg class="i" viewBox="0 0 24 24" aria-hidden="true" style="color: #8A5212"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+      <span class="sm grow" style="color: #5A3A0E"><b>Maria S.</b> requested Wed, Nov 4 at 2:30 PM for gel extensions + chrome. Reply in 3 hr 52 min.</span>
+      <span class="btn sm bp">Review request</span>
+    </a>
+    <div class="col" style="gap: 12px">
+      <div class="seg" style="max-width: 420px"><sc-for list="{{tabs}}" as="t" hint-placeholder-count="3"><button class="{{t.cls}}" onClick="{{t.pick}}">{{t.name}}</button></sc-for></div>
+      <div class="card tbox">
+        <table class="dtable">
+          <thead><tr><th>When</th><th>Customer</th><th>Service</th><th>Where</th><th>Payment</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr data-for="{{rows}}" data-as="b"><td class="strong">{{b.when}}</td><td><a href="{{b.href}}" class="row" style="gap: 10px; text-decoration: none"><span class="av s {{b.av}}">{{b.ini}}</span><span class="strong">{{b.name}}</span></a></td><td>{{b.svc}}</td><td>{{b.where}}</td><td>{{b.pay}}</td><td><span class="pill {{b.pill}}">{{b.status}}</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+</template>
+<div id="dc-root"></div>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1100}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { tab: 0 }; }
+  renderVals() {
+    const T = ['Today', 'Upcoming', 'Past'];
+    const D = [
+      [
+        { when: '10:00 – 11:30 AM', name: 'Aria M.', ini: 'AM', av: 'b', svc: 'Gel extensions', where: 'Walk-in', pay: 'Paid · ₱450', status: 'Completed', pill: 'ok', href: 'd23-complete.dc.html' },
+        { when: '1:00 – 3:00 PM', name: 'Nicole S.', ini: 'NS', av: 'c', svc: 'Acrylic set + art', where: 'Walk-in', pay: 'Deposit ₱150', status: 'Checked in', pill: 'info', href: 'd23-complete.dc.html' },
+        { when: '3:15 – 4:15 PM', name: 'Ruby Y.', ini: 'RY', av: 'd', svc: 'Gel manicure', where: 'Walk-in', pay: 'Deposit ₱150', status: 'Upcoming', pill: 'info', href: 'd23-complete.dc.html' },
+        { when: '5:30 – 7:00 PM', name: 'Jessa R.', ini: 'JR', av: 'e', svc: 'Nail art', where: 'Home · New Visayas', pay: 'No deposit', status: 'Upcoming', pill: 'wait', href: 'd23-complete.dc.html' }
+      ],
+      [
+        { when: 'Thu, Nov 5 · 10:00 AM', name: 'Lea D.', ini: 'LD', av: 'b', svc: 'Gel extensions', where: 'Walk-in', pay: 'Deposit ₱150', status: 'Confirmed', pill: 'ok', href: 'd21-request.dc.html' },
+        { when: 'Fri, Nov 6 · 2:00 PM', name: 'Carla P.', ini: 'CP', av: 'c', svc: 'Acrylic set', where: 'Home · Gredu', pay: 'Deposit ₱150', status: 'Confirmed', pill: 'ok', href: 'd21-request.dc.html' }
+      ],
+      [
+        { when: 'Tue, Nov 3 · 4:00 PM', name: 'Joy T.', ini: 'JT', av: 'd', svc: 'Gel manicure', where: 'Walk-in', pay: 'Paid · ₱350', status: 'Reviewed 5.0', pill: 'ok', href: 'd24-insights.dc.html' },
+        { when: 'Mon, Nov 2 · 11:00 AM', name: 'Ana B.', ini: 'AB', av: 'e', svc: 'Nail art', where: 'Walk-in', pay: 'Refunded', status: 'Cancelled by customer', pill: 'bad', href: 'd24-insights.dc.html' }
+      ]
+    ];
+    return {
+      tabs: T.map((n, i) => ({ name: n, cls: this.state.tab === i ? 'on' : '', pick: () => this.setState({ tab: i }) })),
+      rows: D[this.state.tab]
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#5E1720">
+<link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+<title>KuArte · Your details</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./kuarte.css">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Marcellus&amp;family=Playfair+Display:wght@600;700&amp;display=swap" rel="stylesheet">
+<style>body{margin:0}a{color:inherit}a:hover{color:inherit}</style>
+<link rel="stylesheet" href="./site.css">
+</head>
+<body>
+<template id="dc-tpl">
+<div class="scr">
+  <div class="top" style="padding-bottom: 8px">
+    <a class="ib" href="m09-book-time.dc.html" aria-label="Back"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></a>
+    <div class="col grow" style="gap: 0"><h1 class="h1">Your details</h1><span class="cap">Booking as a guest</span></div>
+  </div>
+  <div style="padding: 0 20px 12px; flex: none" class="col">
+    <div class="steps"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div>
+    <span class="cap">Step 3 of 4 · Details</span>
+  </div>
+  <div class="scroll" style="gap: 16px; padding-top: 2px">
+    <div class="tint row between" style="padding: 12px 14px">
+      <span class="sm">Have an account? Your details fill in.</span>
+      <a class="lnk" href="#">Sign in</a>
+    </div>
+    <div class="field"><label for="g-name">Name</label><input id="g-name" class="inp" value="Maria Santos"></div>
+    <div class="field">
+      <label for="g-phone">Mobile number</label>
+      <div class="row" style="gap: 8px"><span class="inp" style="width: 76px; justify-content: center; font-weight: 600">+63</span><input id="g-phone" class="inp" value="917 555 0142"></div>
+      <span class="cap">We text your code, confirmation and reminders here.</span>
+    </div>
+    <div class="field">
+      <span class="flabel">Enter the 6-digit code</span>
+      <div class="otp" role="group" aria-label="Verification code"><span>4</span><span>8</span><span>2</span><span class="on">0</span><span></span><span></span></div>
+      <span class="cap">Resend code in 0:42</span>
+    </div>
+    <div class="card pad" style="display: flex; flex-direction: column; gap: 10px">
+      <div class="row" style="gap: 8px"><svg class="i s wine" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg><span class="sm strong">Viper's cancellation policy: Moderate</span></div>
+      <p class="sm">Free to cancel up to 24 hours before. After that you get 50% of your deposit back. If the tech cancels or doesn't show, you get it all back.</p>
+      <label class="row" style="gap: 10px; cursor: pointer"><span class="check on"><svg class="i xs" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width: 3"><path d="m5 12 5 5L20 7"/></svg></span><span class="sm" style="color: #22161A">I agree to this policy</span></label>
+    </div>
+  </div>
+  <div class="foot">
+    <a class="btn bp full" href="m11-deposit.dc.html">Continue to deposit</a>
+  </div>
+</div>
+</template>
+<div id="dc-root"></div>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

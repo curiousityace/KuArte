@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#5E1720">
+<link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+<title>KuArte for techs · Insights (desktop)</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./kuarte.css">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Marcellus&amp;family=Playfair+Display:wght@600;700&amp;display=swap" rel="stylesheet">
+<style>body{margin:0}a{color:inherit}a:hover{color:inherit}</style>
+<link rel="stylesheet" href="./site.css">
+</head>
+<body>
+<template id="dc-tpl">
+<div class="dpage">
+  <header class="dhead"><div class="in">
+    <a class="wm" href="d22-dashboard.dc.html">KUARTE</a><span class="badge">For nail techs</span>
+    <nav class="dnav grow" aria-label="Tech"><a href="d22-dashboard.dc.html">Bookings</a><a href="d21-request.dc.html">Requests</a><a href="d19-camera.dc.html">Portfolio</a><a href="d20-availability.dc.html">Availability</a><a class="on" href="d24-insights.dc.html">Insights</a></nav>
+    <span class="av s">VC</span>
+  </div></header>
+  <div class="dwrap">
+    <div class="row between" style="flex-wrap: wrap; gap: 12px"><div class="col" style="gap: 4px"><h1 class="dtitle">Insights</h1><p class="sm">October 2026 · sample data for the prototype</p></div><div class="seg" style="width: 320px"><span>Week</span><span class="on">Month</span><span>Year</span></div></div>
+    <div class="dgrid" style="gap: 16px">
+      <div class="card pad"><span class="cap">Profile views</span><p style="font: 700 30px/1.2 'DM Sans', system-ui, sans-serif; margin-top: 4px">1,240</p></div>
+      <div class="card pad"><span class="cap">Bookings</span><p style="font: 700 30px/1.2 'DM Sans', system-ui, sans-serif; margin-top: 4px">46</p></div>
+      <div class="card pad"><span class="cap">Booked again</span><p style="font: 700 30px/1.2 'DM Sans', system-ui, sans-serif; margin-top: 4px">38%</p></div>
+      <div class="card pad"><span class="cap">Matched reference</span><p style="font: 700 30px/1.2 'DM Sans', system-ui, sans-serif; margin-top: 4px">92%</p></div>
+    </div>
+    <div class="dsplit">
+      <div class="dmain">
+        <div class="card pad-l" style="display: flex; flex-direction: column; gap: 14px">
+          <div class="row between"><h2 class="h2">Bookings per week</h2><span class="cap">Last 6 weeks</span></div>
+          <div class="spark" style="height: 220px; gap: 16px" role="img" aria-label="Bookings per week: 6, 8, 7, 10, 11, 13">
+            <i style="height: 46%"></i><i style="height: 62%"></i><i style="height: 54%"></i><i style="height: 77%"></i><i style="height: 85%"></i><i class="on" style="height: 100%"></i>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 16px; text-align: center" class="cap"><span>Sep 22 · 6</span><span>Sep 29 · 8</span><span>Oct 6 · 7</span><span>Oct 13 · 10</span><span>Oct 20 · 11</span><span class="strong">Oct 27 · 13</span></div>
+        </div>
+        <div class="card pad-l" style="display: flex; flex-direction: column; gap: 12px">
+          <h2 class="h2">Badges</h2>
+          <div class="dgrid l" style="gap: 12px">
+            <div class="row" style="gap: 10px"><span class="badge gold">Top Rated</span><span class="cap">4.7+ across 25+ reviews</span></div>
+            <div class="row" style="gap: 10px"><span class="badge">Verified Work</span><span class="cap">10+ Verified photos</span></div>
+            <div class="row" style="gap: 10px"><span class="badge">Reliable</span><span class="cap">No tech no-shows in 20+ bookings</span></div>
+            <div class="row" style="gap: 10px"><span class="badge">Repeat Favorite</span><span class="cap">30%+ customers book again</span></div>
+          </div>
+        </div>
+      </div>
+      <aside class="dside">
+        <div style="padding: 24px; border-radius: 20px; background: #3B0D13; color: #FFFFFF; display: flex; flex-direction: column; gap: 12px">
+          <div class="row" style="gap: 8px"><svg class="i s" viewBox="0 0 24 24" aria-hidden="true" style="color: #E7C27A"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg><span class="lbl" style="color: #E7C27A">Boost</span></div>
+          <p style="font: 600 22px/1.25 'Playfair Display', serif">Show up first in Panabo searches for 3 days</p>
+          <p class="sm" style="color: #E9D3D5">Boosted spots are labeled Sponsored. Your rating and reviews still show as-is.</p>
+          <div class="seg" style="background: rgba(255,255,255,.1)"><span class="on">3 days</span><span style="color: #E9D3D5">7 days</span></div>
+          <button class="btn bgold">Boost for [BOOST PRICE]</button>
+        </div>
+        <div class="card pad" style="display: flex; flex-direction: column; gap: 6px">
+          <span class="sm strong">October payouts</span>
+          <div class="row between sm"><span>Deposits released</span><span>₱5,850</span></div>
+          <div class="row between sm"><span>Commission</span><span>₱0 · first month free</span></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</div>
+</template>
+<div id="dc-root"></div>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1100}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

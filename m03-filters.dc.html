@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#5E1720">
+<link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+<title>KuArte · Filters</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./kuarte.css">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Marcellus&amp;family=Playfair+Display:wght@600;700&amp;display=swap" rel="stylesheet">
+<style>body{margin:0}a{color:inherit}a:hover{color:inherit}</style>
+<link rel="stylesheet" href="./site.css">
+</head>
+<body>
+<template id="dc-tpl">
+<div class="scr" style="background: #E9D3D5">
+  <div class="scrim"></div>
+  <div class="sheet" style="top: 64px">
+    <div class="grab"></div>
+    <div class="row between" style="padding: 8px 20px 12px">
+      <h1 class="h1">Filters</h1>
+      <a class="ib" href="m02-search.dc.html" aria-label="Close"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></a>
+    </div>
+    <div class="scroll" style="gap: 22px; padding-top: 4px">
+      <div class="col" style="gap: 10px">
+        <span class="lbl">Sort by</span>
+        <div class="wrap-row">
+          <button class="chip {{s0}}" onClick="{{sortNear}}">Nearest</button>
+          <button class="chip {{s1}}" onClick="{{sortRate}}">Top rated</button>
+          <button class="chip {{s2}}" onClick="{{sortPrice}}">Lowest price</button>
+          <button class="chip {{s3}}" onClick="{{sortSoon}}">Soonest available</button>
+        </div>
+      </div>
+      <div class="col" style="gap: 10px">
+        <span class="lbl">Service</span>
+        <div class="wrap-row">
+          <span class="chip">Manicure</span><span class="chip on">Gel extensions</span><span class="chip">Acrylic</span><span class="chip">Nail art</span><span class="chip">Pedicure</span><span class="chip">Removal</span>
+        </div>
+      </div>
+      <div class="col" style="gap: 10px">
+        <span class="lbl">Where</span>
+        <div class="seg"><span class="on">Any</span><span>Walk-in</span><span>Home service</span></div>
+      </div>
+      <div class="col" style="gap: 12px">
+        <div class="row between"><span class="lbl">Starting price</span><span class="sm strong">₱200 – ₱800</span></div>
+        <div style="position: relative; height: 24px">
+          <div style="position: absolute; left: 0; right: 0; top: 10px; height: 4px; border-radius: 2px; background: #E9D3D5"></div>
+          <div style="position: absolute; left: 10%; right: 30%; top: 10px; height: 4px; border-radius: 2px; background: #5E1720"></div>
+          <span style="position: absolute; left: calc(10% - 12px); top: 0; width: 24px; height: 24px; border-radius: 12px; background: #FFFFFF; border: 2px solid #5E1720"></span>
+          <span style="position: absolute; left: calc(70% - 12px); top: 0; width: 24px; height: 24px; border-radius: 12px; background: #FFFFFF; border: 2px solid #5E1720"></span>
+        </div>
+      </div>
+      <div class="col" style="gap: 10px">
+        <span class="lbl">Availability</span>
+        <div class="wrap-row"><span class="chip on">Today</span><span class="chip">Tomorrow</span><span class="chip">This week</span><span class="chip">Pick a date</span></div>
+      </div>
+      <div class="col" style="gap: 0">
+        <div class="row between" style="padding: 12px 0"><div class="col" style="gap: 2px"><span class="ttl" style="font-size: 15px">Rated 4.5 and up</span><span class="cap">Only techs with 10+ reviews</span></div><span class="tog on"></span></div>
+        <div class="hr"></div>
+        <div class="row between" style="padding: 12px 0"><div class="col" style="gap: 2px"><span class="ttl" style="font-size: 15px">Takes deposits</span><span class="cap">Refund protection if the tech no-shows</span></div><span class="tog"></span></div>
+      </div>
+    </div>
+    <div class="foot" style="flex-direction: row">
+      <button class="btn bg" style="flex: 1">Clear all</button>
+      <a class="btn bp" href="m02-search.dc.html" style="flex: 2">Show 12 techs</a>
+    </div>
+  </div>
+</div>
+</template>
+<div id="dc-root"></div>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { sort: 0 }; }
+  renderVals() {
+    const s = this.state.sort;
+    const on = (i) => (s === i ? 'on' : '');
+    return {
+      s0: on(0), s1: on(1), s2: on(2), s3: on(3),
+      sortNear: () => this.setState({ sort: 0 }),
+      sortRate: () => this.setState({ sort: 1 }),
+      sortPrice: () => this.setState({ sort: 2 }),
+      sortSoon: () => this.setState({ sort: 3 })
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#5E1720">
+<link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+<title>KuArte for techs · Availability (desktop)</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./kuarte.css">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Marcellus&amp;family=Playfair+Display:wght@600;700&amp;display=swap" rel="stylesheet">
+<style>body{margin:0}a{color:inherit}a:hover{color:inherit}</style>
+<link rel="stylesheet" href="./site.css">
+</head>
+<body>
+<template id="dc-tpl">
+<div class="dpage">
+  <header class="dhead"><div class="in">
+    <a class="wm" href="d22-dashboard.dc.html">KUARTE</a><span class="badge">For nail techs</span>
+    <nav class="dnav grow" aria-label="Tech"><a href="d22-dashboard.dc.html">Bookings</a><a href="d21-request.dc.html">Requests</a><a href="d19-camera.dc.html">Portfolio</a><a class="on" href="d20-availability.dc.html">Availability</a><a href="d24-insights.dc.html">Insights</a></nav>
+    <span class="av s">VC</span>
+  </div></header>
+  <div class="dwrap">
+    <div class="row between" style="flex-wrap: wrap; gap: 16px"><div class="col" style="gap: 4px"><h1 class="dtitle">Availability</h1><p class="sm">Customers only see start times that fit the service they pick.</p></div><a class="btn bp" href="d22-dashboard.dc.html">Save and go live</a></div>
+    <div class="dsplit">
+      <div class="dside" style="flex: 1 1 340px; max-width: 420px">
+        <div class="card" style="padding: 6px 20px">
+          <sc-for list="{{days}}" as="d" hint-placeholder-count="7">
+            <div class="row" style="gap: 14px; padding: 12px 0; border-bottom: {{d.border}}">
+              <button class="tog {{d.cls}}" onClick="{{d.toggle}}" aria-label="{{d.aria}}" style="border: 0; cursor: pointer"></button>
+              <span class="sm strong" style="width: 90px">{{d.name}}</span>
+              <span class="sm grow" style="text-align: right; color: {{d.col}}">{{d.hours}}</span>
+            </div>
+          </sc-for>
+        </div>
+        <div class="col" style="gap: 8px"><span class="lbl">Break between appointments</span><div class="seg"><span>None</span><span class="on">15 min</span><span>30 min</span></div></div>
+        <div class="col" style="gap: 8px"><span class="lbl">Blocked dates</span><div class="wrap-row"><span class="chip">Nov 12 · Personal</span><span class="chip">Dec 24–25 · Holiday</span><button class="chip" style="border-style: dashed; color: #5E1720">+ Block a date</button></div></div>
+      </div>
+      <div class="dmain">
+        <div class="card pad-l" style="display: flex; flex-direction: column; gap: 14px">
+          <div class="row between"><h2 class="h2">This week</h2><span class="cap">Nov 2 – 8</span></div>
+          <div class="tbox"><div style="display: grid; grid-template-columns: repeat(7, minmax(96px, 1fr)); gap: 8px; min-width: 700px">
+            <sc-for list="{{week}}" as="w" hint-placeholder-count="7">
+              <div class="col" style="gap: 6px">
+                <span class="cap strong" style="text-align: center; color: #22161A">{{w.label}}</span>
+                <div class="col" style="gap: 6px; min-height: 320px; padding: 8px; border-radius: 12px; background: {{w.bg}}">
+                  <sc-for list="{{w.items}}" as="it" hint-placeholder-count="2">
+                    <div style="padding: 8px; border-radius: 8px; background: {{it.bg}}; color: {{it.fg}}; font-size: 11px; line-height: 1.35"><b>{{it.t}}</b><br>{{it.who}}</div>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-for>
+          </div></div>
+          <div class="row" style="gap: 16px"><span class="row cap" style="gap: 6px"><span style="width: 10px; height: 10px; border-radius: 3px; background: #5E1720"></span>Booked</span><span class="row cap" style="gap: 6px"><span style="width: 10px; height: 10px; border-radius: 3px; background: #FBEFD9"></span>Waiting on you</span><span class="row cap" style="gap: 6px"><span style="width: 10px; height: 10px; border-radius: 3px; background: #EADFE0"></span>Closed</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</template>
+<div id="dc-root"></div>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1100}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { open: [true, true, true, true, true, true, false] }; }
+  renderVals() {
+    const N = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    const H = ['9 AM – 8 PM', '9 AM – 8 PM', '9 AM – 8 PM', '9 AM – 8 PM', '9 AM – 8 PM', '8 AM – 6 PM', '9 AM – 5 PM'];
+    const o = this.state.open;
+    const bk = (t, who) => ({ t, who, bg: '#5E1720', fg: '#FFFFFF' });
+    const rq = (t, who) => ({ t, who, bg: '#FBEFD9', fg: '#5A3A0E' });
+    const items = [
+      [bk('10:00', 'Joy T.'), bk('2:00', 'Ana B.')],
+      [bk('1:00', 'Lea D.')],
+      [bk('10:00', 'Aria M.'), bk('1:00', 'Nicole S.'), rq('2:30', 'Maria S.'), bk('3:15', 'Ruby Y.'), bk('5:30', 'Jessa R.')],
+      [bk('10:00', 'Lea D.')],
+      [bk('2:00', 'Carla P.')],
+      [bk('9:00', 'Kat V.'), bk('11:30', 'Mia L.')],
+      []
+    ];
+    const lbl = ['Mon 2', 'Tue 3', 'Wed 4', 'Thu 5', 'Fri 6', 'Sat 7', 'Sun 8'];
+    return {
+      days: N.map((n, i) => ({ name: n, cls: o[i] ? 'on' : '', aria: n + (o[i] ? ' open' : ' closed'), hours: o[i] ? H[i] : 'Closed', col: o[i] ? '#22161A' : '#6B5A5E', border: i < 6 ? '1px solid #EADFE0' : '0', toggle: () => { const c = o.slice(); c[i] = !c[i]; this.setState({ open: c }); } })),
+      week: lbl.map((l, i) => ({ label: l, bg: o[i] ? '#FCF8F7' : '#EADFE0', items: o[i] ? items[i] : [] }))
+    };
+  }
+}
+</script>
+</body>
+</html>

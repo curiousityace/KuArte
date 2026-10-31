@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#5E1720">
+<link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+<title>KuArte · Design detail</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./kuarte.css">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Marcellus&amp;family=Playfair+Display:wght@600;700&amp;display=swap" rel="stylesheet">
+<style>body{margin:0}a{color:inherit}a:hover{color:inherit}</style>
+<link rel="stylesheet" href="./site.css">
+</head>
+<body>
+<template id="dc-tpl">
+<div class="scr">
+  <div class="ph" style="height: 380px; border-radius: 0">
+    <img src="./assets/n1-burgundy-chrome.svg" alt="Burgundy chrome almond nails, close-up">
+    <a class="ib" href="m04-designs.dc.html" aria-label="Back" style="position: absolute; left: 20px; top: 20px; border: 0"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></a>
+    <button class="ib" aria-label="Save design" style="position: absolute; right: 20px; top: 20px; border: 0"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg></button>
+    <span class="tagx" style="left: 20px; bottom: 16px">1 / 3</span>
+  </div>
+  <div class="scroll" style="padding-top: 18px; gap: 16px">
+    <div class="col" style="gap: 8px">
+      <span class="pill ok" style="align-self: flex-start"><svg class="i xs" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.3 1.9 3-.2.8 2.9 2.5 1.6-1.1 2.8 1.1 2.8-2.5 1.6-.8 2.9-3-.2L12 21.5l-2.3-1.9-3 .2-.8-2.9-2.5-1.6 1.1-2.8L3.4 9.7l2.5-1.6.8-2.9 3 .2z"/><path d="m8.5 12 2.4 2.4 4.6-4.8"/></svg>Verified · photo from a KuArte booking, Oct 12</span>
+      <h1 class="disp" style="font-size: 26px">Burgundy chrome</h1>
+      <div class="wrap-row" style="gap: 6px"><span class="badge">Almond</span><span class="badge">Chrome</span><span class="badge">Gel extensions</span><span class="badge">Long</span></div>
+    </div>
+    <a class="card" href="m06-profile.dc.html" style="display: flex; gap: 12px; padding: 12px; align-items: center; text-decoration: none">
+      <span class="av">VC</span>
+      <div class="col grow" style="gap: 2px"><span class="ttl" style="font-size: 15px">Viper Cullen Nail Studio</span><span class="cap">4.9 (38) · 1.2 km · Walk-in and home service</span></div>
+      <svg class="i s" viewBox="0 0 24 24" aria-hidden="true" style="color: #6B5A5E"><path d="m9 18 6-6-6-6"/></svg>
+    </a>
+    <div class="tint" style="padding: 14px 16px; display: flex; justify-content: space-between; align-items: center">
+      <div class="col" style="gap: 2px"><span class="sm strong">Gel extensions + chrome art</span><span class="cap">About 2 hours · final price set at your visit</span></div>
+      <span class="col" style="gap: 0; align-items: flex-end"><span class="cap">from</span><b class="price" style="font-size: 18px">₱450</b></span>
+    </div>
+  </div>
+  <div class="foot" style="flex-direction: row">
+    <a class="btn bs" href="m15-chat.dc.html" style="flex: 1"><svg class="i s" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg>Ask</a>
+    <a class="btn bp" href="m08-book-service.dc.html" style="flex: 2.2">Book this design</a>
+  </div>
+</div>
+</template>
+<div id="dc-root"></div>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

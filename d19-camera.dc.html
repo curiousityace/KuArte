@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#5E1720">
+<link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+<title>KuArte for techs · Portfolio (desktop)</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./kuarte.css">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Marcellus&amp;family=Playfair+Display:wght@600;700&amp;display=swap" rel="stylesheet">
+<style>body{margin:0}a{color:inherit}a:hover{color:inherit}</style>
+<link rel="stylesheet" href="./site.css">
+</head>
+<body>
+<template id="dc-tpl">
+<div class="dpage">
+  <header class="dhead"><div class="in">
+    <a class="wm" href="d22-dashboard.dc.html">KUARTE</a><span class="badge">For nail techs</span>
+    <nav class="dnav grow" aria-label="Tech"><a href="d22-dashboard.dc.html">Bookings</a><a href="d21-request.dc.html">Requests</a><a class="on" href="d19-camera.dc.html">Portfolio</a><a href="d20-availability.dc.html">Availability</a><a href="d24-insights.dc.html">Insights</a></nav>
+    <span class="av s">VC</span>
+  </div></header>
+  <div class="dwrap">
+    <div class="row between" style="flex-wrap: wrap; gap: 16px">
+      <div class="col" style="gap: 4px"><h1 class="dtitle">Portfolio</h1><p class="sm">12 photos · 10 Verified. Verified photos rank higher in the design feed.</p></div>
+      <div class="row" style="gap: 10px; flex-wrap: wrap">
+        <button class="btn bp"><svg class="i s" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>Take on phone · Verified</button>
+        <button class="btn bs"><svg class="i s" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m21 17-5-5-9 8"/></svg>Upload · Unverified</button>
+      </div>
+    </div>
+    <div class="dsplit">
+      <div class="dmain">
+        <div class="dgrid s" style="gap: 12px">
+          <sc-for list="{{photos}}" as="p" hint-placeholder-count="8">
+            <button onClick="{{p.pick}}" class="ph" style="height: 180px; border: 0; padding: 0; cursor: pointer; box-shadow: {{p.ring}}" aria-label="{{p.alt}}"><img src="{{p.img}}" alt=""><span class="ver"><svg class="i xs" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>Verified</span></button>
+          </sc-for>
+        </div>
+      </div>
+      <aside class="dside">
+        <div class="card pad-l" style="display: flex; flex-direction: column; gap: 14px">
+          <div class="ph" style="height: 220px"><img src="{{sel.img}}" alt="{{sel.alt}}"></div>
+          <div class="row between"><span class="ttl">{{sel.alt}}</span><span class="pill ok">Verified</span></div>
+          <span class="cap">Taken in KuArte · Gredu, Panabo · linked to {{sel.cust}}'s booking</span>
+          <div class="col" style="gap: 8px">
+            <span class="lbl">Style tags</span>
+            <div class="wrap-row"><sc-for list="{{tags}}" as="t" hint-placeholder-count="6"><button class="chip {{t.cls}}" onClick="{{t.toggle}}">{{t.name}}</button></sc-for></div>
+          </div>
+          <div class="field"><label for="d19-svc">Linked service</label><div id="d19-svc" class="inp">Gel extensions + chrome art</div></div>
+          <button class="btn bp full">Save changes</button>
+        </div>
+      </aside>
+    </div>
+  </div>
+</div>
+</template>
+<div id="dc-root"></div>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1100}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { sel: 0, on: { 'Chrome': true, 'Almond': true, 'Gel extensions': true } }; }
+  renderVals() {
+    const B = './assets/';
+    const P = [
+      { id: 'n1-burgundy-chrome.svg', alt: 'Burgundy chrome', cust: 'Maria S.' },
+      { id: 'n5-autumn-florals.svg', alt: 'Autumn florals', cust: 'Aria M.' },
+      { id: 'n2-gold-leaf.svg', alt: 'Gold leaf nude', cust: 'Jessa R.' },
+      { id: 'n7-noir-gold.svg', alt: 'Noir and gold', cust: 'Nicole S.' },
+      { id: 'n6-emerald-cateye.svg', alt: 'Emerald cat-eye', cust: 'Aria M.' },
+      { id: 'n8-pastel-mix.svg', alt: 'Pastel mix', cust: 'Ruby Y.' },
+      { id: 'n4-milky-dots.svg', alt: 'Milky dots', cust: 'Lea D.' },
+      { id: 'n3-classic-french.svg', alt: 'Classic French', cust: 'Joy T.' }
+    ];
+    const s = this.state.sel, on = this.state.on;
+    const names = ['Chrome', 'Almond', 'Long', 'Gel extensions', 'Dark', 'Minimal'];
+    return {
+      photos: P.map((p, i) => ({ img: B + p.id, alt: p.alt, ring: s === i ? '0 0 0 3px #5E1720' : 'none', pick: () => this.setState({ sel: i }) })),
+      sel: { img: B + P[s].id, alt: P[s].alt, cust: P[s].cust },
+      tags: names.map((n) => ({ name: n, cls: on[n] ? 'on' : '', toggle: () => this.setState({ on: { ...on, [n]: !on[n] } }) }))
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#5E1720">
+<link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+<title>KuArte · Deposit</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./kuarte.css">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Marcellus&amp;family=Playfair+Display:wght@600;700&amp;display=swap" rel="stylesheet">
+<style>body{margin:0}a{color:inherit}a:hover{color:inherit}</style>
+<link rel="stylesheet" href="./site.css">
+</head>
+<body>
+<template id="dc-tpl">
+<div class="scr">
+  <div class="top" style="padding-bottom: 8px">
+    <a class="ib" href="m10-guest.dc.html" aria-label="Back"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></a>
+    <div class="col grow" style="gap: 0"><h1 class="h1">Deposit</h1><span class="cap">Viper asks for a deposit to hold your slot</span></div>
+  </div>
+  <div style="padding: 0 20px 12px; flex: none" class="col">
+    <div class="steps"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div>
+    <span class="cap">Step 4 of 4 · Deposit</span>
+  </div>
+  <div class="scroll" style="gap: 16px; padding-top: 2px">
+    <div class="card" style="display: flex; gap: 12px; padding: 12px; align-items: center">
+      <div class="ph" style="width: 64px; height: 64px; border-radius: 12px"><img src="./assets/n1-burgundy-chrome.svg" alt="Burgundy chrome reference"></div>
+      <div class="col grow" style="gap: 2px">
+        <span class="sm strong">Gel extensions + chrome art</span>
+        <span class="cap">Viper Cullen · Walk-in, Gredu</span>
+        <span class="cap strong wine">Wed, Nov 4 · 2:30 PM</span>
+      </div>
+    </div>
+    <div class="card pad" style="display: flex; flex-direction: column; gap: 10px">
+      <div class="row between sm"><span>Estimated price</span><span>₱550</span></div>
+      <div class="row between sm"><span>First booking · KUARTE10</span><span style="color: #2F7A4E">−₱55</span></div>
+      <div class="hr"></div>
+      <div class="row between"><span class="sm strong">Deposit now</span><b class="price" style="font-size: 18px">₱150</b></div>
+      <div class="row between sm"><span>Pay at your visit</span><span>about ₱345</span></div>
+      <p class="cap">The tech sets the final price at your visit. Your deposit counts toward it.</p>
+    </div>
+    <div class="col" style="gap: 8px">
+      <span class="lbl">Pay with</span>
+      <sc-for list="{{methods}}" as="m" hint-placeholder-count="2">
+        <button class="opt {{m.cls}}" onClick="{{m.pick}}" style="width: 100%; text-align: left; font-family: 'DM Sans', system-ui, sans-serif">
+          <span class="radio {{m.cls}}"></span>
+          <span style="width: 40px; height: 40px; border-radius: 10px; background: {{m.tint}}; display: flex; align-items: center; justify-content: center; color: #FFFFFF; flex: none"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 10h18M16 15h2"/></svg></span>
+          <span class="col grow" style="gap: 1px"><span class="sm strong">{{m.name}}</span><span class="cap">{{m.note}}</span></span>
+        </button>
+      </sc-for>
+    </div>
+    <div class="row" style="gap: 10px; align-items: flex-start; padding: 0 2px">
+      <svg class="i s" viewBox="0 0 24 24" aria-hidden="true" style="color: #2F7A4E; margin-top: 1px"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="m9 12 2 2 4-4"/></svg>
+      <p class="cap">KuArte holds your deposit. It only goes to the tech after your appointment is done. If Viper declines or doesn't reply in 4 hours, it comes straight back.</p>
+    </div>
+  </div>
+  <div class="foot">
+    <a class="btn bp full" href="m12-status.dc.html"><svg class="i s" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Pay ₱150 and send request</a>
+  </div>
+</div>
+</template>
+<div id="dc-root"></div>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { m: 0 }; }
+  renderVals() {
+    const M = [
+      { name: 'GCash', note: 'Pay in the GCash app', tint: '#2F5FB3' },
+      { name: 'Maya', note: 'Pay in the Maya app', tint: '#2F7A4E' }
+    ];
+    return { methods: M.map((m, i) => ({ ...m, cls: this.state.m === i ? 'on' : '', pick: () => this.setState({ m: i }) })) };
+  }
+}
+</script>
+</body>
+</html>

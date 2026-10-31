@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#5E1720">
+<link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+<title>KuArte for techs · Complete booking (desktop)</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./kuarte.css">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Marcellus&amp;family=Playfair+Display:wght@600;700&amp;display=swap" rel="stylesheet">
+<style>body{margin:0}a{color:inherit}a:hover{color:inherit}</style>
+<link rel="stylesheet" href="./site.css">
+</head>
+<body>
+<template id="dc-tpl">
+<div class="dpage">
+  <header class="dhead"><div class="in">
+    <a class="wm" href="d22-dashboard.dc.html">KUARTE</a><span class="badge">For nail techs</span>
+    <nav class="dnav grow" aria-label="Tech"><a class="on" href="d22-dashboard.dc.html">Bookings</a><a href="d21-request.dc.html">Requests</a><a href="d19-camera.dc.html">Portfolio</a><a href="d20-availability.dc.html">Availability</a><a href="d24-insights.dc.html">Insights</a></nav>
+    <span class="av s">VC</span>
+  </div></header>
+  <div class="dwrap" style="max-width: 1120px">
+    <div class="col" style="gap: 6px">
+      <a class="lnk row" href="d22-dashboard.dc.html" style="gap: 4px"><svg class="i s" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>Today's bookings</a>
+      <h1 class="dtitle">Complete Nicole's booking</h1>
+      <p class="sm">Acrylic set + nail art · 1:00 – 3:00 PM · checked in 12:56 PM</p>
+    </div>
+    <div class="dsplit">
+      <div class="dmain" style="gap: 24px">
+        <div class="col" style="gap: 10px">
+          <span class="lbl">Final price</span>
+          <div class="card" style="display: flex; align-items: center; gap: 16px; padding: 14px 18px; max-width: 420px">
+            <button class="ib" onClick="{{minus}}" aria-label="Lower price by 50"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/></svg></button>
+            <span class="grow" style="text-align: center; font: 700 36px/1 'DM Sans', system-ui, sans-serif; color: #5E1720">₱{{price}}</span>
+            <button class="ib" onClick="{{plus}}" aria-label="Raise price by 50"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+          </div>
+          <span class="cap">Listed from ₱500 + ₱100 art. {{flag}}</span>
+        </div>
+        <div class="col" style="gap: 10px">
+          <span class="lbl">Result photo</span>
+          <div class="row" style="gap: 14px; flex-wrap: wrap">
+            <div class="ph" style="width: 180px; height: 180px; border-radius: 16px"><img src="./assets/n7-noir-gold.svg" alt="Result: black nails with gold lines"><span class="ver"><svg class="i xs" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>Verified</span></div>
+            <div style="width: 180px; height: 180px; border-radius: 16px; border: 1.5px dashed #C9A2A6; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; color: #5E1720; font-size: 13px; font-weight: 600; text-align: center; padding: 12px"><svg class="i l" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>Take another on your phone</div>
+          </div>
+          <span class="cap">Photos taken in KuArte during this booking are Verified. Nicole decides if they go on your public portfolio.</span>
+        </div>
+      </div>
+      <aside class="dside">
+        <div class="card pad-l shadow" style="display: flex; flex-direction: column; gap: 12px">
+          <div class="row" style="gap: 12px"><span class="av c">NS</span><div class="col" style="gap: 0"><span class="sm strong">Nicole S.</span><span class="cap">Walk-in · booked on KuArte</span></div></div>
+          <div class="hr"></div>
+          <div class="row between sm"><span>Final price</span><span class="strong">₱{{price}}</span></div>
+          <div class="row between sm"><span>Deposit already paid</span><span>−₱150</span></div>
+          <div class="row between"><span class="sm strong">Collect from Nicole now</span><b class="price" style="font-size: 20px">₱{{collect}}</b></div>
+          <div class="hr"></div>
+          <div class="row between sm"><span>KuArte commission (10%)</span><span>−₱{{fee}}</span></div>
+          <div class="row between sm"><span>Deposit released to your GCash</span><span class="strong">₱{{payout}}</span></div>
+          <a class="btn bp full" href="d22-dashboard.dc.html">Send to Nicole to confirm</a>
+          <p class="cap" style="text-align: center">She confirms the price, then gets asked for a review</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</div>
+</template>
+<div id="dc-root"></div>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1100}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { price: 650 }; }
+  renderVals() {
+    const p = this.state.price, fee = Math.round(p * 0.1);
+    return {
+      price: p, collect: p - 150, fee, payout: 150 - fee,
+      flag: p > 750 ? 'Over 25% above listed: Nicole sees a note when she confirms.' : 'Within the normal range.',
+      minus: () => this.setState({ price: Math.max(500, p - 50) }),
+      plus: () => this.setState({ price: Math.min(1000, p + 50) })
+    };
+  }
+}
+</script>
+</body>
+</html>

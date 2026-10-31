@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#5E1720">
+<link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+<title>KuArte · Your details (desktop)</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./kuarte.css">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Marcellus&amp;family=Playfair+Display:wght@600;700&amp;display=swap" rel="stylesheet">
+<style>body{margin:0}a{color:inherit}a:hover{color:inherit}</style>
+<link rel="stylesheet" href="./site.css">
+</head>
+<body>
+<template id="dc-tpl">
+<div class="dpage">
+  <header class="dhead"><div class="in">
+    <a class="wm" href="d01-home.dc.html">KUARTE</a>
+    <span class="grow"></span>
+    <span class="row cap" style="gap: 6px"><svg class="i s" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Secure booking</span>
+    <a class="lnk" href="d06-profile.dc.html">Exit</a>
+  </div></header>
+  <div class="dwrap" style="gap: 28px; max-width: 1120px">
+    <div class="col" style="gap: 12px">
+      <a class="lnk row" href="d09-book-time.dc.html" style="gap: 4px"><svg class="i s" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>Back to date and time</a>
+      <h1 class="dtitle">Your details</h1>
+      <div class="wrap-row" style="gap: 8px 24px">
+        <span class="row sm" style="gap: 8px"><span class="av s" style="width: 26px; height: 26px"><svg class="i xs" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width: 3"><path d="m5 12 5 5L20 7"/></svg></span>Service</span>
+        <span class="row sm" style="gap: 8px"><span class="av s" style="width: 26px; height: 26px"><svg class="i xs" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width: 3"><path d="m5 12 5 5L20 7"/></svg></span>Date and time</span>
+        <span class="row sm strong wine" style="gap: 8px"><span class="av s" style="width: 26px; height: 26px; font-size: 12px">3</span>Your details</span>
+        <span class="row sm" style="gap: 8px"><span class="av s" style="width: 26px; height: 26px; font-size: 12px; background: #E9D3D5; color: #5E1720">4</span>Deposit</span>
+      </div>
+    </div>
+    <div class="dsplit">
+      <div class="dmain" style="gap: 20px; max-width: 640px">
+        <div class="tint row between" style="padding: 14px 18px; flex-wrap: wrap; gap: 8px"><span class="sm">Booking as a guest. Have an account? Your details fill in.</span><a class="lnk" href="#">Sign in</a></div>
+        <div class="dgrid l" style="gap: 16px">
+          <div class="field"><label for="dg-name">Name</label><input id="dg-name" class="inp" value="Maria Santos"></div>
+          <div class="field"><label for="dg-phone">Mobile number</label><div class="row" style="gap: 8px"><span class="inp" style="width: 76px; justify-content: center; font-weight: 600">+63</span><input id="dg-phone" class="inp" value="917 555 0142"></div></div>
+        </div>
+        <div class="field">
+          <span class="flabel">Enter the 6-digit code we texted you</span>
+          <div class="otp" role="group" aria-label="Verification code"><span>4</span><span>8</span><span>2</span><span class="on">0</span><span></span><span></span></div>
+          <span class="cap">Resend code in 0:42 · We also text your confirmation and reminders here</span>
+        </div>
+        <div class="field"><label for="dg-note">Note for Viper (optional)</label><textarea id="dg-note" class="inp">Same length as the photo please. A little darker chrome if possible.</textarea></div>
+        <div class="card pad" style="display: flex; flex-direction: column; gap: 10px">
+          <div class="row" style="gap: 8px"><svg class="i s wine" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg><span class="sm strong">Viper's cancellation policy: Moderate</span></div>
+          <p class="sm">Free to cancel up to 24 hours before. After that you get 50% of your deposit back. If the tech cancels or doesn't show, you get it all back.</p>
+          <label class="row" style="gap: 10px; cursor: pointer"><span class="check on"><svg class="i xs" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width: 3"><path d="m5 12 5 5L20 7"/></svg></span><span class="sm" style="color: #22161A">I agree to this policy</span></label>
+        </div>
+      </div>
+      <aside class="dside">
+        <div class="card pad-l shadow" style="display: flex; flex-direction: column; gap: 14px">
+          <div class="row" style="gap: 12px"><div class="ph" style="width: 56px; height: 56px; border-radius: 12px"><img src="./assets/n1-burgundy-chrome.svg" alt=""></div><div class="col" style="gap: 0"><span class="sm strong">Gel extensions + chrome art</span><span class="cap">Viper Cullen · Walk-in</span></div></div>
+          <div class="hr"></div>
+          <div class="row between sm"><span>When</span><span class="strong">Wed, Nov 4 · 2:30 PM</span></div>
+          <div class="row between sm"><span>Starts at</span><b class="price">₱550</b></div>
+          <a class="btn bp full" href="d11-deposit.dc.html">Continue to deposit</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</div>
+</template>
+<div id="dc-root"></div>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1100}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

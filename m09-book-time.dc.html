@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#5E1720">
+<link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+<title>KuArte · Book: date and time</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./kuarte.css">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Marcellus&amp;family=Playfair+Display:wght@600;700&amp;display=swap" rel="stylesheet">
+<style>body{margin:0}a{color:inherit}a:hover{color:inherit}</style>
+<link rel="stylesheet" href="./site.css">
+</head>
+<body>
+<template id="dc-tpl">
+<div class="scr">
+  <div class="top" style="padding-bottom: 8px">
+    <a class="ib" href="m08-book-service.dc.html" aria-label="Back"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></a>
+    <div class="col grow" style="gap: 0"><h1 class="h1">Pick a time</h1><span class="cap">Gel extensions + chrome art · about 2 hr</span></div>
+  </div>
+  <div style="padding: 0 20px 12px; flex: none" class="col">
+    <div class="steps"><i class="on"></i><i class="on"></i><i></i><i></i></div>
+    <span class="cap">Step 2 of 4 · Date and time</span>
+  </div>
+  <div class="scroll" style="gap: 16px; padding-top: 2px">
+    <div class="card" style="padding: 14px">
+      <div class="row between" style="padding: 0 4px 10px">
+        <button class="ib" aria-label="Previous month" style="width: 36px; height: 36px"><svg class="i s" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+        <span class="ttl">November 2026</span>
+        <button class="ib" aria-label="Next month" style="width: 36px; height: 36px"><svg class="i s" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
+      </div>
+      <div class="cal">
+        <span class="dow">Mo</span><span class="dow">Tu</span><span class="dow">We</span><span class="dow">Th</span><span class="dow">Fr</span><span class="dow">Sa</span><span class="dow">Su</span>
+        <sc-for list="{{days}}" as="d" hint-placeholder-count="35">
+          <button class="d {{d.cls}}" onClick="{{d.pick}}" style="border: 0; background: {{d.bg}}; font-family: 'DM Sans', system-ui, sans-serif; color: {{d.fg}}" aria-label="{{d.aria}}">{{d.n}}</button>
+        </sc-for>
+      </div>
+      <div class="row" style="gap: 14px; padding: 10px 4px 0">
+        <span class="row cap" style="gap: 6px"><span style="width: 6px; height: 6px; border-radius: 3px; background: #2F7A4E"></span>Open slots</span>
+        <span class="row cap" style="gap: 6px"><span style="text-decoration: line-through">12</span>Fully booked</span>
+      </div>
+    </div>
+    <div class="col" style="gap: 10px">
+      <div class="row between"><span class="lbl">{{dayLabel}}</span><span class="cap">Start times that fit 2 hr</span></div>
+      <div class="slots">
+        <sc-for list="{{slots}}" as="s" hint-placeholder-count="6">
+          <button class="slot {{s.cls}}" onClick="{{s.pick}}" style="font-family: 'DM Sans', system-ui, sans-serif">{{s.t}}</button>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <div class="row between"><span class="sm strong">{{summary}}</span><span class="cap">from ₱550</span></div>
+    <a class="btn bp full" href="m10-guest.dc.html">Continue</a>
+  </div>
+</div>
+</template>
+<div id="dc-root"></div>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { day: 4, slot: 3 }; }
+  renderVals() {
+    const full = [7, 12, 21];
+    const days = [];
+    [26, 27, 28, 29].forEach((n) => days.push({ n, cls: 'past', bg: 'transparent', fg: '#A3959A', aria: 'October ' + n + ', past', pick: () => {} }));
+    days.push({ n: 30, cls: 'today avail', bg: 'transparent', fg: '#22161A', aria: 'Today', pick: () => {} });
+    days.push({ n: 31, cls: 'avail', bg: 'transparent', fg: '#22161A', aria: 'October 31', pick: () => {} });
+    for (let n = 1; n <= 30; n++) {
+      const isFull = full.indexOf(n) > -1;
+      const on = this.state.day === n;
+      days.push({
+        n,
+        cls: (isFull ? 'full' : 'avail') + (on ? ' on' : ''),
+        bg: on ? '#5E1720' : 'transparent',
+        fg: on ? '#FFFFFF' : (isFull ? '#A3959A' : '#22161A'),
+        aria: 'November ' + n + (isFull ? ', fully booked' : ''),
+        pick: isFull ? () => {} : () => this.setState({ day: n, slot: -1 })
+      });
+    }
+    [1, 2, 3, 4, 5, 6].forEach((n) => days.push({ n, cls: 'past', bg: 'transparent', fg: '#A3959A', aria: 'December ' + n, pick: () => {} }));
+    const times = ['9:00 AM', '11:00 AM', '1:00 PM', '2:30 PM', '4:30 PM', '6:00 PM'];
+    const taken = (this.state.day % 3 === 1) ? [0, 4] : [1, 2];
+    const slots = times.map((t, i) => {
+      const off = taken.indexOf(i) > -1;
+      return { t, cls: off ? 'off' : (this.state.slot === i ? 'on' : ''), pick: off ? () => {} : () => this.setState({ slot: i }) };
+    });
+    const dow = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][new Date(2026, 10, this.state.day).getDay()];
+    const label = dow + ', Nov ' + this.state.day;
+    return {
+      days, slots, dayLabel: label,
+      summary: this.state.slot > -1 ? label + ' · ' + times[this.state.slot] : 'Pick a start time'
+    };
+  }
+}
+</script>
+</body>
+</html>

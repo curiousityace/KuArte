@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#5E1720">
+<link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+<title>KuArte · Booking status</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./kuarte.css">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Marcellus&amp;family=Playfair+Display:wght@600;700&amp;display=swap" rel="stylesheet">
+<style>body{margin:0}a{color:inherit}a:hover{color:inherit}</style>
+<link rel="stylesheet" href="./site.css">
+</head>
+<body>
+<template id="dc-tpl">
+<div class="scr">
+  <div class="top" style="padding-bottom: 8px">
+    <div class="col grow" style="gap: 0"><h1 class="h1">Your booking</h1><span class="cap">Ref KA-20491</span></div>
+    <a class="ib" href="m15-chat.dc.html" aria-label="Message Viper"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></a>
+  </div>
+  <div class="scroll" style="gap: 16px">
+    <sc-if value="{{notYet}}" hint-placeholder-val="{{ true }}">
+      <div style="padding: 16px; border-radius: 16px; background: #FBEFD9; display: flex; flex-direction: column; gap: 10px">
+        <span class="pill wait" style="align-self: flex-start; background: #FFFFFF">Your turn</span>
+        <p class="ttl">Viper accepted. Confirm to lock it in.</p>
+        <p class="sm" style="color: #5A3A0E">Both sides confirm, so nobody gets surprised. The slot is held for you for 2 hours.</p>
+        <button class="btn bp full" onClick="{{confirm}}">Confirm booking</button>
+      </div>
+    </sc-if>
+    <sc-if value="{{done}}" hint-placeholder-val="{{ false }}">
+      <div style="padding: 16px; border-radius: 16px; background: #E3F2E8; display: flex; flex-direction: column; gap: 8px">
+        <span class="pill ok" style="align-self: flex-start; background: #FFFFFF">Confirmed</span>
+        <p class="ttl">You're booked for Wed, Nov 4 at 2:30 PM</p>
+        <p class="sm" style="color: #1F4D33">Reminders come by SMS a day before and 2 hours before. Check-in opens 30 minutes before.</p>
+        <a class="btn bp full" href="m13-checkin.dc.html">Open check-in (demo)</a>
+      </div>
+    </sc-if>
+    <div class="card" style="display: flex; gap: 12px; padding: 12px; align-items: center">
+      <div class="ph" style="width: 64px; height: 64px; border-radius: 12px"><img src="./assets/n1-burgundy-chrome.svg" alt="Burgundy chrome reference"></div>
+      <div class="col grow" style="gap: 2px">
+        <span class="sm strong">Gel extensions + chrome art</span>
+        <span class="cap">Viper Cullen · Walk-in, Gredu</span>
+        <span class="cap">Deposit ₱150 held · about ₱345 at visit</span>
+      </div>
+    </div>
+    <div class="card pad">
+      <div class="tl">
+        <div class="st done"><span class="k"><svg class="i xs" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width: 3"><path d="m5 12 5 5L20 7"/></svg></span><div class="col" style="gap: 1px"><span class="sm strong">Requested</span><span class="cap">Today 9:12 AM · deposit held by KuArte</span></div></div>
+        <div class="st done"><span class="k"><svg class="i xs" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width: 3"><path d="m5 12 5 5L20 7"/></svg></span><div class="col" style="gap: 1px"><span class="sm strong">Accepted by Viper</span><span class="cap">Today 9:40 AM</span></div></div>
+        <div class="st {{c3}}"><span class="k"><sc-if value="{{done}}" hint-placeholder-val="{{ false }}"><svg class="i xs" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width: 3"><path d="m5 12 5 5L20 7"/></svg></sc-if></span><div class="col" style="gap: 1px"><span class="sm strong">Confirmed by you</span><span class="cap">{{confirmNote}}</span></div></div>
+        <div class="st {{c4}}"><span class="k"></span><div class="col" style="gap: 1px"><span class="sm strong">Check in</span><span class="cap">Opens Nov 4, 2:00 PM</span></div></div>
+        <div class="st"><span class="k"></span><div class="col" style="gap: 1px"><span class="sm strong">Completed + review</span><span class="cap">Deposit released to Viper after</span></div></div>
+      </div>
+    </div>
+    <div class="row" style="gap: 10px">
+      <button class="btn bg" style="flex: 1">Reschedule</button>
+      <button class="btn bd" style="flex: 1">Cancel</button>
+    </div>
+  </div>
+  <nav class="nav" aria-label="Main">
+    <a href="Main.dc.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>Home</a>
+    <a href="m04-designs.dc.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg>Designs</a>
+    <a class="on" href="m12-status.dc.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Bookings</a>
+    <a href="m15-chat.dc.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg>Messages<span class="dot"></span></a>
+    <a href="m16-signup.dc.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Account</a>
+  </nav>
+</div>
+</template>
+<div id="dc-root"></div>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { confirmed: false }; }
+  renderVals() {
+    const c = this.state.confirmed;
+    return {
+      notYet: !c, done: c,
+      c3: c ? 'done' : 'now', c4: c ? 'now' : '',
+      confirmNote: c ? 'Today 9:45 AM' : 'Waiting for you',
+      confirm: () => this.setState({ confirmed: true })
+    };
+  }
+}
+</script>
+</body>
+</html>

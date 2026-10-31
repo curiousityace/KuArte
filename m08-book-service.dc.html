@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#5E1720">
+<link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+<title>KuArte · Book: service</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./kuarte.css">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Marcellus&amp;family=Playfair+Display:wght@600;700&amp;display=swap" rel="stylesheet">
+<style>body{margin:0}a{color:inherit}a:hover{color:inherit}</style>
+<link rel="stylesheet" href="./site.css">
+</head>
+<body>
+<template id="dc-tpl">
+<div class="scr">
+  <div class="top" style="padding-bottom: 8px">
+    <a class="ib" href="m06-profile.dc.html" aria-label="Back"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></a>
+    <div class="col grow" style="gap: 0"><h1 class="h1">Book appointment</h1><span class="cap">Viper Cullen Nail Studio</span></div>
+  </div>
+  <div style="padding: 0 20px 14px; flex: none" class="col">
+    <div class="steps"><i class="on"></i><i></i><i></i><i></i></div>
+    <span class="cap">Step 1 of 4 · Service</span>
+  </div>
+  <div class="scroll" style="gap: 18px; padding-top: 2px">
+    <div class="col" style="gap: 8px">
+      <span class="lbl">Choose a service</span>
+      <sc-for list="{{services}}" as="s" hint-placeholder-count="3">
+        <button class="opt {{s.cls}}" onClick="{{s.pick}}" style="width: 100%; text-align: left; font-family: 'DM Sans', system-ui, sans-serif">
+          <span class="radio {{s.cls}}"></span>
+          <span class="col grow" style="gap: 1px"><span class="sm strong">{{s.name}}</span><span class="cap">{{s.time}}</span></span>
+          <span class="sm">from <b class="price">₱{{s.price}}</b></span>
+        </button>
+      </sc-for>
+    </div>
+    <div class="col" style="gap: 8px">
+      <span class="lbl">Add-ons</span>
+      <sc-for list="{{addons}}" as="a" hint-placeholder-count="2">
+        <button class="opt" onClick="{{a.toggle}}" style="width: 100%; text-align: left; font-family: 'DM Sans', system-ui, sans-serif; padding: 12px 16px">
+          <span class="check {{a.cls}}"><svg class="i xs" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width: 3"><path d="m5 12 5 5L20 7"/></svg></span>
+          <span class="sm strong grow">{{a.name}}</span>
+          <span class="sm">+₱{{a.price}}</span>
+        </button>
+      </sc-for>
+    </div>
+    <div class="col" style="gap: 8px">
+      <span class="lbl">Where</span>
+      <div class="seg">
+        <button class="{{m0}}" onClick="{{walkIn}}"><svg class="i s" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v10h16V10"/><path d="M3 4h18l-1 5a3 3 0 0 1-6 0 3 3 0 0 1-4 0 3 3 0 0 1-6 0z"/></svg>Walk-in</button>
+        <button class="{{m1}}" onClick="{{homeSvc}}"><svg class="i s" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>Home service</button>
+      </div>
+      <span class="cap">{{modeNote}}</span>
+    </div>
+    <div class="col" style="gap: 8px">
+      <span class="lbl">Reference photo</span>
+      <div class="card" style="display: flex; gap: 12px; padding: 10px; align-items: center">
+        <div class="ph" style="width: 56px; height: 56px; border-radius: 10px"><img src="./assets/n1-burgundy-chrome.svg" alt="Burgundy chrome reference"></div>
+        <div class="col grow" style="gap: 1px"><span class="sm strong">Burgundy chrome</span><span class="cap">From the design you picked</span></div>
+        <button class="lnk" style="border: 0; background: none; cursor: pointer">Change</button>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <div class="row between"><span class="sm">Starts at <b class="price" style="font-size: 17px">₱{{total}}</b></span><span class="cap">About {{dur}}</span></div>
+    <a class="btn bp full" href="m09-book-time.dc.html">Choose date and time</a>
+  </div>
+</div>
+</template>
+<div id="dc-root"></div>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { svc: 1, add: { art: true, removal: false }, mode: 0 }; }
+  renderVals() {
+    const S = [
+      { name: 'Gel manicure', time: '1 hr', price: 350, mins: 60 },
+      { name: 'Gel extensions', time: '1 hr 30 min', price: 450, mins: 90 },
+      { name: 'Acrylic set', time: '2 hr', price: 500, mins: 120 }
+    ];
+    const A = [
+      { id: 'art', name: 'Chrome nail art', price: 100, mins: 30 },
+      { id: 'removal', name: 'Remove old set', price: 80, mins: 20 }
+    ];
+    const st = this.state;
+    let total = S[st.svc].price + (st.mode === 1 ? 50 : 0);
+    let mins = S[st.svc].mins;
+    A.forEach((a) => { if (st.add[a.id]) { total += a.price; mins += a.mins; } });
+    const h = Math.floor(mins / 60), m = mins % 60;
+    return {
+      services: S.map((s, i) => ({ ...s, cls: st.svc === i ? 'on' : '', pick: () => this.setState({ svc: i }) })),
+      addons: A.map((a) => ({ ...a, cls: st.add[a.id] ? 'on' : '', toggle: () => this.setState({ add: { ...st.add, [a.id]: !st.add[a.id] } }) })),
+      m0: st.mode === 0 ? 'on' : '', m1: st.mode === 1 ? 'on' : '',
+      walkIn: () => this.setState({ mode: 0 }),
+      homeSvc: () => this.setState({ mode: 1 }),
+      modeNote: st.mode === 0 ? 'At the studio in Gredu, Panabo. Exact address shows after the tech confirms.' : 'Travel fee ₱50 within Panabo. You add your address in step 3.',
+      total, dur: h + ' hr' + (m ? ' ' + m + ' min' : '')
+    };
+  }
+}
+</script>
+</body>
+</html>

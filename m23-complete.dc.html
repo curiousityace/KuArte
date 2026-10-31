@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#5E1720">
+<link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+<title>KuArte for techs · Complete booking</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./kuarte.css">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Marcellus&amp;family=Playfair+Display:wght@600;700&amp;display=swap" rel="stylesheet">
+<style>body{margin:0}a{color:inherit}a:hover{color:inherit}</style>
+<link rel="stylesheet" href="./site.css">
+</head>
+<body>
+<template id="dc-tpl">
+<div class="scr">
+  <div class="top" style="padding-bottom: 8px">
+    <a class="ib" href="m22-dashboard.dc.html" aria-label="Back"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></a>
+    <div class="col grow" style="gap: 0"><h1 class="h1">Complete booking</h1><span class="cap">Nicole S. · Acrylic set + nail art</span></div>
+  </div>
+  <div class="scroll" style="gap: 16px">
+    <div class="col" style="gap: 8px">
+      <span class="lbl">Final price</span>
+      <div class="card" style="display: flex; align-items: center; gap: 12px; padding: 12px 14px">
+        <button class="ib" onClick="{{minus}}" aria-label="Lower price by 50"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/></svg></button>
+        <span class="grow" style="text-align: center; font: 700 30px/1 'DM Sans', system-ui, sans-serif; color: #5E1720">₱{{price}}</span>
+        <button class="ib" onClick="{{plus}}" aria-label="Raise price by 50"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+      </div>
+      <span class="cap">Listed from ₱500 + ₱100 art. {{flag}}</span>
+    </div>
+    <div class="card pad" style="display: flex; flex-direction: column; gap: 10px">
+      <div class="row between sm"><span>Deposit already paid</span><span>₱150</span></div>
+      <div class="row between"><span class="sm strong">Collect from Nicole now</span><b class="price">₱{{collect}}</b></div>
+      <div class="hr"></div>
+      <div class="row between sm"><span>KuArte commission (10%)</span><span>−₱{{fee}}</span></div>
+      <div class="row between sm"><span>Deposit released to your GCash</span><span class="strong">₱{{payout}}</span></div>
+    </div>
+    <div class="col" style="gap: 8px">
+      <span class="lbl">Result photo</span>
+      <div class="row" style="gap: 10px">
+        <div class="ph" style="width: 96px; height: 96px; border-radius: 12px"><img src="./assets/n7-noir-gold.svg" alt="Result: black nails with gold lines"><span class="ver" style="left: 5px; top: 5px"><svg class="i xs" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>Verified</span></div>
+        <a href="m19-camera.dc.html" style="width: 96px; height: 96px; border-radius: 12px; border: 1.5px dashed #C9A2A6; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: #5E1720; text-decoration: none; font-size: 12px; font-weight: 600"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>Take another</a>
+      </div>
+      <span class="cap">Nicole decides if it goes on your public portfolio.</span>
+    </div>
+  </div>
+  <div class="foot">
+    <a class="btn bp full" href="m22-dashboard.dc.html">Send to Nicole to confirm</a>
+    <span class="cap" style="text-align: center">She confirms the price, then gets asked for a review</span>
+  </div>
+</div>
+</template>
+<div id="dc-root"></div>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { price: 650 }; }
+  renderVals() {
+    const p = this.state.price;
+    const fee = Math.round(p * 0.1);
+    return {
+      price: p, collect: p - 150, fee, payout: 150 - fee,
+      flag: p > 750 ? 'Over 25% above listed: Nicole sees a note when she confirms.' : 'Within the normal range.',
+      minus: () => this.setState({ price: Math.max(500, p - 50) }),
+      plus: () => this.setState({ price: Math.min(1000, p + 50) })
+    };
+  }
+}
+</script>
+</body>
+</html>

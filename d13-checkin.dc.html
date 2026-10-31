@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#5E1720">
+<link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+<title>KuArte · Check-in (desktop)</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./kuarte.css">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Marcellus&amp;family=Playfair+Display:wght@600;700&amp;display=swap" rel="stylesheet">
+<style>body{margin:0}a{color:inherit}a:hover{color:inherit}</style>
+<link rel="stylesheet" href="./site.css">
+</head>
+<body>
+<template id="dc-tpl">
+<div class="dpage">
+  <header class="dhead"><div class="in">
+    <a class="wm" href="d01-home.dc.html">KUARTE</a>
+    <nav class="dnav grow" aria-label="Main"><a href="d01-home.dc.html">Explore</a><a href="d04-designs.dc.html">Designs</a><a class="on" href="d12-status.dc.html">My bookings</a><a href="d15-chat.dc.html">Messages</a></nav>
+    <span class="av s">MS</span>
+  </div></header>
+  <div class="dwrap">
+    <div class="col" style="gap: 6px">
+      <a class="lnk row" href="d12-status.dc.html" style="gap: 4px"><svg class="i s" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>Booking KA-20491</a>
+      <h1 class="dtitle">Check in · today at 2:30 PM</h1>
+      <p class="sm">Viper Cullen Nail Studio · Gredu, Panabo · starts in 24 minutes</p>
+    </div>
+    <div class="dsplit">
+      <div class="dmain">
+        <div class="map" style="height: 520px">
+          <div class="road" style="left: 0; top: 260px; width: 100%; height: 14px"></div>
+          <div class="road" style="left: 58%; top: 0; width: 14px; height: 100%"></div>
+          <div class="road" style="left: 0; top: 110px; width: 100%; height: 8px; transform: rotate(10deg)"></div>
+          <div class="blk" style="left: 6%; top: 300px; width: 22%; height: 120px"></div>
+          <div class="blk" style="left: 64%; top: 300px; width: 18%; height: 90px"></div>
+          <div class="blk" style="left: 30%; top: 150px; width: 16%; height: 70px"></div>
+          <span class="pin on" style="left: 59%; top: 200px">Studio</span>
+          <span class="me" style="left: {{meX}}%; top: 262px"></span>
+          <span class="pin" style="left: 3%; top: 470px">{{dist}}</span>
+        </div>
+      </div>
+      <aside class="dside">
+        <div class="card pad-l" style="display: flex; flex-direction: column; gap: 14px">
+          <div class="row between"><span class="lbl">You</span><span class="pill {{youPill}}">{{youLabel}}</span></div>
+          <button class="btn {{b1}} full" onClick="{{onWay}}"><svg class="i s" viewBox="0 0 24 24" aria-hidden="true"><path d="m3 11 18-8-8 18-2-8z"/></svg>On my way</button>
+          <button class="btn {{b2}} full" onClick="{{here}}"><svg class="i s" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>I'm here</button>
+          <div class="col" style="gap: 6px"><span class="cap">Running late? Let Viper know</span><div class="wrap-row" style="gap: 6px"><span class="chip">5 min</span><span class="chip">10 min</span><span class="chip">15 min</span></div></div>
+        </div>
+        <div class="card pad" style="display: flex; gap: 12px; align-items: center">
+          <span class="av">VC</span>
+          <div class="col grow" style="gap: 1px"><span class="sm strong">Viper is at the studio</span><span class="cap">Checked in 2:05 PM · location confirmed</span></div>
+          <span class="pill ok">Ready</span>
+        </div>
+        <sc-if value="{{arrived}}" hint-placeholder-val="{{ false }}"><a class="btn bp full" href="d14-review.dc.html">Appointment done (demo)</a></sc-if>
+        <p class="cap">Location is shared only from 30 minutes before until you check in. If a tech hasn't checked in 15 minutes after start, you can report a no-show for a full refund.</p>
+      </aside>
+    </div>
+  </div>
+</div>
+</template>
+<div id="dc-root"></div>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1100}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { step: 0 }; }
+  renderVals() {
+    const s = this.state.step;
+    return {
+      b1: s === 1 ? 'bp' : 'bs', b2: s === 2 ? 'bp' : 'bs',
+      youPill: s === 0 ? 'info' : (s === 1 ? 'wait' : 'ok'),
+      youLabel: s === 0 ? 'Not started' : (s === 1 ? 'On the way' : 'Arrived 2:24 PM'),
+      dist: s === 0 ? 'You are 2.1 km away' : (s === 1 ? 'About 6 min away' : 'You are at the studio'),
+      meX: s === 0 ? 12 : (s === 1 ? 36 : 58),
+      arrived: s === 2,
+      onWay: () => this.setState({ step: 1 }), here: () => this.setState({ step: 2 })
+    };
+  }
+}
+</script>
+</body>
+</html>

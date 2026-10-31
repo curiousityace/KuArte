@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#5E1720">
+<link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+<title>KuArte · Tech profile</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./kuarte.css">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Marcellus&amp;family=Playfair+Display:wght@600;700&amp;display=swap" rel="stylesheet">
+<style>body{margin:0}a{color:inherit}a:hover{color:inherit}</style>
+<link rel="stylesheet" href="./site.css">
+</head>
+<body>
+<template id="dc-tpl">
+<div class="scr">
+  <div class="top" style="padding-bottom: 6px">
+    <a class="ib" href="Main.dc.html" aria-label="Back"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></a>
+    <span class="grow"></span>
+    <button class="ib" aria-label="Save tech"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg></button>
+  </div>
+  <div class="scroll" style="gap: 16px; padding-top: 0">
+    <div class="row" style="gap: 16px; align-items: flex-start">
+      <span class="av l">VC</span>
+      <div class="col grow" style="gap: 5px">
+        <h1 class="h1" style="font-size: 21px">Viper Cullen Nail Studio</h1>
+        <a href="m07-reviews.dc.html" class="row cap" style="gap: 4px; text-decoration: none"><svg class="i xs f" viewBox="0 0 24 24" style="color: #C49A45" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg><b class="strong">4.9</b><span style="text-decoration: underline">38 reviews</span> · 92% matched reference</a>
+        <span class="row cap" style="gap: 4px"><svg class="i xs" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>1.2 km · Gredu, Panabo</span>
+        <span class="row cap" style="gap: 4px"><svg class="i xs" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><b style="color: #2F7A4E">Open today</b> 9 AM – 8 PM</span>
+      </div>
+    </div>
+    <div class="wrap-row" style="gap: 6px">
+      <span class="badge gold"><svg class="i xs f" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg>Top Rated</span>
+      <span class="badge"><svg class="i xs" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>Verified Work</span>
+      <span class="badge">Reliable</span>
+      <span class="badge">Walk-in + Home service</span>
+    </div>
+    <div class="row" style="gap: 10px">
+      <a class="btn bp" href="m08-book-service.dc.html" style="flex: 2">Book appointment</a>
+      <a class="btn bs" href="m15-chat.dc.html" style="flex: 1">Message</a>
+    </div>
+    <div class="seg" role="tablist">
+      <button class="{{t0}}" onClick="{{tabWork}}" style="border: 0; flex: 1; min-height: 40px; border-radius: 10px; font: 600 13px 'DM Sans', system-ui, sans-serif; cursor: pointer">Work</button>
+      <button class="{{t1}}" onClick="{{tabSvc}}" style="border: 0; flex: 1; min-height: 40px; border-radius: 10px; font: 600 13px 'DM Sans', system-ui, sans-serif; cursor: pointer">Services</button>
+      <button class="{{t2}}" onClick="{{tabRev}}" style="border: 0; flex: 1; min-height: 40px; border-radius: 10px; font: 600 13px 'DM Sans', system-ui, sans-serif; cursor: pointer">Reviews</button>
+    </div>
+    <sc-if value="{{isWork}}" hint-placeholder-val="{{ true }}">
+      <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px">
+        <a href="m05-design-detail.dc.html" class="ph" style="height: 112px; border-radius: 10px"><img src="./assets/n1-burgundy-chrome.svg" alt="Burgundy chrome"><span class="ver" style="left: 5px; top: 5px; padding: 0 5px"><svg class="i xs" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg></span></a>
+        <a href="m05-design-detail.dc.html" class="ph" style="height: 112px; border-radius: 10px"><img src="./assets/n5-autumn-florals.svg" alt="Autumn florals"><span class="ver" style="left: 5px; top: 5px; padding: 0 5px"><svg class="i xs" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg></span></a>
+        <a href="m05-design-detail.dc.html" class="ph" style="height: 112px; border-radius: 10px"><img src="./assets/n2-gold-leaf.svg" alt="Gold leaf nude"><span class="ver" style="left: 5px; top: 5px; padding: 0 5px"><svg class="i xs" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg></span></a>
+        <a href="m05-design-detail.dc.html" class="ph" style="height: 112px; border-radius: 10px"><img src="./assets/n7-noir-gold.svg" alt="Noir and gold"><span class="ver" style="left: 5px; top: 5px; padding: 0 5px"><svg class="i xs" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg></span></a>
+        <a href="m05-design-detail.dc.html" class="ph" style="height: 112px; border-radius: 10px"><img src="./assets/n8-pastel-mix.svg" alt="Pastel mix"><span class="ver" style="left: 5px; top: 5px; padding: 0 5px"><svg class="i xs" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg></span></a>
+        <a href="m05-design-detail.dc.html" class="ph" style="height: 112px; border-radius: 10px"><img src="./assets/n4-milky-dots.svg" alt="Milky dots"><span class="ver" style="left: 5px; top: 5px; padding: 0 5px"><svg class="i xs" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg></span></a>
+      </div>
+    </sc-if>
+    <sc-if value="{{isSvc}}" hint-placeholder-val="{{ false }}">
+      <div class="card" style="padding: 0 16px">
+        <div class="row between" style="padding: 14px 0; border-bottom: 1px solid #EADFE0"><div class="col" style="gap: 2px"><span class="sm strong">Gel manicure</span><span class="cap">1 hr</span></div><span class="sm">from <b class="price">₱350</b></span></div>
+        <div class="row between" style="padding: 14px 0; border-bottom: 1px solid #EADFE0"><div class="col" style="gap: 2px"><span class="sm strong">Gel extensions</span><span class="cap">1 hr 30 min</span></div><span class="sm">from <b class="price">₱450</b></span></div>
+        <div class="row between" style="padding: 14px 0; border-bottom: 1px solid #EADFE0"><div class="col" style="gap: 2px"><span class="sm strong">Acrylic set</span><span class="cap">2 hr</span></div><span class="sm">from <b class="price">₱500</b></span></div>
+        <div class="row between" style="padding: 14px 0"><div class="col" style="gap: 2px"><span class="sm strong">Nail art add-on</span><span class="cap">+30 min, per set</span></div><span class="sm">from <b class="price">₱100</b></span></div>
+      </div>
+    </sc-if>
+    <sc-if value="{{isRev}}" hint-placeholder-val="{{ false }}">
+      <a href="m07-reviews.dc.html" class="card pad" style="display: flex; flex-direction: column; gap: 10px; text-decoration: none">
+        <div class="row" style="gap: 10px"><span class="av s b">AM</span><div class="col grow" style="gap: 0"><span class="sm strong">Aria M.</span><span class="cap">Gel extensions · Oct 18</span></div><span class="pill ok">Matched</span></div>
+        <p class="sm" style="color: #22161A">Exactly the chrome I showed her. Clean cuticles, lasted three weeks.</p>
+        <span class="lnk">Read all 38 reviews</span>
+      </a>
+    </sc-if>
+  </div>
+</div>
+</template>
+<div id="dc-root"></div>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { tab: 0 }; }
+  renderVals() {
+    const t = this.state.tab;
+    return {
+      t0: t === 0 ? 'on' : '', t1: t === 1 ? 'on' : '', t2: t === 2 ? 'on' : '',
+      isWork: t === 0, isSvc: t === 1, isRev: t === 2,
+      tabWork: () => this.setState({ tab: 0 }),
+      tabSvc: () => this.setState({ tab: 1 }),
+      tabRev: () => this.setState({ tab: 2 })
+    };
+  }
+}
+</script>
+</body>
+</html>

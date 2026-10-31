@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#5E1720">
+<link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+<title>KuArte for techs · Sign up</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./kuarte.css">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Marcellus&amp;family=Playfair+Display:wght@600;700&amp;display=swap" rel="stylesheet">
+<style>body{margin:0}a{color:inherit}a:hover{color:inherit}</style>
+<link rel="stylesheet" href="./site.css">
+</head>
+<body>
+<template id="dc-tpl">
+<div class="scr">
+  <div style="background: #5E1720; color: #FFFFFF; padding: 28px 20px 24px; display: flex; flex-direction: column; gap: 14px; flex: none">
+    <div class="row between"><span class="wm" style="color: #FCF8F7; font-size: 22px">KUARTE</span><span class="badge" style="background: rgba(255,255,255,.14); color: #F6ECED">For nail techs</span></div>
+    <h1 class="disp" style="font-size: 28px">Get booked for your work.</h1>
+    <div class="col" style="gap: 6px; font-size: 13px; color: #E9D3D5">
+      <span class="row" style="gap: 8px"><svg class="i s" viewBox="0 0 24 24" aria-hidden="true" style="color: #E7C27A"><path d="m5 12 5 5L20 7"/></svg>Free to join, no monthly fee</span>
+      <span class="row" style="gap: 8px"><svg class="i s" viewBox="0 0 24 24" aria-hidden="true" style="color: #E7C27A"><path d="m5 12 5 5L20 7"/></svg>0% commission for your first month</span>
+      <span class="row" style="gap: 8px"><svg class="i s" viewBox="0 0 24 24" aria-hidden="true" style="color: #E7C27A"><path d="m5 12 5 5L20 7"/></svg>Optional deposits to stop no-shows</span>
+    </div>
+  </div>
+  <div class="scroll" style="padding-top: 20px; gap: 16px">
+    <div class="col" style="gap: 8px">
+      <span class="lbl">I'm signing up as</span>
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+        <button class="opt {{a0}}" onClick="{{solo}}" style="flex-direction: column; align-items: flex-start; gap: 6px; font-family: 'DM Sans', system-ui, sans-serif; text-align: left">
+          <svg class="i l wine" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+          <span class="sm strong">Solo tech</span><span class="cap">From home, a booth, or home service</span>
+        </button>
+        <button class="opt {{a1}}" onClick="{{salon}}" style="flex-direction: column; align-items: flex-start; gap: 6px; font-family: 'DM Sans', system-ui, sans-serif; text-align: left">
+          <svg class="i l wine" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v10h16V10"/><path d="M3 4h18l-1 5a3 3 0 0 1-6 0 3 3 0 0 1-4 0 3 3 0 0 1-6 0z"/></svg>
+          <span class="sm strong">Salon</span><span class="cap">One business account for the shop</span>
+        </button>
+      </div>
+    </div>
+    <div class="field"><label for="t-name">{{nameLabel}}</label><input id="t-name" class="inp" value="{{nameVal}}"></div>
+    <div class="field"><label for="t-phone">Mobile number</label><div class="row" style="gap: 8px"><span class="inp" style="width: 76px; justify-content: center; font-weight: 600">+63</span><input id="t-phone" class="inp" value="908 555 0187"></div><span class="cap">For booking alerts. Never shown on your profile.</span></div>
+  </div>
+  <div class="foot">
+    <a class="btn bp full" href="m17-setup.dc.html">Send code and continue</a>
+    <a class="lnk" href="Main.dc.html" style="text-align: center">I'm here to book nails instead</a>
+  </div>
+</div>
+</template>
+<div id="dc-root"></div>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { t: 0 }; }
+  renderVals() {
+    const s = this.state.t;
+    return {
+      a0: s === 0 ? 'on' : '', a1: s === 1 ? 'on' : '',
+      nameLabel: s === 0 ? 'Your name or brand' : 'Salon name',
+      nameVal: s === 0 ? 'Viper Cullen Nail Studio' : 'Reyna Nail Studio',
+      solo: () => this.setState({ t: 0 }), salon: () => this.setState({ t: 1 })
+    };
+  }
+}
+</script>
+</body>
+</html>

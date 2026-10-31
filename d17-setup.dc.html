@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#5E1720">
+<link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+<title>KuArte for techs · Profile and services (desktop)</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./kuarte.css">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Marcellus&amp;family=Playfair+Display:wght@600;700&amp;display=swap" rel="stylesheet">
+<style>body{margin:0}a{color:inherit}a:hover{color:inherit}</style>
+<link rel="stylesheet" href="./site.css">
+</head>
+<body>
+<template id="dc-tpl">
+<div class="dpage">
+  <header class="dhead"><div class="in">
+    <a class="wm" href="d16-signup.dc.html">KUARTE</a><span class="badge">For nail techs</span>
+    <span class="grow"></span>
+    <span class="cap">Setting up · saved automatically</span>
+  </div></header>
+  <div class="dwrap">
+    <div class="dsplit">
+      <aside class="dside" style="flex: 1 1 240px; max-width: 280px">
+        <div class="tint" style="padding: 18px; display: flex; flex-direction: column; gap: 12px">
+          <span class="lbl">Go live checklist</span>
+          <div class="bar" style="background: #FFFFFF"><i style="width: 40%"></i></div>
+          <span class="row sm" style="gap: 10px"><span class="check on"><svg class="i xs" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width: 3"><path d="m5 12 5 5L20 7"/></svg></span>Account</span>
+          <span class="row sm strong wine" style="gap: 10px"><span class="radio on"></span>Profile and services</span>
+          <a class="row sm" href="d18-rules.dc.html" style="gap: 10px; text-decoration: none"><span class="radio"></span>Booking rules</a>
+          <a class="row sm" href="d19-camera.dc.html" style="gap: 10px; text-decoration: none"><span class="radio"></span>3 portfolio photos</a>
+          <a class="row sm" href="d20-availability.dc.html" style="gap: 10px; text-decoration: none"><span class="radio"></span>Hours</a>
+        </div>
+      </aside>
+      <div class="dmain" style="gap: 24px">
+        <div class="col" style="gap: 4px"><h1 class="dtitle">Profile and services</h1><p class="sm">Customers see this before they book.</p></div>
+        <div class="card pad-l" style="display: flex; flex-direction: column; gap: 18px">
+          <div class="row" style="gap: 20px; flex-wrap: wrap">
+            <div style="position: relative"><span class="av l">VC</span><button class="ib dark" aria-label="Change photo" style="position: absolute; right: -4px; bottom: -4px; width: 34px; height: 34px"><svg class="i s" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></button></div>
+            <div class="field grow" style="min-width: 260px"><label for="ds-name">Name shown to customers</label><input id="ds-name" class="inp" value="Viper Cullen Nail Studio"></div>
+          </div>
+          <div class="field"><label for="ds-bio">Short bio</label><input id="ds-bio" class="inp" value="Gel and chrome specialist, 6 years. Clean cuticle work, long-lasting sets."></div>
+          <div class="dgrid l" style="gap: 12px">
+            <div class="opt on" style="cursor: default"><div class="col grow" style="gap: 1px"><span class="sm strong">Walk-in</span><span class="cap">Studio pin: Gredu, Panabo</span></div><span class="tog on"></span></div>
+            <div class="opt on" style="cursor: default"><div class="col grow" style="gap: 1px"><span class="sm strong">Home service</span><span class="cap">Panabo + Carmen · ₱50 travel</span></div><span class="tog on"></span></div>
+          </div>
+        </div>
+        <div class="col" style="gap: 10px">
+          <div class="row between"><h2 class="h2">Service menu</h2><button class="btn sm bg"><svg class="i s" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Add a service</button></div>
+          <div class="card tbox"><table class="dtable"><thead><tr><th>Service</th><th>Time</th><th>Starts at</th><th><span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Edit</span></th></tr></thead><tbody>
+            <tr><td class="strong">Gel manicure</td><td>1 hr</td><td class="price">₱350</td><td style="text-align: right"><button class="lnk" style="border: 0; background: none; cursor: pointer">Edit</button></td></tr>
+            <tr><td class="strong">Gel extensions</td><td>1 hr 30 min</td><td class="price">₱450</td><td style="text-align: right"><button class="lnk" style="border: 0; background: none; cursor: pointer">Edit</button></td></tr>
+            <tr><td class="strong">Acrylic set</td><td>2 hr</td><td class="price">₱500</td><td style="text-align: right"><button class="lnk" style="border: 0; background: none; cursor: pointer">Edit</button></td></tr>
+            <tr><td class="strong">Chrome nail art <span class="badge" style="margin-left: 6px">Add-on</span></td><td>+30 min</td><td class="price">+₱100</td><td style="text-align: right"><button class="lnk" style="border: 0; background: none; cursor: pointer">Edit</button></td></tr>
+          </tbody></table></div>
+          <span class="cap">Prices show as "starts at". You set the final price at the visit, and the customer confirms it.</span>
+        </div>
+        <div class="row" style="gap: 12px"><a class="btn bp" href="d18-rules.dc.html">Next: booking rules</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+</template>
+<div id="dc-root"></div>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1100}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

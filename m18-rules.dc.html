@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#5E1720">
+<link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+<title>KuArte for techs · Booking rules</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./kuarte.css">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Marcellus&amp;family=Playfair+Display:wght@600;700&amp;display=swap" rel="stylesheet">
+<style>body{margin:0}a{color:inherit}a:hover{color:inherit}</style>
+<link rel="stylesheet" href="./site.css">
+</head>
+<body>
+<template id="dc-tpl">
+<div class="scr">
+  <div class="top" style="padding-bottom: 8px">
+    <a class="ib" href="m17-setup.dc.html" aria-label="Back"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></a>
+    <div class="col grow" style="gap: 0"><h1 class="h1">Booking rules</h1><span class="cap">You can change these any time</span></div>
+  </div>
+  <div class="scroll" style="gap: 18px">
+    <div class="card pad" style="display: flex; flex-direction: column; gap: 12px">
+      <div class="row between"><div class="col" style="gap: 1px"><span class="sm strong">Ask for a deposit</span><span class="cap">Paid through KuArte, sent to you after the visit</span></div><button class="tog {{depOn}}" onClick="{{toggleDep}}" aria-label="Ask for a deposit" style="border: 0; cursor: pointer"></button></div>
+      <sc-if value="{{dep}}" hint-placeholder-val="{{ true }}">
+        <div class="seg"><span>₱100</span><span class="on">₱150</span><span>30%</span></div>
+      </sc-if>
+    </div>
+    <div class="col" style="gap: 8px">
+      <span class="lbl">Cancellation policy</span>
+      <sc-for list="{{policies}}" as="p" hint-placeholder-count="3">
+        <button class="opt {{p.cls}}" onClick="{{p.pick}}" style="width: 100%; text-align: left; font-family: 'DM Sans', system-ui, sans-serif; align-items: flex-start">
+          <span class="radio {{p.cls}}" style="margin-top: 2px"></span>
+          <span class="col grow" style="gap: 2px"><span class="sm strong">{{p.name}}</span><span class="cap">{{p.desc}}</span></span>
+        </button>
+      </sc-for>
+    </div>
+    <div class="col" style="gap: 8px">
+      <span class="lbl">Reply to requests within</span>
+      <div class="seg"><span>1 hr</span><span class="on">4 hr</span><span>12 hr</span></div>
+      <span class="cap">Requests you don't answer in time expire and the customer is refunded.</span>
+    </div>
+    <div class="card" style="display: flex; gap: 12px; padding: 14px 16px; align-items: center">
+      <span style="width: 40px; height: 40px; border-radius: 10px; background: #2F5FB3; color: #FFFFFF; display: flex; align-items: center; justify-content: center; flex: none"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 10h18M16 15h2"/></svg></span>
+      <div class="col grow" style="gap: 1px"><span class="sm strong">Payouts to GCash</span><span class="cap">Account ending 0187</span></div>
+      <button class="lnk" style="border: 0; background: none; cursor: pointer">Change</button>
+    </div>
+    <p class="cap">KuArte keeps 10% of the final price on bookings made here, taken from your payout. Your first month is commission-free.</p>
+  </div>
+  <div class="foot">
+    <a class="btn bp full" href="m19-camera.dc.html">Next: add portfolio photos</a>
+  </div>
+</div>
+</template>
+<div id="dc-root"></div>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { dep: true, pol: 1 }; }
+  renderVals() {
+    const P = [
+      { name: 'Flexible', desc: 'Free to cancel up to 2 hours before' },
+      { name: 'Moderate', desc: 'Free up to 24 hours before, then 50% of the deposit back' },
+      { name: 'Strict', desc: 'Free up to 48 hours before, then no refund' }
+    ];
+    return {
+      dep: this.state.dep, depOn: this.state.dep ? 'on' : '',
+      toggleDep: () => this.setState({ dep: !this.state.dep }),
+      policies: P.map((p, i) => ({ ...p, cls: this.state.pol === i ? 'on' : '', pick: () => this.setState({ pol: i }) }))
+    };
+  }
+}
+</script>
+</body>
+</html>

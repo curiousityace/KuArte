@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#5E1720">
+<link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+<title>KuArte for techs · Sign up (desktop)</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./kuarte.css">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Marcellus&amp;family=Playfair+Display:wght@600;700&amp;display=swap" rel="stylesheet">
+<style>body{margin:0}a{color:inherit}a:hover{color:inherit}</style>
+<link rel="stylesheet" href="./site.css">
+</head>
+<body>
+<template id="dc-tpl">
+<div class="dpage" style="background: #5E1720">
+  <header style="border-bottom: 1px solid rgba(255,255,255,.12)"><div style="max-width: 1280px; margin: 0 auto; padding: 18px 32px; display: flex; flex-wrap: wrap; gap: 16px; align-items: center">
+    <a class="wm" href="d01-home.dc.html" style="color: #FCF8F7">KUARTE</a>
+    <span class="badge" style="background: rgba(255,255,255,.14); color: #F6ECED">For nail techs</span>
+    <span class="grow"></span>
+    <a class="lnk" href="d01-home.dc.html" style="color: #E9D3D5">I'm booking nails instead</a>
+  </div></header>
+  <div class="dwrap" style="padding-top: 56px; padding-bottom: 72px">
+    <div class="dsplit" style="gap: 56px; align-items: center">
+      <div class="dmain" style="gap: 24px; color: #FFFFFF">
+        <h1 class="ddisp">Get booked for<br>your work.</h1>
+        <p class="body" style="color: #E9D3D5; max-width: 520px">Customers on KuArte are here for nails, nothing else. Show your verified work, set your prices and hours, and get requests without answering "hm po?" all day.</p>
+        <div class="dgrid l" style="gap: 14px; max-width: 640px">
+          <div style="padding: 16px; border-radius: 16px; background: rgba(255,255,255,.08)"><span class="ttl">Free to join</span><p class="sm" style="color: #E9D3D5; margin-top: 4px">No monthly fee. 0% commission your first month, 10% after, only on bookings made here.</p></div>
+          <div style="padding: 16px; border-radius: 16px; background: rgba(255,255,255,.08)"><span class="ttl">Fewer no-shows</span><p class="sm" style="color: #E9D3D5; margin-top: 4px">Ask for a deposit. Check-in records settle who showed up.</p></div>
+          <div style="padding: 16px; border-radius: 16px; background: rgba(255,255,255,.08)"><span class="ttl">A record that's yours</span><p class="sm" style="color: #E9D3D5; margin-top: 4px">Verified photos and reviews build your badges over time.</p></div>
+          <div style="padding: 16px; border-radius: 16px; background: rgba(255,255,255,.08)"><span class="ttl">Bookings in one place</span><p class="sm" style="color: #E9D3D5; margin-top: 4px">Calendar, chat and payouts together, on phone or laptop.</p></div>
+        </div>
+      </div>
+      <div class="dside w">
+        <div class="card pad-l shadow" style="display: flex; flex-direction: column; gap: 16px; border-radius: 24px; padding: 28px">
+          <h2 class="h1">Create your tech account</h2>
+          <div class="col" style="gap: 8px">
+            <span class="lbl">I'm signing up as</span>
+            <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+              <button class="opt {{a0}}" onClick="{{solo}}" style="flex-direction: column; align-items: flex-start; gap: 6px; font-family: 'DM Sans', system-ui, sans-serif; text-align: left"><svg class="i l wine" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span class="sm strong">Solo tech</span><span class="cap">Home, booth, or home service</span></button>
+              <button class="opt {{a1}}" onClick="{{salon}}" style="flex-direction: column; align-items: flex-start; gap: 6px; font-family: 'DM Sans', system-ui, sans-serif; text-align: left"><svg class="i l wine" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v10h16V10"/><path d="M3 4h18l-1 5a3 3 0 0 1-6 0 3 3 0 0 1-4 0 3 3 0 0 1-6 0z"/></svg><span class="sm strong">Salon</span><span class="cap">One account for the shop</span></button>
+            </div>
+          </div>
+          <div class="field"><label for="dt-name">{{nameLabel}}</label><input id="dt-name" class="inp" value="{{nameVal}}"></div>
+          <div class="field"><label for="dt-phone">Mobile number</label><div class="row" style="gap: 8px"><span class="inp" style="width: 76px; justify-content: center; font-weight: 600">+63</span><input id="dt-phone" class="inp" value="908 555 0187"></div><span class="cap">For booking alerts. Never shown on your profile.</span></div>
+          <a class="btn bp full" href="d17-setup.dc.html">Send code and continue</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</template>
+<div id="dc-root"></div>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1100}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { t: 0 }; }
+  renderVals() {
+    const s = this.state.t;
+    return {
+      a0: s === 0 ? 'on' : '', a1: s === 1 ? 'on' : '',
+      nameLabel: s === 0 ? 'Your name or brand' : 'Salon name',
+      nameVal: s === 0 ? 'Viper Cullen Nail Studio' : 'Reyna Nail Studio',
+      solo: () => this.setState({ t: 0 }), salon: () => this.setState({ t: 1 })
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+/* Live-site overrides: real phone sizing, scrolling, prototype pill */
+html, body { min-height: 100%; }
+#dc-root { min-height: 100vh; }
+
+/* Mobile screens: full screen on phones, a phone-sized frame on laptops */
+body.m { background: #E9D3D5; }
+body.m .scr { width: 100%; max-width: 430px; height: 100vh; height: 100dvh; margin: 0 auto; }
+body.m .scroll { overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; }
+@media (min-width: 700px) {
+  body.m { padding: 24px 0; }
+  body.m .scr { height: min(844px, calc(100dvh - 48px)); border-radius: 36px; box-shadow: 0 24px 64px rgba(59, 13, 19, .25); }
+}
+
+/* Desktop pages fill the window */
+.dpage { min-height: 100vh; }
+
+/* Prototype pill */
+.kp { position: fixed; right: 16px; bottom: 16px; z-index: 50; display: flex; align-items: center; gap: 4px; padding: 6px; border-radius: 999px; background: rgba(34, 22, 26, .88); color: #FFFFFF; font: 600 12px 'DM Sans', system-ui, sans-serif; box-shadow: 0 6px 20px rgba(0, 0, 0, .2); }
+.kp a { color: #FFFFFF; text-decoration: none; padding: 6px 10px; border-radius: 999px; }
+.kp a:hover { background: rgba(255, 255, 255, .14); }
+.kp-tag { padding: 6px 10px; border-radius: 999px; background: #C49A45; color: #3B0D13; }
+@media (max-width: 699px) { .kp.kp-m { display: none; } }
+@media (max-width: 699px) { .kp { left: 12px; right: 12px; bottom: 12px; justify-content: center; } }

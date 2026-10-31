@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#5E1720">
+<link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+<title>KuArte · Book: service (desktop)</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./kuarte.css">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Marcellus&amp;family=Playfair+Display:wght@600;700&amp;display=swap" rel="stylesheet">
+<style>body{margin:0}a{color:inherit}a:hover{color:inherit}</style>
+<link rel="stylesheet" href="./site.css">
+</head>
+<body>
+<template id="dc-tpl">
+<div class="dpage">
+  <header class="dhead"><div class="in">
+    <a class="wm" href="d01-home.dc.html">KUARTE</a>
+    <span class="grow"></span>
+    <span class="row cap" style="gap: 6px"><svg class="i s" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Secure booking</span>
+    <a class="lnk" href="d06-profile.dc.html">Exit</a>
+  </div></header>
+  <div class="dwrap" style="gap: 28px; max-width: 1120px">
+    <div class="col" style="gap: 12px">
+      <h1 class="dtitle">Book with Viper Cullen</h1>
+      <div class="wrap-row" style="gap: 8px 24px">
+        <span class="row sm strong wine" style="gap: 8px"><span class="av s" style="width: 26px; height: 26px; font-size: 12px">1</span>Service</span>
+        <span class="row sm" style="gap: 8px"><span class="av s" style="width: 26px; height: 26px; font-size: 12px; background: #E9D3D5; color: #5E1720">2</span>Date and time</span>
+        <span class="row sm" style="gap: 8px"><span class="av s" style="width: 26px; height: 26px; font-size: 12px; background: #E9D3D5; color: #5E1720">3</span>Your details</span>
+        <span class="row sm" style="gap: 8px"><span class="av s" style="width: 26px; height: 26px; font-size: 12px; background: #E9D3D5; color: #5E1720">4</span>Deposit</span>
+      </div>
+    </div>
+    <div class="dsplit">
+      <div class="dmain" style="gap: 24px">
+        <div class="col" style="gap: 10px">
+          <span class="lbl">Choose a service</span>
+          <sc-for list="{{services}}" as="s" hint-placeholder-count="3">
+            <button class="opt {{s.cls}}" onClick="{{s.pick}}" style="width: 100%; text-align: left; font-family: 'DM Sans', system-ui, sans-serif">
+              <span class="radio {{s.cls}}"></span>
+              <span class="col grow" style="gap: 1px"><span class="ttl" style="font-size: 15px">{{s.name}}</span><span class="cap">{{s.time}}</span></span>
+              <span class="sm">from <b class="price">₱{{s.price}}</b></span>
+            </button>
+          </sc-for>
+        </div>
+        <div class="col" style="gap: 10px">
+          <span class="lbl">Add-ons</span>
+          <div class="dgrid l" style="gap: 10px">
+            <sc-for list="{{addons}}" as="a" hint-placeholder-count="2">
+              <button class="opt" onClick="{{a.toggle}}" style="width: 100%; text-align: left; font-family: 'DM Sans', system-ui, sans-serif">
+                <span class="check {{a.cls}}"><svg class="i xs" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width: 3"><path d="m5 12 5 5L20 7"/></svg></span>
+                <span class="sm strong grow">{{a.name}}</span><span class="sm">+₱{{a.price}}</span>
+              </button>
+            </sc-for>
+          </div>
+        </div>
+        <div class="col" style="gap: 10px">
+          <span class="lbl">Where</span>
+          <div class="seg" style="max-width: 420px">
+            <button class="{{m0}}" onClick="{{walkIn}}">Walk-in at studio</button>
+            <button class="{{m1}}" onClick="{{homeSvc}}">Home service</button>
+          </div>
+          <span class="cap">{{modeNote}}</span>
+        </div>
+        <div class="col" style="gap: 10px">
+          <span class="lbl">Reference photo</span>
+          <div class="card" style="display: flex; gap: 14px; padding: 12px; align-items: center; max-width: 520px">
+            <div class="ph" style="width: 72px; height: 72px; border-radius: 12px"><img src="./assets/n1-burgundy-chrome.svg" alt="Burgundy chrome reference"></div>
+            <div class="col grow" style="gap: 2px"><span class="sm strong">Burgundy chrome</span><span class="cap">From the design you picked</span></div>
+            <button class="btn sm bg">Change</button>
+          </div>
+        </div>
+      </div>
+      <aside class="dside">
+        <div class="card pad-l shadow" style="display: flex; flex-direction: column; gap: 14px">
+          <div class="row" style="gap: 12px"><span class="av">VC</span><div class="col" style="gap: 0"><span class="sm strong">Viper Cullen Nail Studio</span><span class="cap">4.9 (38) · Gredu, Panabo</span></div></div>
+          <div class="hr"></div>
+          <div class="row between sm"><span>{{svcName}}</span><span>₱{{svcPrice}}</span></div>
+          <sc-for list="{{chosen}}" as="c" hint-placeholder-count="1"><div class="row between sm"><span>{{c.name}}</span><span>+₱{{c.price}}</span></div></sc-for>
+          <sc-if value="{{isHome}}" hint-placeholder-val="{{ false }}"><div class="row between sm"><span>Travel fee</span><span>+₱50</span></div></sc-if>
+          <div class="hr"></div>
+          <div class="row between"><span class="sm strong">Starts at</span><b class="price" style="font-size: 20px">₱{{total}}</b></div>
+          <span class="cap">About {{dur}} · final price set at your visit</span>
+          <a class="btn bp full" href="d09-book-time.dc.html">Choose date and time</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</div>
+</template>
+<div id="dc-root"></div>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1100}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { svc: 1, add: { art: true, removal: false }, mode: 0 }; }
+  renderVals() {
+    const S = [
+      { name: 'Gel manicure', time: '1 hr', price: 350, mins: 60 },
+      { name: 'Gel extensions', time: '1 hr 30 min', price: 450, mins: 90 },
+      { name: 'Acrylic set', time: '2 hr', price: 500, mins: 120 }
+    ];
+    const A = [
+      { id: 'art', name: 'Chrome nail art', price: 100, mins: 30 },
+      { id: 'removal', name: 'Remove old set', price: 80, mins: 20 }
+    ];
+    const st = this.state;
+    let total = S[st.svc].price + (st.mode === 1 ? 50 : 0), mins = S[st.svc].mins;
+    A.forEach((a) => { if (st.add[a.id]) { total += a.price; mins += a.mins; } });
+    const h = Math.floor(mins / 60), m = mins % 60;
+    return {
+      services: S.map((s, i) => ({ ...s, cls: st.svc === i ? 'on' : '', pick: () => this.setState({ svc: i }) })),
+      addons: A.map((a) => ({ ...a, cls: st.add[a.id] ? 'on' : '', toggle: () => this.setState({ add: { ...st.add, [a.id]: !st.add[a.id] } }) })),
+      chosen: A.filter((a) => st.add[a.id]),
+      svcName: S[st.svc].name, svcPrice: S[st.svc].price,
+      m0: st.mode === 0 ? 'on' : '', m1: st.mode === 1 ? 'on' : '', isHome: st.mode === 1,
+      walkIn: () => this.setState({ mode: 0 }), homeSvc: () => this.setState({ mode: 1 }),
+      modeNote: st.mode === 0 ? 'At the studio in Gredu, Panabo. The exact address shows after Viper confirms.' : 'Viper covers Panabo and Carmen. ₱50 travel fee. You add your address in step 3.',
+      total, dur: h + ' hr' + (m ? ' ' + m + ' min' : '')
+    };
+  }
+}
+</script>
+</body>
+</html>

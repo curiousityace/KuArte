@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#5E1720">
+<link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+<title>KuArte for techs · Availability</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="./kuarte.css">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Marcellus&amp;family=Playfair+Display:wght@600;700&amp;display=swap" rel="stylesheet">
+<style>body{margin:0}a{color:inherit}a:hover{color:inherit}</style>
+<link rel="stylesheet" href="./site.css">
+</head>
+<body>
+<template id="dc-tpl">
+<div class="scr">
+  <div class="top" style="padding-bottom: 8px">
+    <a class="ib" href="m19-camera.dc.html" aria-label="Back"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></a>
+    <div class="col grow" style="gap: 0"><h1 class="h1">Availability</h1><span class="cap">Customers only see times that fit the service</span></div>
+  </div>
+  <div class="scroll" style="gap: 16px">
+    <div class="card" style="padding: 4px 16px">
+      <sc-for list="{{days}}" as="d" hint-placeholder-count="7">
+        <div class="row" style="gap: 12px; padding: 10px 0; border-bottom: {{d.border}}">
+          <button class="tog {{d.cls}}" onClick="{{d.toggle}}" aria-label="{{d.aria}}" style="border: 0; cursor: pointer"></button>
+          <span class="sm strong" style="width: 44px">{{d.name}}</span>
+          <span class="sm grow" style="text-align: right; color: {{d.col}}">{{d.hours}}</span>
+        </div>
+      </sc-for>
+    </div>
+    <div class="col" style="gap: 8px">
+      <span class="lbl">Break between appointments</span>
+      <div class="seg"><span>None</span><span class="on">15 min</span><span>30 min</span></div>
+    </div>
+    <div class="col" style="gap: 8px">
+      <span class="lbl">Blocked dates</span>
+      <div class="wrap-row">
+        <span class="chip">Nov 12 · Personal <svg class="i xs" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></span>
+        <span class="chip">Dec 24–25 · Holiday <svg class="i xs" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></span>
+        <button class="chip" style="border-style: dashed; color: #5E1720"><svg class="i xs" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Block a date</button>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <a class="btn bp full" href="m22-dashboard.dc.html">Save and go live</a>
+  </div>
+</div>
+</template>
+<div id="dc-root"></div>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { open: [true, true, true, true, true, true, false] }; }
+  renderVals() {
+    const N = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    const H = ['9 AM – 8 PM', '9 AM – 8 PM', '9 AM – 8 PM', '9 AM – 8 PM', '9 AM – 8 PM', '8 AM – 6 PM', '9 AM – 5 PM'];
+    const o = this.state.open;
+    return {
+      days: N.map((n, i) => ({
+        name: n, cls: o[i] ? 'on' : '', aria: n + (o[i] ? ' open' : ' closed'),
+        hours: o[i] ? H[i] : 'Closed', col: o[i] ? '#22161A' : '#6B5A5E',
+        border: i < 6 ? '1px solid #EADFE0' : '0',
+        toggle: () => { const c = o.slice(); c[i] = !c[i]; this.setState({ open: c }); }
+      }))
+    };
+  }
+}
+</script>
+</body>
+</html>
