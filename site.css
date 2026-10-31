@@ -7,7 +7,12 @@ body.m { background: #E9D3D5; }
 body.m .scr { width: 100%; max-width: 430px; height: 100vh; height: 100dvh; margin: 0 auto; }
 body.m .scroll { overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; scrollbar-width: none; }
 body.m .scroll::-webkit-scrollbar { display: none; }
-@media (min-width: 700px) {
+/* 430–899px (large phones, tablets): the mobile design fills the height, centred */
+@media (min-width: 431px) and (max-width: 899px) {
+  body.m .scr { max-width: 600px; box-shadow: 0 0 0 1px #E3CBCE, 0 0 40px rgba(59, 13, 19, .08); }
+}
+/* phone view pinned on a laptop: a phone-sized frame */
+@media (min-width: 900px) {
   body.m { padding: 24px 0; }
   body.m .scr { height: min(844px, calc(100dvh - 48px)); border-radius: 36px; box-shadow: 0 24px 64px rgba(59, 13, 19, .25); }
 }
@@ -19,7 +24,7 @@ body.m .scroll::-webkit-scrollbar { display: none; }
 .kp { position: fixed; right: 16px; bottom: 16px; z-index: 50; display: flex; align-items: center; gap: 4px; padding: 6px; border-radius: 999px; background: rgba(34, 22, 26, .9); color: #FFFFFF; font: 600 12px 'DM Sans', system-ui, sans-serif; box-shadow: 0 6px 20px rgba(0, 0, 0, .2); }
 .kp a { color: #FFFFFF; text-decoration: none; padding: 6px 10px; border-radius: 999px; transition: background-color 150ms ease; }
 .kp-tag { padding: 6px 10px; border-radius: 999px; background: #C49A45; color: #3B0D13; }
-@media (max-width: 699px) { .kp { display: none; } }
+@media (max-width: 899px) { .kp { display: none; } }
 
 /* Prototype bar (desktop): sits above the header, never covers content */
 .kbar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 4px 16px; padding: 8px 32px; background: #3B0D13; color: #E9D3D5; font: 500 12px 'DM Sans', system-ui, sans-serif; }

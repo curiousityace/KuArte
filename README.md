@@ -3,6 +3,10 @@
 A static website: 28 mobile screens and 28 desktop pages, with a start page at `index.html`.
 No build step and no dependencies. Fonts load from Google Fonts.
 
+## One link, any screen
+
+Every screen picks its layout from the window width: the mobile design under 900px, the desktop design from 900px up. Resizing the window switches it, keeping your place. To present the phone design from a laptop, use **Phone view** in the top bar; **Fit to window** turns it off.
+
 ## Live demo for the pitch
 
 Open `demo.html` on a laptop. It shows the customer phone and Viper's phone side by side:

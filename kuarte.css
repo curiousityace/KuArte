@@ -102,6 +102,10 @@ svg.i.f{fill:currentColor;stroke:none}
 
 /* inputs */
 .search{display:flex;align-items:center;gap:10px;min-height:48px;padding:0 16px;border-radius:24px;background:var(--white);border:1px solid var(--blush2);color:var(--ink6);font-size:15px;text-decoration:none;flex:1;min-width:0}
+.search input,.search-bare input{flex:1;min-width:0;height:46px;border:0;padding:0;background:transparent;font:500 16px var(--sans);color:var(--ink9);outline:none;-webkit-appearance:none;appearance:none}
+.search input::placeholder,.search-bare input::placeholder{color:var(--ink6);font-weight:400}
+.search input::-webkit-search-cancel-button,.search-bare input::-webkit-search-cancel-button{-webkit-appearance:none}
+.search:focus-within{border-color:var(--wine5);box-shadow:0 0 0 3px rgba(140,47,59,.12)}
 .field{display:flex;flex-direction:column;gap:6px}
 .field label,.flabel{font-size:13px;font-weight:600;color:var(--ink9)}
 .inp{min-height:48px;border-radius:12px;border:1px solid var(--blush2);background:var(--white);padding:0 14px;font:15px var(--sans);color:var(--ink9);width:100%;display:flex;align-items:center}

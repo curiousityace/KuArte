@@ -7,6 +7,39 @@
 (function () {
   'use strict';
 
+  const M = ['Main', 'm02-search', 'm03-filters', 'm04-designs', 'm05-design-detail', 'm06-profile', 'm07-reviews', 'm08-book-service', 'm09-book-time', 'm10-guest', 'm11-deposit', 'm12-status', 'm13-checkin', 'm14-review', 'm15-chat', 'm16-signup', 'm17-setup', 'm18-rules', 'm19-camera', 'm20-availability', 'm21-request', 'm22-dashboard', 'm23-complete', 'm24-insights', 'm25-post-design', 'm26-offers', 'm27-design-requests', 'm28-make-offer'];
+  const D = ['d01-home', 'd02-search', 'd03-filters', 'd04-designs', 'd05-design-detail', 'd06-profile', 'd07-reviews', 'd08-book-service', 'd09-book-time', 'd10-guest', 'd11-deposit', 'd12-status', 'd13-checkin', 'd14-review', 'd15-chat', 'd16-signup', 'd17-setup', 'd18-rules', 'd19-camera', 'd20-availability', 'd21-request', 'd22-dashboard', 'd23-complete', 'd24-insights', 'd25-post-design', 'd26-offers', 'd27-design-requests', 'd28-make-offer'];
+
+  /* ---- one URL per screen, layout picked by width ----
+     Under 900px the mobile design loads, from 900px up the desktop design, keeping the
+     query string. ?view=m or ?view=d pins a layout for this tab (phone view on a laptop);
+     ?view=auto unpins. Frames (the live demo phones) are left alone. */
+  const BP = 900;
+  const FILE = (location.pathname.split('/').pop() || '').replace('.dc.html', '');
+  const IDX = M.indexOf(FILE) >= 0 ? M.indexOf(FILE) : D.indexOf(FILE);
+  const IS_M = M.indexOf(FILE) >= 0;
+  const FRAMED = (() => { try { return window.self !== window.top; } catch (e) { return true; } })();
+  function getPin() { try { return sessionStorage.getItem('kuarte-view'); } catch (e) { return null; } }
+  function setPin(v) { try { if (v) sessionStorage.setItem('kuarte-view', v); else sessionStorage.removeItem('kuarte-view'); } catch (e) { /* private mode: no pin */ } }
+  (function readViewParam() {
+    const q = new URLSearchParams(location.search); const v = q.get('view');
+    if (!v) return;
+    setPin(v === 'm' || v === 'd' ? v : null);
+    q.delete('view'); const rest = q.toString();
+    history.replaceState(null, '', location.pathname + (rest ? '?' + rest : '') + location.hash);
+  })();
+  function wanted() { return getPin() || (window.innerWidth < BP ? 'm' : 'd'); }
+  function switchIfNeeded() {
+    if (IDX < 0 || FRAMED) return false;
+    const want = wanted();
+    if ((want === 'm') === IS_M) return false;
+    location.replace('./' + (want === 'm' ? M[IDX] : D[IDX]) + '.dc.html' + location.search + location.hash);
+    return true;
+  }
+  const SWITCHING = switchIfNeeded();
+  let rz;
+  window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(switchIfNeeded, 150); });
+
   class DCLogic {
     constructor(props) { this.props = props || {}; this.state = {}; }
     setState(patch) {
@@ -135,16 +168,12 @@
   window.addEventListener('storage', (e) => { if (!e.key || e.key.indexOf(PFX) === 0) rerender(); });
 
   /* ---- prototype chrome ---- */
-  const M = ['Main', 'm02-search', 'm03-filters', 'm04-designs', 'm05-design-detail', 'm06-profile', 'm07-reviews', 'm08-book-service', 'm09-book-time', 'm10-guest', 'm11-deposit', 'm12-status', 'm13-checkin', 'm14-review', 'm15-chat', 'm16-signup', 'm17-setup', 'm18-rules', 'm19-camera', 'm20-availability', 'm21-request', 'm22-dashboard', 'm23-complete', 'm24-insights', 'm25-post-design', 'm26-offers', 'm27-design-requests', 'm28-make-offer'];
-  const D = ['d01-home', 'd02-search', 'd03-filters', 'd04-designs', 'd05-design-detail', 'd06-profile', 'd07-reviews', 'd08-book-service', 'd09-book-time', 'd10-guest', 'd11-deposit', 'd12-status', 'd13-checkin', 'd14-review', 'd15-chat', 'd16-signup', 'd17-setup', 'd18-rules', 'd19-camera', 'd20-availability', 'd21-request', 'd22-dashboard', 'd23-complete', 'd24-insights', 'd25-post-design', 'd26-offers', 'd27-design-requests', 'd28-make-offer'];
-
   function addPrototypeBar(isMobile) {
-    const file = (location.pathname.split('/').pop() || '').replace('.dc.html', '');
-    let i = M.indexOf(file);
-    if (i < 0) i = D.indexOf(file);
-    if (i < 0) return;
-    const other = (isMobile ? D[i] : M[i]) + '.dc.html';
-    const links = '<a href="./' + other + '">' + (isMobile ? 'Desktop version' : 'Mobile version') + '</a>' +
+    if (IDX < 0) return;
+    const pinned = getPin();
+    const other = (isMobile ? D[IDX] : M[IDX]) + '.dc.html';
+    const links = (pinned ? '<a href="./' + other + '?view=auto">Fit to window</a>'
+        : (isMobile ? '' : '<a href="./' + other + '?view=m">Phone view</a>')) +
       '<a href="./demo.html">Live demo</a>' +
       '<a href="./index.html">All screens</a>' +
       '<a href="#" data-reset>Reset demo</a>';
@@ -188,6 +217,7 @@
   }
 
   document.addEventListener('DOMContentLoaded', function () {
+    if (SWITCHING) return;
     const tpl = document.getElementById('dc-tpl');
     const root = document.getElementById('dc-root');
     if (!tpl || !root) return;

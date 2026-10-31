@@ -17,7 +17,7 @@
 <div class="dpage">
   <header class="dhead"><div class="in">
     <a class="wm" href="d01-home.dc.html">KUARTE</a>
-    <label class="search" style="max-width: 520px; cursor: text"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="strong">Gel extensions</span><span class="cap" style="margin-left: auto">near Gredu, Panabo</span></label>
+    <form class="search" action="d02-search.dc.html" method="get" role="search" style="max-width: 520px"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input type="search" name="q" value="{{q}}" placeholder="Search techs, designs, services" aria-label="Search" autocomplete="off"><span class="cap" style="white-space: nowrap">near Gredu, Panabo</span></form>
     <nav class="dnav grow" aria-label="Main"><a class="on" href="d01-home.dc.html">Explore</a><a href="d04-designs.dc.html">Designs</a><a href="d12-status.dc.html">My bookings</a><a href="d15-chat.dc.html">Messages</a></nav>
     <span class="av s">MS</span>
   </div></header>
@@ -73,7 +73,9 @@
 class Component extends DCLogic {
   renderVals() {
     const B = './assets/';
+    const q = (() => { try { return new URLSearchParams(location.search).get('q'); } catch (e) { return null; } })();
     return {
+      q: q || 'Gel extensions',
       techs: [
         { name: 'Viper Cullen Nail Studio', price: 350, rating: '4.9', count: 38, dist: '1.2 km', area: 'Gredu', modes: 'Walk-in · Home service', next: 'Today, 2:30 PM', badge: 'Top Rated', bcls: 'gold', img: B + 'n5-autumn-florals.svg', alt: 'Autumn florals by Viper Cullen', ring: 'inset 0 0 0 1.5px #5E1720' },
         { name: 'Killjoy Nails', price: 300, rating: '4.8', count: 21, dist: '2.4 km', area: 'New Visayas', modes: 'Home service only', next: 'Tomorrow, 10:00 AM', badge: 'Reliable', bcls: '', img: B + 'n6-emerald-cateye.svg', alt: 'Emerald cat-eye by Killjoy Nails', ring: 'none' },

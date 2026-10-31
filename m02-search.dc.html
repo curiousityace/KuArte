@@ -17,7 +17,7 @@
 <div class="scr">
   <div class="top" style="padding-bottom: 10px">
     <a class="ib" href="Main.dc.html" aria-label="Back"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></a>
-    <label class="search" style="cursor: text"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="strong" style="font-size: 15px">Gel extensions</span></label>
+    <form class="search" action="m02-search.dc.html" method="get" role="search"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input type="search" name="q" value="{{q}}" placeholder="Search techs, designs, services" aria-label="Search" enterkeyhint="search" autocomplete="off"></form>
     <a class="ib" href="m03-filters.dc.html" aria-label="Filters"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h9M17 6h3M4 12h3M11 12h9M4 18h11M19 18h1"/><circle cx="15" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="17" cy="18" r="2"/></svg></a>
   </div>
   <div style="padding: 0 20px 12px; display: flex; flex-direction: column; gap: 12px">
@@ -76,7 +76,7 @@
 <div id="dc-root"></div>
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
 class Component extends DCLogic {
-  renderVals() { return {}; }
+  renderVals() { const q = (() => { try { return new URLSearchParams(location.search).get('q'); } catch (e) { return null; } })(); return { q: q || 'Gel extensions' }; }
 }
 </script>
 </body>
