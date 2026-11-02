@@ -45,6 +45,7 @@
     <div class="tabs" role="tablist" aria-label="Scenario">
       <button class="on" data-s="booking" role="tab" aria-selected="true">Booking request</button>
       <button data-s="design" role="tab" aria-selected="false">Post a design</button>
+      <button data-s="checkin" role="tab" aria-selected="false">Check-in</button>
       <button data-s="chat" role="tab" aria-selected="false">Chat</button>
     </div>
     <button class="ghost" id="reset">Reset demo</button>
@@ -85,6 +86,15 @@
         '<li><b>Customer:</b> Viper\'s offer now shows that quote. Pick one of the times and accept.</li>' +
         '<li><b>Tech:</b> My offers shows Chosen, and the booking is in Upcoming.</li></ol>' +
         '<p class="note">Offers from other techs are sample data.</p>'
+    },
+    checkin: {
+      c: './m13-checkin.dc.html', t: './m22-dashboard.dc.html', who: 'Maria, on the day',
+      html: '<h2>Check-in</h2><ol>' +
+        '<li><b>Customer:</b> tap On my way. Viper\'s Upcoming list shows "Customer on the way".</li>' +
+        '<li><b>Customer:</b> tap 10 min under "Running late?". It goes to Viper as a chat message and shows on the booking.</li>' +
+        '<li><b>Customer:</b> tap I\'m here. Viper sees "Customer arrived".</li>' +
+        '<li><b>Tech:</b> tap the bell to see every update in one list.</li></ol>' +
+        '<p class="note">If nobody checks in 15 minutes after the start time, these records decide the no-show refund.</p>'
     },
     chat: {
       c: './chat.html', t: './chat.html?as=tech', who: 'Maria, chatting with Viper',

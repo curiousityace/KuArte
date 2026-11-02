@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#5E1720">
 <link rel="icon" href="./assets/photos/favicon-64.png" type="image/png">
+<script src="./shared.js" defer></script>
 <title>KuArte · Your details (desktop)</title>
 <script src="./support.js"></script>
 <link rel="stylesheet" href="./kuarte.css">
@@ -41,7 +42,7 @@
         </div>
         <div class="field">
           <span class="flabel">Enter the 6-digit code we texted you</span>
-          <div class="otp" role="group" aria-label="Verification code"><span>4</span><span>8</span><span>2</span><span class="on">0</span><span></span><span></span></div>
+          <div class="otp" role="group" aria-label="Verification code"><input type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="1" aria-label="Digit 1"><input type="text" inputmode="numeric" autocomplete="off" maxlength="1" aria-label="Digit 2"><input type="text" inputmode="numeric" autocomplete="off" maxlength="1" aria-label="Digit 3"><input type="text" inputmode="numeric" autocomplete="off" maxlength="1" aria-label="Digit 4"><input type="text" inputmode="numeric" autocomplete="off" maxlength="1" aria-label="Digit 5"><input type="text" inputmode="numeric" autocomplete="off" maxlength="1" aria-label="Digit 6"></div>
           <span class="cap">Resend code in 0:42 · We also text your confirmation and reminders here</span>
         </div>
         <div class="field"><label for="dg-note">Note for Viper (optional)</label><textarea id="dg-note" class="inp">Same length as the photo please. A little darker chrome if possible.</textarea></div>

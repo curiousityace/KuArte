@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#5E1720">
 <link rel="icon" href="./assets/photos/favicon-64.png" type="image/png">
+<script src="./shared.js" defer></script>
 <title>KuArte for techs · Insights (desktop)</title>
 <script src="./support.js"></script>
 <link rel="stylesheet" href="./kuarte.css">
@@ -17,7 +18,7 @@
 <div class="dpage">
   <header class="dhead"><div class="in">
     <a class="wm" href="d22-dashboard.dc.html" aria-label="KuArte home"><img class="logo" src="./assets/photos/logo-h.png" alt="KuArte"></a><span class="badge">For nail techs</span>
-    <nav class="dnav grow" aria-label="Tech"><a href="d22-dashboard.dc.html">Bookings</a><a href="d21-request.dc.html">Requests</a><a href="d19-camera.dc.html">Portfolio</a><a href="d20-availability.dc.html">Availability</a><a class="on" href="d24-insights.dc.html">Insights</a></nav>
+    <nav class="dnav grow" aria-label="Tech"><a href="d22-dashboard.dc.html">Bookings</a><a href="d21-request.dc.html">Requests</a><a href="chat.html?as=tech">Messages</a><a href="d19-camera.dc.html">Portfolio</a><a href="d20-availability.dc.html">Availability</a><a class="on" href="d24-insights.dc.html">Insights</a></nav>
     <button type="button" class="av s" data-soon="Account settings" data-msg="Account settings are coming soon." aria-label="Your account">VC</button>
   </div></header>
   <div class="dwrap">
@@ -50,7 +51,7 @@
           <p style="font: 600 22px/1.25 'Playfair Display', serif">Show up first in Panabo searches for {{boostDays}}</p>
           <p class="sm" style="color: #E9D3D5">Boosted spots are labeled Sponsored. Your rating and reviews still show as-is.</p>
           <div class="seg sl dark" role="radiogroup" aria-label="Boost length" style="--n: 2; --i: {{boostI}}"><sc-for list="{{boosts}}" as="b" hint-placeholder-count="2"><button type="button" role="radio" aria-checked="{{b.checked}}" class="{{b.cls}}" onClick="{{b.pick}}">{{b.name}}</button></sc-for></div>
-          <button class="btn bgold">Boost for [BOOST PRICE]</button>
+          <button class="btn bgold" type="button" data-soon="Boosts" data-msg="Boosts are coming soon. The price for 3 and 7 days is still being set.">Boost for [BOOST PRICE]</button>
         </div>
         <div class="card pad" style="display: flex; flex-direction: column; gap: 6px">
           <span class="sm strong">October payouts</span>

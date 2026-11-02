@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#5E1720">
 <link rel="icon" href="./assets/photos/favicon-64.png" type="image/png">
+<script src="./shared.js" defer></script>
 <title>KuArte for techs · Profile and services</title>
 <script src="./support.js"></script>
 <link rel="stylesheet" href="./kuarte.css">
@@ -27,7 +28,7 @@
     </div>
     <div class="row" style="gap: 14px">
       <div style="position: relative"><span class="av l">VC</span><button class="ib dark" type="button" data-soon="Profile photo" data-msg="Updating your profile photo is coming soon." aria-label="Change photo" style="position: absolute; right: -4px; bottom: -4px; width: 34px; height: 34px"><svg class="i s" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></button></div>
-      <div class="field grow"><label for="s-bio">Short bio</label><input id="s-bio" class="inp" value="Gel and chrome specialist, 6 years"></div>
+      <div class="field grow"><label for="s-bio">Short bio</label><input id="s-bio" class="inp" value="Gel and chrome specialist, 6 years" onInput="{{typed}}"><span class="saved {{savedCls}}" aria-live="polite">{{savedTxt}}</span></div>
     </div>
     <div class="card" style="padding: 0 16px">
       <div class="row between" style="padding: 14px 0; border-bottom: 1px solid #EADFE0"><div class="col" style="gap: 1px"><span class="sm strong" id="m17-walk">Walk-in</span><span class="cap">{{walkCap}}</span></div><button class="tog {{walkCls}}" type="button" role="switch" aria-checked="{{walkAria}}" aria-labelledby="m17-walk" onClick="{{flipWalk}}"></button></div>
@@ -36,9 +37,9 @@
     <div class="col" style="gap: 8px">
       <div class="row between"><span class="lbl">Service menu</span><span class="cap">Prices show as "starts at"</span></div>
       <div class="card" style="padding: 0 16px">
-        <div class="row" style="padding: 12px 0; border-bottom: 1px solid #EADFE0; gap: 10px"><div class="col grow" style="gap: 1px"><span class="sm strong">Gel manicure</span><span class="cap">1 hr · from ₱350</span></div><button class="ib" aria-label="Edit Gel manicure" style="width: 36px; height: 36px"><svg class="i s" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/></svg></button></div>
-        <div class="row" style="padding: 12px 0; border-bottom: 1px solid #EADFE0; gap: 10px"><div class="col grow" style="gap: 1px"><span class="sm strong">Gel extensions</span><span class="cap">1 hr 30 min · from ₱450</span></div><button class="ib" aria-label="Edit Gel extensions" style="width: 36px; height: 36px"><svg class="i s" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/></svg></button></div>
-        <div class="row" style="padding: 12px 0; gap: 10px"><div class="col grow" style="gap: 1px"><span class="sm strong">Chrome nail art · add-on</span><span class="cap">+30 min · +₱100</span></div><button class="ib" aria-label="Edit Chrome nail art" style="width: 36px; height: 36px"><svg class="i s" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/></svg></button></div>
+        <div class="row" style="padding: 12px 0; border-bottom: 1px solid #EADFE0; gap: 10px"><div class="col grow" style="gap: 1px"><span class="sm strong">Gel manicure</span><span class="cap">1 hr · from ₱350</span></div><button class="ib" type="button" data-soon="Editing services" data-msg="Editing a service is coming soon." aria-label="Edit Gel manicure" style="width: 36px; height: 36px"><svg class="i s" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/></svg></button></div>
+        <div class="row" style="padding: 12px 0; border-bottom: 1px solid #EADFE0; gap: 10px"><div class="col grow" style="gap: 1px"><span class="sm strong">Gel extensions</span><span class="cap">1 hr 30 min · from ₱450</span></div><button class="ib" type="button" data-soon="Editing services" data-msg="Editing a service is coming soon." aria-label="Edit Gel extensions" style="width: 36px; height: 36px"><svg class="i s" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/></svg></button></div>
+        <div class="row" style="padding: 12px 0; gap: 10px"><div class="col grow" style="gap: 1px"><span class="sm strong">Chrome nail art · add-on</span><span class="cap">+30 min · +₱100</span></div><button class="ib" type="button" data-soon="Editing services" data-msg="Editing a service is coming soon." aria-label="Edit Chrome nail art" style="width: 36px; height: 36px"><svg class="i s" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/></svg></button></div>
       </div>
       <button class="btn bg full" type="button" data-soon="Adding a service" data-msg="Adding a service is coming soon."><svg class="i s" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Add a service</button>
     </div>
@@ -51,7 +52,7 @@
 <div id="dc-root"></div>
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
 class Component extends DCLogic {
-  constructor(p) { super(p); this.state = { walk: true, home: true }; }
+  constructor(p) { super(p); this.state = { walk: true, home: true, saved: 0 }; }
   renderVals() {
     const st = this.state;
     const flip = (k) => {
@@ -64,7 +65,9 @@ class Component extends DCLogic {
       walkAria: st.walk ? 'true' : 'false', homeAria: st.home ? 'true' : 'false',
       walkCap: st.walk ? 'Studio pin: Gredu, Panabo' : 'Off · customers can\'t book a studio visit',
       homeCap: st.home ? 'Panabo + Carmen · ₱50 travel fee' : 'Off · customers can\'t book home service',
-      flipWalk: () => flip('walk'), flipHome: () => flip('home')
+      flipWalk: () => flip('walk'), flipHome: () => flip('home'),
+      savedCls: st.saved ? '' : 'hide', savedTxt: st.saved ? 'Saved ✓' : 'Saved ✓',
+      typed: () => { clearTimeout(this._t); this.setState({ saved: 1 }); this._t = setTimeout(() => this.setState({ saved: 0 }), 1600); }
     };
   }
 }

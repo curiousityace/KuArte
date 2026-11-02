@@ -317,3 +317,24 @@ button.tog{border:0;padding:0;cursor:pointer}
 @keyframes k-grow{from{transform:scaleY(0)}}
 .num{transition:opacity 200ms ease}
 @media (prefers-reduced-motion:reduce){.seg.sl::before,.reveal,.bars .fill{transition:none;animation:none}}
+/* notifications panel */
+.knotif{position:absolute;z-index:70;width:min(340px,calc(100vw - 24px));background:var(--white);border:1px solid var(--line);border-radius:16px;box-shadow:0 16px 40px rgba(59,13,19,.18);padding:6px;opacity:0;transform:translateY(-6px) scale(.98);transform-origin:top right;transition:opacity 160ms ease,transform 200ms var(--ease-out);text-align:left;font-family:var(--sans)}
+.scr .knotif{width:calc(100% - 24px)}
+.knotif.in{opacity:1;transform:none}
+.kn-h{display:flex;justify-content:space-between;align-items:center;padding:8px 10px 6px;font-size:14px;color:var(--ink9)}
+.kn-x{border:0;background:none;font-size:22px;line-height:1;color:var(--ink6);cursor:pointer;width:32px;height:32px;border-radius:16px}
+.kn-i{display:flex;gap:10px;align-items:flex-start;padding:10px;border-radius:12px;text-decoration:none;color:var(--ink9);transition:background-color 150ms ease}
+.kn-i span{display:flex;flex-direction:column;gap:2px;min-width:0;font-size:13px;line-height:1.35}
+.kn-i span span{font-size:12px;color:var(--ink6);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
+.kn-dot,.kn-sp{flex:none;width:8px;height:8px;border-radius:4px;margin-top:6px}
+.kn-dot{background:var(--wine7)}
+.kn-f{font-size:11px;color:var(--ink4);padding:6px 10px 6px;margin:0}
+@media (hover:hover) and (pointer:fine){.kn-i:hover{background:var(--blush1)}}
+/* code boxes as real inputs */
+.otp input{width:48px;height:56px;border-radius:12px;border:1px solid var(--blush2);background:var(--white);text-align:center;font:600 22px var(--sans);color:var(--ink9);padding:0;transition:border-color 150ms ease,box-shadow 150ms ease}
+.otp input:focus{outline:none;border:2px solid var(--wine7)}
+/* chips that leave */
+.chip.gone{animation:k-out 200ms var(--ease-out) forwards;pointer-events:none}
+@keyframes k-out{to{opacity:0;transform:scale(.85)}}
+.saved{font-size:12px;color:var(--ok);font-weight:600;transition:opacity 200ms ease}
+.saved.hide{opacity:0}

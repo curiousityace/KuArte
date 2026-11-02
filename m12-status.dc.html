@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#5E1720">
 <link rel="icon" href="./assets/photos/favicon-64.png" type="image/png">
+<script src="./shared.js" defer></script>
 <title>KuArte · Booking status</title>
 <script src="./support.js"></script>
 <link rel="stylesheet" href="./kuarte.css">
@@ -69,7 +70,7 @@
     </div>
     <sc-if value="{{canCancel}}" hint-placeholder-val="{{ true }}">
       <div class="row" style="gap: 10px">
-        <button class="btn bg" style="flex: 1">Reschedule</button>
+        <button class="btn bg" type="button" style="flex: 1" data-soon="Rescheduling" data-msg="Rescheduling is coming soon. For now, cancel within the policy and book a new time.">Reschedule</button>
         <button class="btn bd" style="flex: 1" onClick="{{askCancel}}">Cancel</button>
       </div>
     </sc-if>

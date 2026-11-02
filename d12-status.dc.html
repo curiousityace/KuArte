@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#5E1720">
 <link rel="icon" href="./assets/photos/favicon-64.png" type="image/png">
+<script src="./shared.js" defer></script>
 <title>KuArte · My bookings (desktop)</title>
 <script src="./support.js"></script>
 <link rel="stylesheet" href="./kuarte.css">
@@ -70,7 +71,7 @@
             <div class="row between sm"><span>Deposit paid (held by KuArte)</span><span>₱{{b.deposit}}</span></div>
             <div class="row between sm"><span>Pay at your visit</span><span>about ₱{{b.rest}}</span></div>
             <sc-if value="{{canCancel}}" hint-placeholder-val="{{ true }}">
-              <div class="row" style="gap: 10px; flex-wrap: wrap; padding-top: 4px"><a class="btn sm bs" href="d15-chat.dc.html">Message Viper</a><button class="btn sm bg">Reschedule</button><button class="btn sm bd" onClick="{{askCancel}}">Cancel</button></div>
+              <div class="row" style="gap: 10px; flex-wrap: wrap; padding-top: 4px"><a class="btn sm bs" href="d15-chat.dc.html">Message Viper</a><button class="btn sm bg" type="button" data-soon="Rescheduling" data-msg="Rescheduling is coming soon. For now, cancel within the policy and book a new time.">Reschedule</button><button class="btn sm bd" onClick="{{askCancel}}">Cancel</button></div>
             </sc-if>
             <sc-if value="{{asking}}" hint-placeholder-val="{{ false }}">
               <div class="banner" role="group" aria-label="Confirm cancellation" style="padding: 16px; border-radius: 14px; border: 1.5px solid #B42335; display: flex; flex-direction: column; gap: 10px">

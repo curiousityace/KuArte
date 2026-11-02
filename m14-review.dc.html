@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#5E1720">
 <link rel="icon" href="./assets/photos/favicon-64.png" type="image/png">
+<script src="./shared.js" defer></script>
 <title>KuArte · Leave a review</title>
 <script src="./support.js"></script>
 <link rel="stylesheet" href="./kuarte.css">
@@ -45,26 +46,29 @@
       <div class="col" style="gap: 4px"><div class="ph" style="height: 120px; border-radius: 12px"><img src="./assets/photos/burgundy-gloss.jpg" alt="Your reference"></div><span class="lbl">Reference</span></div>
       <div class="col" style="gap: 4px"><div class="ph" style="height: 120px; border-radius: 12px"><img src="./assets/photos/burgundy-gloss.jpg" alt="Result photo taken at the booking"><span class="ver" style="left: 6px; top: 6px"><svg class="i xs" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>Verified</span></div><span class="lbl">Result, taken by Viper</span></div>
     </div>
+    <button class="btn bg full" type="button" data-soon="Photo upload" data-msg="Adding your own photo to a review is coming soon.">+ Add your own photo</button>
     <div class="field">
       <label for="r-text">Tell others about it (optional)</label>
       <textarea id="r-text" class="inp">Chrome came out exactly like my photo. Clean work and on time.</textarea>
     </div>
-    <label class="row" style="gap: 10px; cursor: pointer; align-items: flex-start"><span class="check on"><svg class="i xs" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width: 3"><path d="m5 12 5 5L20 7"/></svg></span><span class="sm" style="color: #22161A">Let Viper add the result photo to her portfolio as Verified</span></label>
+    <label class="row" style="gap: 10px; cursor: pointer; align-items: flex-start"><span class="check {{shareCls}}" role="checkbox" aria-checked="{{shareAria}}" tabindex="0" onClick="{{toggleShare}}"><svg class="i xs" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width: 3"><path d="m5 12 5 5L20 7"/></svg></span><span class="sm" style="color: #22161A">Let Viper add the result photo to her portfolio as Verified</span></label>
   </div>
   <div class="foot">
-    <a class="btn bp full" href="Main.dc.html?toast=Review%20posted.%20Thanks%20for%20helping%20others%20choose.">Post review</a>
+    <a class="btn bp full" href="Main.dc.html?toast=Review%20posted.%20Thanks%20for%20helping%20others%20choose." onClick="{{post}}">Post review</a>
   </div>
 </div>
 </template>
 <div id="dc-root"></div>
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
 class Component extends DCLogic {
-  constructor(p) { super(p); this.state = { r: 5, m: 0 }; }
+  constructor(p) { super(p); this.state = { r: 5, m: 0, share: true }; }
   renderVals() {
     const st = this.state;
     const stars = [1, 2, 3, 4, 5].map((n) => ({ col: n <= st.r ? '#C49A45' : '#E9D3D5', aria: n + ' star' + (n > 1 ? 's' : ''), pick: () => this.setState({ r: n }) }));
     return {
       stars,
+      shareCls: st.share ? 'on' : '', shareAria: st.share ? 'true' : 'false', toggleShare: () => this.setState({ share: !st.share }),
+      post: () => { const el = document.getElementById('r-text'); if (window.KU) KU.set('review', { stars: st.r, match: st.m, text: el ? el.value.trim() : '', share: st.share }); },
       m0: st.m === 0 ? 'on' : '', m1: st.m === 1 ? 'on' : '', m2: st.m === 2 ? 'on' : '',
       mYes: () => this.setState({ m: 0 }), mPart: () => this.setState({ m: 1 }), mNo: () => this.setState({ m: 2 })
     };

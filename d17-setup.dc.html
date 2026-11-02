@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#5E1720">
 <link rel="icon" href="./assets/photos/favicon-64.png" type="image/png">
+<script src="./shared.js" defer></script>
 <title>KuArte for techs · Profile and services (desktop)</title>
 <script src="./support.js"></script>
 <link rel="stylesheet" href="./kuarte.css">
@@ -18,7 +19,7 @@
   <header class="dhead"><div class="in">
     <a class="wm" href="d16-signup.dc.html" aria-label="KuArte home"><img class="logo" src="./assets/photos/logo-h.png" alt="KuArte"></a><span class="badge">For nail techs</span>
     <span class="grow"></span>
-    <span class="cap">Setting up · saved automatically</span>
+    <span class="cap">Setting up · <span class="saved" aria-live="polite" style="font-size: inherit">{{savedTxt}}</span></span>
   </div></header>
   <div class="dwrap">
     <div class="dsplit">
@@ -38,9 +39,9 @@
         <div class="card pad-l" style="display: flex; flex-direction: column; gap: 18px">
           <div class="row" style="gap: 20px; flex-wrap: wrap">
             <div style="position: relative"><span class="av l">VC</span><button class="ib dark" type="button" data-soon="Profile photo" data-msg="Updating your profile photo is coming soon." aria-label="Change photo" style="position: absolute; right: -4px; bottom: -4px; width: 34px; height: 34px"><svg class="i s" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></button></div>
-            <div class="field grow" style="min-width: 260px"><label for="ds-name">Name shown to customers</label><input id="ds-name" class="inp" value="Viper Cullen Nail Studio"></div>
+            <div class="field grow" style="min-width: 260px"><label for="ds-name">Name shown to customers</label><input id="ds-name" class="inp" value="Viper Cullen Nail Studio" onInput="{{typed}}"></div>
           </div>
-          <div class="field"><label for="ds-bio">Short bio</label><input id="ds-bio" class="inp" value="Gel and chrome specialist, 6 years. Clean cuticle work, long-lasting sets."></div>
+          <div class="field"><label for="ds-bio">Short bio</label><input id="ds-bio" class="inp" onInput="{{typed}}" value="Gel and chrome specialist, 6 years. Clean cuticle work, long-lasting sets."></div>
           <div class="dgrid l" style="gap: 12px">
             <div class="opt {{walkCls}}" style="cursor: default"><div class="col grow" style="gap: 1px"><span class="sm strong" id="d17-walk">Walk-in</span><span class="cap">{{walkCap}}</span></div><button class="tog {{walkCls}}" type="button" role="switch" aria-checked="{{walkAria}}" aria-labelledby="d17-walk" onClick="{{flipWalk}}"></button></div>
             <div class="opt {{homeCls}}" style="cursor: default"><div class="col grow" style="gap: 1px"><span class="sm strong" id="d17-home">Home service</span><span class="cap">{{homeCap}}</span></div><button class="tog {{homeCls}}" type="button" role="switch" aria-checked="{{homeAria}}" aria-labelledby="d17-home" onClick="{{flipHome}}"></button></div>
@@ -49,10 +50,10 @@
         <div class="col" style="gap: 10px">
           <div class="row between"><h2 class="h2">Service menu</h2><button class="btn sm bg" type="button" data-soon="Adding a service" data-msg="Adding a service is coming soon."><svg class="i s" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Add a service</button></div>
           <div class="card tbox"><table class="dtable"><thead><tr><th>Service</th><th>Time</th><th>Starts at</th><th><span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Edit</span></th></tr></thead><tbody>
-            <tr><td class="strong">Gel manicure</td><td>1 hr</td><td class="price">₱350</td><td style="text-align: right"><button class="lnk" style="border: 0; background: none; cursor: pointer">Edit</button></td></tr>
-            <tr><td class="strong">Gel extensions</td><td>1 hr 30 min</td><td class="price">₱450</td><td style="text-align: right"><button class="lnk" style="border: 0; background: none; cursor: pointer">Edit</button></td></tr>
-            <tr><td class="strong">Acrylic set</td><td>2 hr</td><td class="price">₱500</td><td style="text-align: right"><button class="lnk" style="border: 0; background: none; cursor: pointer">Edit</button></td></tr>
-            <tr><td class="strong">Chrome nail art <span class="badge" style="margin-left: 6px">Add-on</span></td><td>+30 min</td><td class="price">+₱100</td><td style="text-align: right"><button class="lnk" style="border: 0; background: none; cursor: pointer">Edit</button></td></tr>
+            <tr><td class="strong">Gel manicure</td><td>1 hr</td><td class="price">₱350</td><td style="text-align: right"><button class="lnk" type="button" data-soon="Editing services" data-msg="Editing a service is coming soon." style="border: 0; background: none; cursor: pointer">Edit</button></td></tr>
+            <tr><td class="strong">Gel extensions</td><td>1 hr 30 min</td><td class="price">₱450</td><td style="text-align: right"><button class="lnk" type="button" data-soon="Editing services" data-msg="Editing a service is coming soon." style="border: 0; background: none; cursor: pointer">Edit</button></td></tr>
+            <tr><td class="strong">Acrylic set</td><td>2 hr</td><td class="price">₱500</td><td style="text-align: right"><button class="lnk" type="button" data-soon="Editing services" data-msg="Editing a service is coming soon." style="border: 0; background: none; cursor: pointer">Edit</button></td></tr>
+            <tr><td class="strong">Chrome nail art <span class="badge" style="margin-left: 6px">Add-on</span></td><td>+30 min</td><td class="price">+₱100</td><td style="text-align: right"><button class="lnk" type="button" data-soon="Editing services" data-msg="Editing a service is coming soon." style="border: 0; background: none; cursor: pointer">Edit</button></td></tr>
           </tbody></table></div>
           <span class="cap">Prices show as "starts at". You set the final price at the visit, and the customer confirms it.</span>
         </div>
@@ -65,7 +66,7 @@
 <div id="dc-root"></div>
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1100}}'>
 class Component extends DCLogic {
-  constructor(p) { super(p); this.state = { walk: true, home: true }; }
+  constructor(p) { super(p); this.state = { walk: true, home: true, saved: 0 }; }
   renderVals() {
     const st = this.state;
     const flip = (k) => {
@@ -78,7 +79,9 @@ class Component extends DCLogic {
       walkAria: st.walk ? 'true' : 'false', homeAria: st.home ? 'true' : 'false',
       walkCap: st.walk ? 'Studio pin: Gredu, Panabo' : 'Off · customers can\'t book a studio visit',
       homeCap: st.home ? 'Panabo + Carmen · ₱50 travel fee' : 'Off · customers can\'t book home service',
-      flipWalk: () => flip('walk'), flipHome: () => flip('home')
+      flipWalk: () => flip('walk'), flipHome: () => flip('home'),
+      savedTxt: st.saved ? 'Saved ✓' : 'saved automatically',
+      typed: () => { clearTimeout(this._t); this.setState({ saved: 1 }); this._t = setTimeout(() => this.setState({ saved: 0 }), 1600); }
     };
   }
 }

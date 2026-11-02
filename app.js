@@ -244,6 +244,23 @@
   });
 
   /* ---------- reviews filter ---------- */
+  var mine = (function () { try { return JSON.parse(localStorage.getItem('kuarte.review') || 'null'); } catch (e) { return null; } })();
+  var rlist = document.getElementById('rlist');
+  if (mine && rlist) {
+    var M = { 0: ['Matched', 'ok', 'matched'], 1: ['Partly', 'wait', 'partly'], 2: ['No', 'bad', 'partly'] }[mine.match || 0];
+    var st = ''; for (var k = 1; k <= 5; k++) st += '<svg class="i xs f' + (k <= mine.stars ? '' : ' off') + '" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg>';
+    var art = document.createElement('article');
+    art.className = 'card rcard';
+    art.setAttribute('data-rv', M[2] + ',photos');
+    art.style.boxShadow = 'inset 0 0 0 1.5px #5E1720';
+    art.innerHTML = '<div class="row" style="gap: 10px"><span class="av s">MS</span><div class="col grow" style="gap: 2px"><span class="sm strong">Maria S. <span class="badge" style="margin-left: 6px">Just now · your review</span></span><span class="cap">Gel extensions · Nov 4</span></div><span class="pill ' + M[1] + '">' + M[0] + '</span></div>' +
+      '<span class="stars" aria-label="' + mine.stars + ' out of 5 stars">' + st + '</span>' +
+      '<div class="refres"><div class="col" style="gap: 4px"><div class="ph"><img src="assets/photos/burgundy-gloss.jpg" alt="Reference photo"></div><span class="lbl">Reference</span></div><div class="col" style="gap: 4px"><div class="ph"><img src="assets/photos/burgundy-gloss.jpg" alt="Result photo"><span class="ver">Verified</span></div><span class="lbl">Result</span></div></div>' +
+      '<p class="sm" style="color: #22161A"></p>';
+    art.querySelector('p').textContent = mine.text || '';
+    rlist.insertBefore(art, rlist.firstChild);
+    var cnt = document.getElementById('rcount'); if (cnt) cnt.textContent = 'Showing 6 of 39 reviews (sample), including yours.';
+  }
   var rchips = document.querySelectorAll('[data-rf]');
   if (rchips.length) {
     var cards = document.querySelectorAll('[data-rv]');
@@ -277,7 +294,7 @@
   ];
   var PHONE = /(\+?63|0)\s?9\d{2}[\s-]?\d{3}[\s-]?\d{4}/;
   function read(k, d) { try { var v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } }
-  function load() { return read(KEY, null) || SEED.slice(); }
+  function load() { return window.KUS ? KUS.chat() : (read(KEY, null) || SEED.slice()); }
   function save(list) { try { localStorage.setItem(KEY, JSON.stringify(list)); } catch (e) { /* storage blocked: this tab only */ } }
   function clock() { return new Date().toLocaleTimeString('en-PH', { hour: 'numeric', minute: '2-digit' }); }
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
@@ -312,6 +329,7 @@
     var nav = document.querySelector('.hnav');
     if (nav) nav.innerHTML = '<a href="m22-dashboard.dc.html">Bookings</a><a href="m21-request.dc.html">Requests</a><a class="on" aria-current="page" href="chat.html?as=tech">Messages</a><a href="m19-camera.dc.html">Portfolio</a><a href="m24-insights.dc.html">Insights</a>';
     var av = document.getElementById('hd-av'); if (av) av.textContent = 'VC';
+    var bell = document.getElementById('hd-bell'); if (bell) bell.setAttribute('data-notify', 'tech');
   }
 
   var box = document.getElementById('msgs');

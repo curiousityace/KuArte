@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#5E1720">
 <link rel="icon" href="./assets/photos/favicon-64.png" type="image/png">
+<script src="./shared.js" defer></script>
 <title>KuArte for techs · Availability (desktop)</title>
 <script src="./support.js"></script>
 <link rel="stylesheet" href="./kuarte.css">
@@ -17,7 +18,7 @@
 <div class="dpage">
   <header class="dhead"><div class="in">
     <a class="wm" href="d22-dashboard.dc.html" aria-label="KuArte home"><img class="logo" src="./assets/photos/logo-h.png" alt="KuArte"></a><span class="badge">For nail techs</span>
-    <nav class="dnav grow" aria-label="Tech"><a href="d22-dashboard.dc.html">Bookings</a><a href="d21-request.dc.html">Requests</a><a href="d19-camera.dc.html">Portfolio</a><a class="on" href="d20-availability.dc.html">Availability</a><a href="d24-insights.dc.html">Insights</a></nav>
+    <nav class="dnav grow" aria-label="Tech"><a href="d22-dashboard.dc.html">Bookings</a><a href="d21-request.dc.html">Requests</a><a href="chat.html?as=tech">Messages</a><a href="d19-camera.dc.html">Portfolio</a><a class="on" href="d20-availability.dc.html">Availability</a><a href="d24-insights.dc.html">Insights</a></nav>
     <button type="button" class="av s" data-soon="Account settings" data-msg="Account settings are coming soon." aria-label="Your account">VC</button>
   </div></header>
   <div class="dwrap">
@@ -34,7 +35,7 @@
           </sc-for>
         </div>
         <div class="col" style="gap: 8px"><span class="lbl">Break between appointments</span><div class="seg sl" role="radiogroup" aria-label="Break between appointments" style="--n: 3; --i: {{brkI}}"><sc-for list="{{brks}}" as="b" hint-placeholder-count="3"><button type="button" role="radio" aria-checked="{{b.checked}}" class="{{b.cls}}" onClick="{{b.pick}}">{{b.name}}</button></sc-for></div><span class="cap">{{brkNote}}</span></div>
-        <div class="col" style="gap: 8px"><span class="lbl">Blocked dates</span><div class="wrap-row"><span class="chip">Nov 12 · Personal</span><span class="chip">Dec 24–25 · Holiday</span><button class="chip" style="border-style: dashed; color: #5E1720">+ Block a date</button></div></div>
+        <div class="col" style="gap: 8px"><span class="lbl">Blocked dates</span><div class="wrap-row"><sc-for list="{{blocks}}" as="k" hint-placeholder-count="2"><span class="chip {{k.cls}}">{{k.name}}<button type="button" onClick="{{k.del}}" aria-label="Remove {{k.name}}" style="border: 0; background: none; padding: 0 0 0 4px; cursor: pointer; color: inherit; display: inline-flex"><svg class="i xs" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button></span></sc-for><button class="chip" type="button" data-soon="Blocking dates" data-msg="Picking a date to block is coming soon." style="border-style: dashed; color: #5E1720">+ Block a date</button></div></div>
       </div>
       <div class="dmain">
         <div class="card pad-l" style="display: flex; flex-direction: column; gap: 14px">
@@ -61,7 +62,7 @@
 <div id="dc-root"></div>
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1100}}'>
 class Component extends DCLogic {
-  constructor(p) { super(p); this.state = { open: [true, true, true, true, true, true, false], brk: 1 }; }
+  constructor(p) { super(p); this.state = { open: [true, true, true, true, true, true, false], brk: 1, blocks: ['Nov 12 · Personal', 'Dec 24–25 · Holiday'], going: null }; }
   renderVals() {
     const N = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     const H = ['9 AM – 8 PM', '9 AM – 8 PM', '9 AM – 8 PM', '9 AM – 8 PM', '9 AM – 8 PM', '8 AM – 6 PM', '9 AM – 5 PM'];
@@ -80,8 +81,10 @@ class Component extends DCLogic {
       []
     ];
     const lbl = ['Mon 2', 'Tue 3', 'Wed 4', 'Thu 5', 'Fri 6', 'Sat 7', 'Sun 8'];
+    const gone = this.state.going;
+    const blocks = this.state.blocks.map((n) => ({ name: n, cls: gone === n ? 'gone' : '', del: () => { this.setState({ going: n }); setTimeout(() => this.setState({ blocks: this.state.blocks.filter((x) => x !== n), going: null }), 200); if (window.KU && KU.toast) KU.toast('Unblocked ' + n.split(' · ')[0] + '. Customers can book that day again.'); } }));
     return {
-      ...brk,
+      ...brk, blocks,
       days: N.map((n, i) => ({ name: n, cls: o[i] ? 'on' : '', aria: n + (o[i] ? ' open' : ' closed'), hours: o[i] ? H[i] : 'Closed', col: o[i] ? '#22161A' : '#6B5A5E', border: i < 6 ? '1px solid #EADFE0' : '0', toggle: () => { const c = o.slice(); c[i] = !c[i]; this.setState({ open: c }); } })),
       week: lbl.map((l, i) => ({ label: l, bg: o[i] ? '#FCF8F7' : '#EADFE0', items: o[i] ? items[i] : [] }))
     };

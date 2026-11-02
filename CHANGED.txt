@@ -1,9 +1,7 @@
 Files changed or added since the previous zip. Upload everything in this folder (except this note) to the root of your repository, replacing the old files.
 
 .vercelignore
-README.md
-app-data.js
-app.css
+KuArte-explainer.pdf
 app.js
 chat.html
 d08-book-service.dc.html
@@ -13,7 +11,6 @@ d11-deposit.dc.html
 d12-status.dc.html
 d13-checkin.dc.html
 d14-review.dc.html
-d15-chat.dc.html
 d16-signup.dc.html
 d17-setup.dc.html
 d18-rules.dc.html
@@ -44,16 +41,27 @@ filters.html
 home.html
 index.html
 kuarte.css
-m15-chat.dc.html
+m08-book-service.dc.html
+m09-book-time.dc.html
+m10-guest.dc.html
+m11-deposit.dc.html
+m12-status.dc.html
+m13-checkin.dc.html
+m14-review.dc.html
 m16-signup.dc.html
 m17-setup.dc.html
 m18-rules.dc.html
 m19-camera.dc.html
 m20-availability.dc.html
 m21-request.dc.html
+m22-dashboard.dc.html
+m23-complete.dc.html
 m24-insights.dc.html
+m25-post-design.dc.html
+m26-offers.dc.html
+m27-design-requests.dc.html
+m28-make-offer.dc.html
 profile.html
 reviews.html
 search.html
-site.css
-support.js
+shared.js

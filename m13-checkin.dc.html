@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#5E1720">
 <link rel="icon" href="./assets/photos/favicon-64.png" type="image/png">
+<script src="./shared.js" defer></script>
 <title>KuArte · Check-in</title>
 <script src="./support.js"></script>
 <link rel="stylesheet" href="./kuarte.css">
@@ -37,7 +38,7 @@
       </div>
       <div class="col" style="gap: 6px">
         <span class="cap">Running late? Let Viper know</span>
-        <div class="row" style="gap: 6px"><span class="chip">5 min</span><span class="chip">10 min</span><span class="chip">15 min</span></div>
+        <div class="row" style="gap: 6px"><sc-for list="{{lates}}" as="l" hint-placeholder-count="3"><button class="chip {{l.cls}}" type="button" onClick="{{l.pick}}">{{l.name}}</button></sc-for></div>
       </div>
     </div>
     <div class="card pad" style="display: flex; gap: 12px; align-items: center">
@@ -55,18 +56,35 @@
 <div id="dc-root"></div>
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
 class Component extends DCLogic {
-  constructor(p) { super(p); this.state = { step: 0 }; }
+  constructor(p) { super(p); this.state = { step: 0, late: 0 }; }
   renderVals() {
-    const s = this.state.step;
+    const KU = window.KU;
+    const bk = KU ? KU.booking() : null;
+    const live = bk && bk.tech === 'viper' && bk.status === 'confirmed' ? bk : null;
+    const s = live && live.checkin ? (live.checkin === 'here' ? 2 : 1) : this.state.step;
+    const ensure = () => {
+      if (!KU) return;
+      const b = KU.booking();
+      if (!b || b.tech !== 'viper' || b.status !== 'confirmed') KU.create({ source: 'booking', tech: 'viper', customer: (b && b.customer) || 'Maria Santos', svc: 'Gel extensions + chrome nail art', mode: 'Walk-in', when: 'Wed, Nov 4 · 2:30 PM', total: 550, deposit: 150, img: 'burgundy', status: 'confirmed' });
+    };
+    const lateMins = live && live.late ? live.late : this.state.late;
+    const sendLate = (n) => {
+      ensure();
+      if (KU) KU.update({ late: n }, 'Customer running ' + n + ' min late');
+      if (window.KUS) KUS.chatPush('c', 'Running about ' + n + ' min late, sorry! On my way.');
+      this.setState({ late: n });
+      if (KU && KU.toast) KU.toast('Sent to Viper in chat: running about ' + n + ' min late.');
+    };
     return {
       b1: s === 1 ? 'bp' : 'bs', b2: s === 2 ? 'bp' : 'bs',
       youPill: s === 0 ? 'info' : (s === 1 ? 'wait' : 'ok'),
-      youLabel: s === 0 ? 'Not started' : (s === 1 ? 'On the way' : 'Arrived 2:24 PM'),
+      youLabel: s === 0 ? 'Not started' : (s === 1 ? (lateMins ? 'On the way · ' + lateMins + ' min late' : 'On the way') : 'Arrived ' + ((live && live.log && live.log.length) ? live.log[live.log.length - 1].t : '2:24 PM')),
       dist: s === 0 ? 'You are 2.1 km away' : (s === 1 ? 'About 6 min away' : 'You are at the studio'),
       meX: s === 0 ? 40 : (s === 1 ? 130 : 206),
       arrived: s === 2,
-      onWay: () => this.setState({ step: 1 }),
-      here: () => this.setState({ step: 2 })
+      lates: [5, 10, 15].map((n) => ({ name: n + ' min', cls: lateMins === n ? 'on' : '', pick: () => sendLate(n) })),
+      onWay: () => { ensure(); if (KU) KU.update({ checkin: 'onway' }, 'Customer is on the way'); this.setState({ step: 1 }); },
+      here: () => { ensure(); if (KU) KU.update({ checkin: 'here' }, 'Customer arrived'); this.setState({ step: 2 }); }
     };
   }
 }
