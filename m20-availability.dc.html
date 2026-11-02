@@ -31,7 +31,7 @@
     </div>
     <div class="col" style="gap: 8px">
       <span class="lbl">Break between appointments</span>
-      <div class="seg"><span>None</span><span class="on">15 min</span><span>30 min</span></div>
+      <div class="seg sl" role="radiogroup" aria-label="Break between appointments" style="--n: 3; --i: {{brkI}}"><sc-for list="{{brks}}" as="b" hint-placeholder-count="3"><button type="button" role="radio" aria-checked="{{b.checked}}" class="{{b.cls}}" onClick="{{b.pick}}">{{b.name}}</button></sc-for></div><span class="cap">{{brkNote}}</span>
     </div>
     <div class="col" style="gap: 8px">
       <span class="lbl">Blocked dates</span>
@@ -50,12 +50,15 @@
 <div id="dc-root"></div>
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
 class Component extends DCLogic {
-  constructor(p) { super(p); this.state = { open: [true, true, true, true, true, true, false] }; }
+  constructor(p) { super(p); this.state = { open: [true, true, true, true, true, true, false], brk: 1 }; }
   renderVals() {
     const N = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
     const H = ['9 AM – 8 PM', '9 AM – 8 PM', '9 AM – 8 PM', '9 AM – 8 PM', '9 AM – 8 PM', '8 AM – 6 PM', '9 AM – 5 PM'];
     const o = this.state.open;
+    const BR = ['None', '15 min', '30 min'], NX = ['11:00 AM', '11:15 AM', '11:30 AM'], bi = this.state.brk;
+    const brk = { brkI: bi, brkNote: 'Example: a 1-hour booking at 10:00 AM, then the next start time customers see is ' + NX[bi] + '.', brks: BR.map((n, i) => ({ name: n, cls: bi === i ? 'on' : '', checked: bi === i ? 'true' : 'false', pick: () => this.setState({ brk: i }) })) };
     return {
+      ...brk,
       days: N.map((n, i) => ({
         name: n, cls: o[i] ? 'on' : '', aria: n + (o[i] ? ' open' : ' closed'),
         hours: o[i] ? H[i] : 'Closed', col: o[i] ? '#22161A' : '#6B5A5E',

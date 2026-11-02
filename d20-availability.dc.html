@@ -16,9 +16,9 @@
 <template id="dc-tpl">
 <div class="dpage">
   <header class="dhead"><div class="in">
-    <a class="wm" href="d22-dashboard.dc.html">KUARTE</a><span class="badge">For nail techs</span>
+    <a class="wm" href="d22-dashboard.dc.html" aria-label="KuArte home"><img class="logo" src="./assets/photos/logo-h.png" alt="KuArte"></a><span class="badge">For nail techs</span>
     <nav class="dnav grow" aria-label="Tech"><a href="d22-dashboard.dc.html">Bookings</a><a href="d21-request.dc.html">Requests</a><a href="d19-camera.dc.html">Portfolio</a><a class="on" href="d20-availability.dc.html">Availability</a><a href="d24-insights.dc.html">Insights</a></nav>
-    <span class="av s">VC</span>
+    <button type="button" class="av s" data-soon="Account settings" data-msg="Account settings are coming soon." aria-label="Your account">VC</button>
   </div></header>
   <div class="dwrap">
     <div class="row between" style="flex-wrap: wrap; gap: 16px"><div class="col" style="gap: 4px"><h1 class="dtitle">Availability</h1><p class="sm">Customers only see start times that fit the service they pick.</p></div><a class="btn bp" href="d22-dashboard.dc.html?toast=You%27re%20live.%20Customers%20can%20book%20you%20now.">Save and go live</a></div>
@@ -33,7 +33,7 @@
             </div>
           </sc-for>
         </div>
-        <div class="col" style="gap: 8px"><span class="lbl">Break between appointments</span><div class="seg"><span>None</span><span class="on">15 min</span><span>30 min</span></div></div>
+        <div class="col" style="gap: 8px"><span class="lbl">Break between appointments</span><div class="seg sl" role="radiogroup" aria-label="Break between appointments" style="--n: 3; --i: {{brkI}}"><sc-for list="{{brks}}" as="b" hint-placeholder-count="3"><button type="button" role="radio" aria-checked="{{b.checked}}" class="{{b.cls}}" onClick="{{b.pick}}">{{b.name}}</button></sc-for></div><span class="cap">{{brkNote}}</span></div>
         <div class="col" style="gap: 8px"><span class="lbl">Blocked dates</span><div class="wrap-row"><span class="chip">Nov 12 · Personal</span><span class="chip">Dec 24–25 · Holiday</span><button class="chip" style="border-style: dashed; color: #5E1720">+ Block a date</button></div></div>
       </div>
       <div class="dmain">
@@ -61,11 +61,13 @@
 <div id="dc-root"></div>
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1100}}'>
 class Component extends DCLogic {
-  constructor(p) { super(p); this.state = { open: [true, true, true, true, true, true, false] }; }
+  constructor(p) { super(p); this.state = { open: [true, true, true, true, true, true, false], brk: 1 }; }
   renderVals() {
     const N = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     const H = ['9 AM – 8 PM', '9 AM – 8 PM', '9 AM – 8 PM', '9 AM – 8 PM', '9 AM – 8 PM', '8 AM – 6 PM', '9 AM – 5 PM'];
     const o = this.state.open;
+    const BR = ['None', '15 min', '30 min'], NX = ['11:00 AM', '11:15 AM', '11:30 AM'], bi = this.state.brk;
+    const brk = { brkI: bi, brkNote: 'Example: a 1-hour booking at 10:00 AM, then the next start time customers see is ' + NX[bi] + '.', brks: BR.map((n, i) => ({ name: n, cls: bi === i ? 'on' : '', checked: bi === i ? 'true' : 'false', pick: () => this.setState({ brk: i }) })) };
     const bk = (t, who) => ({ t, who, bg: '#5E1720', fg: '#FFFFFF' });
     const rq = (t, who) => ({ t, who, bg: '#FBEFD9', fg: '#5A3A0E' });
     const items = [
@@ -79,6 +81,7 @@ class Component extends DCLogic {
     ];
     const lbl = ['Mon 2', 'Tue 3', 'Wed 4', 'Thu 5', 'Fri 6', 'Sat 7', 'Sun 8'];
     return {
+      ...brk,
       days: N.map((n, i) => ({ name: n, cls: o[i] ? 'on' : '', aria: n + (o[i] ? ' open' : ' closed'), hours: o[i] ? H[i] : 'Closed', col: o[i] ? '#22161A' : '#6B5A5E', border: i < 6 ? '1px solid #EADFE0' : '0', toggle: () => { const c = o.slice(); c[i] = !c[i]; this.setState({ open: c }); } })),
       week: lbl.map((l, i) => ({ label: l, bg: o[i] ? '#FCF8F7' : '#EADFE0', items: o[i] ? items[i] : [] }))
     };

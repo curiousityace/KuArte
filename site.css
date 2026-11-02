@@ -39,6 +39,7 @@ body.m .scroll::-webkit-scrollbar { display: none; }
 /* Toast: enters from the bottom edge, leaves faster than it came */
 .ktoast { position: fixed; left: 50%; bottom: 24px; z-index: 60; display: flex; align-items: center; gap: 10px; max-width: min(400px, calc(100vw - 32px)); padding: 12px 16px; border-radius: 14px; background: #22161A; color: #FFFFFF; font: 600 14px/1.35 'DM Sans', system-ui, sans-serif; box-shadow: 0 12px 32px rgba(34, 22, 26, .3); cursor: pointer;
   opacity: 0; transform: translate(-50%, 16px); transition: opacity 260ms cubic-bezier(.23, 1, .32, 1), transform 260ms cubic-bezier(.23, 1, .32, 1); }
+.ktoast.soon svg { stroke: #E7C27A; stroke-width: 2; }
 .ktoast svg { width: 18px; height: 18px; flex: none; fill: none; stroke: #8CD3A8; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
 .ktoast.in { opacity: 1; transform: translate(-50%, 0); }
 .ktoast.out { opacity: 0; transform: translate(-50%, 8px); transition-duration: 160ms; }

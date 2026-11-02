@@ -39,12 +39,13 @@
 </head>
 <body>
   <header class="dbar">
-    <a href="./index.html" class="wm" style="color: #FCF8F7; font-size: 22px; text-decoration: none">KUARTE</a>
+    <a href="./index.html" aria-label="KuArte, all screens"><img src="./assets/photos/logo-h-light.png" alt="KuArte" style="height: 36px; width: auto; display: block"></a>
     <h1>Live demo: both sides at once</h1>
     <span class="grow"></span>
     <div class="tabs" role="tablist" aria-label="Scenario">
       <button class="on" data-s="booking" role="tab" aria-selected="true">Booking request</button>
       <button data-s="design" role="tab" aria-selected="false">Post a design</button>
+      <button data-s="chat" role="tab" aria-selected="false">Chat</button>
     </div>
     <button class="ghost" id="reset">Reset demo</button>
     <a class="ghost" href="./index.html">All screens</a>
@@ -84,6 +85,15 @@
         '<li><b>Customer:</b> Viper\'s offer now shows that quote. Pick one of the times and accept.</li>' +
         '<li><b>Tech:</b> My offers shows Chosen, and the booking is in Upcoming.</li></ol>' +
         '<p class="note">Offers from other techs are sample data.</p>'
+    },
+    chat: {
+      c: './chat.html', t: './chat.html?as=tech', who: 'Maria, chatting with Viper',
+      html: '<h2>Chat</h2><ol>' +
+        '<li><b>Customer:</b> type a message and send it.</li>' +
+        '<li><b>Tech:</b> it appears on Viper\'s phone straight away. Type a reply.</li>' +
+        '<li><b>Customer:</b> the reply shows up live.</li>' +
+        '<li>Try sending a phone number: both sides get a reminder to keep the chat in KuArte.</li></ol>' +
+        '<p class="note">Messages stay in this browser. Reset demo clears them.</p>'
     }
   };
   var fc = document.getElementById('fc'), ft = document.getElementById('ft'), guide = document.getElementById('guide');

@@ -194,16 +194,16 @@
     if (r) r.addEventListener('click', (e) => { e.preventDefault(); window.KU.reset(); location.reload(); });
   }
 
-  /* Success moments arrive as ?toast=message on the next screen */
-  function showToast() {
-    const params = new URLSearchParams(location.search);
-    const msg = params.get('toast');
-    if (!msg) return;
-    history.replaceState(null, '', location.pathname + location.hash);
+  /* Toasts: success moments arrive as ?toast=message; KU.toast() shows one on demand */
+  function toast(msg, kind) {
+    const old = document.querySelector('.ktoast');
+    if (old) old.remove();
     const t = document.createElement('div');
-    t.className = 'ktoast';
+    t.className = 'ktoast' + (kind === 'soon' ? ' soon' : '');
     t.setAttribute('role', 'status');
-    t.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg><span></span>';
+    t.innerHTML = kind === 'soon'
+      ? '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span></span>'
+      : '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg><span></span>';
     t.querySelector('span').textContent = msg;
     const host = document.querySelector('.scr') || document.body;
     host.appendChild(t);
@@ -215,6 +215,23 @@
     t.addEventListener('pointerleave', () => { timer = setTimeout(hide, 1500); });
     t.addEventListener('click', hide);
   }
+  window.KU.toast = toast;
+  function showToast() {
+    const params = new URLSearchParams(location.search);
+    const msg = params.get('toast');
+    if (!msg) return;
+    params.delete('toast');
+    const rest = params.toString();
+    history.replaceState(null, '', location.pathname + (rest ? '?' + rest : '') + location.hash);
+    toast(msg);
+  }
+  /* anything outside the prototype says so instead of doing nothing */
+  document.addEventListener('click', (e) => {
+    const el = e.target.closest && e.target.closest('[data-soon]');
+    if (!el) return;
+    e.preventDefault();
+    toast(el.getAttribute('data-msg') || ((el.getAttribute('data-soon') || 'This') + ' is coming soon.'), 'soon');
+  });
 
   document.addEventListener('DOMContentLoaded', function () {
     if (SWITCHING) return;
@@ -240,6 +257,8 @@
       tpl.content.childNodes.forEach((c) => render(c, vals, frag));
       if (first) { root.replaceChildren(frag); first = false; }
       else { const box = document.createElement('div'); box.appendChild(frag); patchChildren(root, box); }
+      /* selects follow their data-val (a value attribute alone doesn't move the selection) */
+      root.querySelectorAll('select[data-val]').forEach((el) => { if (el.value !== el.getAttribute('data-val')) el.value = el.getAttribute('data-val'); });
     };
     window.__dcRender();
     const isMobile = !!root.querySelector('.scr');

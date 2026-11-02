@@ -16,7 +16,7 @@
 <template id="dc-tpl">
 <div class="scr" style="background: #22161A">
   <div class="ph" style="height: 420px; border-radius: 0; flex: none">
-    <img src="./assets/photos/sapphire-chrome.jpg" alt="Photo just taken: emerald cat-eye nails">
+    <img src="./assets/photos/sapphire-chrome.jpg" alt="Photo just taken: sapphire chrome nails">
     <a class="ib" href="m18-rules.dc.html" aria-label="Back" style="position: absolute; left: 20px; top: 20px; border: 0"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></a>
     <span style="position: absolute; left: 20px; right: 20px; bottom: 16px; display: flex; gap: 8px; align-items: center; padding: 10px 12px; border-radius: 12px; background: rgba(34,22,26,.78); color: #FFFFFF; font-size: 12px">
       <svg class="i s" viewBox="0 0 24 24" aria-hidden="true" style="color: #8CC4A4"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
@@ -31,6 +31,7 @@
         <span class="av s b">AM</span>
         <div class="col grow" style="gap: 0"><span class="sm strong">Linked to Aria M.'s booking</span><span class="cap">Today 1:00 PM · Gel extensions</span></div>
       </div>
+      <div class="field"><label for="m19-svc">Linked service</label><select id="m19-svc" class="inp" onChange="{{pickSvc}}" data-val="{{cur}}" style="appearance: auto; cursor: pointer"><sc-for list="{{svcs}}" as="o" hint-placeholder-count="5"><option value="{{o.name}}">{{o.name}}</option></sc-for></select></div>
       <div class="col" style="gap: 8px">
         <span class="lbl">Style tags</span>
         <div class="wrap-row">
@@ -41,7 +42,7 @@
       </div>
     </div>
     <div class="foot" style="flex-direction: row">
-      <button class="btn bg" style="flex: 1">Retake</button>
+      <button class="btn bg" type="button" style="flex: 1" data-soon="Retake" data-msg="Retaking photos in KuArte is coming soon.">Retake</button>
       <a class="btn bp" href="m20-availability.dc.html?toast=Added%20to%20your%20portfolio%20as%20Verified." style="flex: 2">Add to portfolio</a>
     </div>
   </div>
@@ -50,11 +51,14 @@
 <div id="dc-root"></div>
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
 class Component extends DCLogic {
-  constructor(p) { super(p); this.state = { on: { 'Cat-eye': true, 'Almond': true, 'Gel extensions': true } }; }
+  constructor(p) { super(p); this.state = { svc: 'Gel extensions', on: { 'Cat-eye': true, 'Almond': true, 'Gel extensions': true } }; }
   renderVals() {
     const names = ['Cat-eye', 'Chrome', 'Almond', 'Long', 'Gel extensions', 'Dark', 'Minimal'];
     const on = this.state.on;
+    const SV = ['Gel manicure', 'Gel extensions', 'Gel extensions + chrome art', 'Acrylic set', 'Nail art add-on'];
     return {
+      cur: this.state.svc, svcs: SV.map((n) => ({ name: n })),
+      pickSvc: (e) => this.setState({ svc: e.target.value }),
       tags: names.map((n) => ({ name: n, cls: on[n] ? 'on' : '', toggle: () => this.setState({ on: { ...on, [n]: !on[n] } }) }))
     };
   }

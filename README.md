@@ -2,7 +2,7 @@
 
 A static website with a start page at `index.html`. It is being rebuilt as one responsive page per screen, in batches.
 
-- **Responsive now (batch 1):** `home.html`, `search.html`, `filters.html`, `designs.html`, `design-*.html` (one per design), `profile.html`, `reviews.html`. They share `app.css`, `app.js` and `app-data.js`.
+- **Responsive now:** `home.html`, `search.html`, `filters.html`, `designs.html`, `design-*.html` (one per design), `profile.html`, `reviews.html`, `chat.html` (add `?as=tech` for the nail tech's side). They share `app.css`, `app.js` and `app-data.js`.
 - **Not yet rebuilt:** the booking flow, the nail tech side and Post a design are still separate mobile (`m…`) and desktop (`d…`) screens that switch at 900px.
 - Old links such as `Main.dc.html` or `m06-profile.dc.html` forward to the new pages.
 
@@ -16,10 +16,15 @@ Every screen picks its layout from the window width: the mobile design under 900
 
 Open `demo.html` on a laptop. It shows the customer phone and Viper's phone side by side:
 
+- **Chat:** send a message on one phone and it appears on the other.
 - **Booking request:** book on the customer phone, accept on the tech phone, confirm on the customer phone. Each side updates the moment the other acts.
 - **Post a design:** post a request, send a quote from the tech side, accept it on the customer side.
 
 The two sides share one demo booking saved in this browser (localStorage). It also syncs across two tabs or windows on the same computer, but not across different devices. Use **Reset demo** before each run.
+
+## Updating a site you already deployed
+
+Each new zip has a `_changed-files` folder with only the files that changed since the previous zip, in the same folders. Upload its contents to the root of your repository and replace the old files. Vercel redeploys on its own. The folder itself is never served (see `.vercelignore`).
 
 ## Deploy to Vercel
 

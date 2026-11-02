@@ -16,16 +16,16 @@
 <template id="dc-tpl">
 <div class="dpage">
   <header class="dhead"><div class="in">
-    <a class="wm" href="d22-dashboard.dc.html">KUARTE</a><span class="badge">For nail techs</span>
+    <a class="wm" href="d22-dashboard.dc.html" aria-label="KuArte home"><img class="logo" src="./assets/photos/logo-h.png" alt="KuArte"></a><span class="badge">For nail techs</span>
     <nav class="dnav grow" aria-label="Tech"><a href="d22-dashboard.dc.html">Bookings</a><a href="d21-request.dc.html">Requests</a><a class="on" href="d19-camera.dc.html">Portfolio</a><a href="d20-availability.dc.html">Availability</a><a href="d24-insights.dc.html">Insights</a></nav>
-    <span class="av s">VC</span>
+    <button type="button" class="av s" data-soon="Account settings" data-msg="Account settings are coming soon." aria-label="Your account">VC</button>
   </div></header>
   <div class="dwrap">
     <div class="row between" style="flex-wrap: wrap; gap: 16px">
       <div class="col" style="gap: 4px"><h1 class="dtitle">Portfolio</h1><p class="sm">12 photos · 10 Verified. Verified photos rank higher in the design feed.</p></div>
       <div class="row" style="gap: 10px; flex-wrap: wrap">
-        <button class="btn bp"><svg class="i s" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>Take on phone · Verified</button>
-        <button class="btn bs"><svg class="i s" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m21 17-5-5-9 8"/></svg>Upload · Unverified</button>
+        <button class="btn bp" type="button" data-soon="Taking photos" data-msg="Taking a Verified photo on your phone is coming soon."><svg class="i s" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>Take on phone · Verified</button>
+        <button class="btn bs" type="button" data-soon="Uploads" data-msg="Uploading photos is coming soon."><svg class="i s" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m21 17-5-5-9 8"/></svg>Upload · Unverified</button>
       </div>
     </div>
     <div class="dsplit">
@@ -45,8 +45,8 @@
             <span class="lbl">Style tags</span>
             <div class="wrap-row"><sc-for list="{{tags}}" as="t" hint-placeholder-count="6"><button class="chip {{t.cls}}" onClick="{{t.toggle}}">{{t.name}}</button></sc-for></div>
           </div>
-          <div class="field"><label for="d19-svc">Linked service</label><div id="d19-svc" class="inp">Gel extensions + chrome art</div></div>
-          <button class="btn bp full">Save changes</button>
+          <div class="field"><label for="d19-svc">Linked service</label><select id="d19-svc" class="inp" onChange="{{pickSvc}}" data-val="{{cur}}" style="appearance: auto; cursor: pointer"><sc-for list="{{svcs}}" as="o" hint-placeholder-count="5"><option value="{{o.name}}">{{o.name}}</option></sc-for></select><span class="cap">Customers who tap this photo see this service and its starting price.</span></div>
+          <button class="btn bp full" type="button" onClick="{{save}}">Save changes</button>
         </div>
       </aside>
     </div>
@@ -56,24 +56,30 @@
 <div id="dc-root"></div>
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1100}}'>
 class Component extends DCLogic {
-  constructor(p) { super(p); this.state = { sel: 0, on: { 'Chrome': true, 'Almond': true, 'Gel extensions': true } }; }
+  constructor(p) { super(p); this.state = { sel: 0, svc: {}, on: { 'Chrome': true, 'Almond': true, 'Gel extensions': true } }; }
   renderVals() {
     const B = './assets/';
     const P = [
       { id: 'photos/burgundy-gloss.jpg', alt: 'Burgundy chrome', cust: 'Maria S.' },
-      { id: 'photos/rose-florals.jpg', alt: 'Autumn florals', cust: 'Aria M.' },
-      { id: 'photos/gold-leaf-tips.jpg', alt: 'Gold leaf nude', cust: 'Jessa R.' },
-      { id: 'photos/black-cherry.jpg', alt: 'Noir and gold', cust: 'Nicole S.' },
-      { id: 'photos/sapphire-chrome.jpg', alt: 'Emerald cat-eye', cust: 'Aria M.' },
-      { id: 'photos/cafe-dots.jpg', alt: 'Pastel mix', cust: 'Ruby Y.' },
+      { id: 'photos/rose-florals.jpg', alt: 'Rose florals', cust: 'Aria M.' },
+      { id: 'photos/gold-leaf-tips.jpg', alt: 'Gold leaf tips', cust: 'Jessa R.' },
+      { id: 'photos/black-cherry.jpg', alt: 'Black cherry', cust: 'Nicole S.' },
+      { id: 'photos/sapphire-chrome.jpg', alt: 'Sapphire chrome', cust: 'Aria M.' },
+      { id: 'photos/cafe-dots.jpg', alt: 'Café dots', cust: 'Ruby Y.' },
       { id: 'photos/milky-dots.jpg', alt: 'Milky dots', cust: 'Lea D.' },
-      { id: 'photos/soft-french.jpg', alt: 'Classic French', cust: 'Joy T.' }
+      { id: 'photos/soft-french.jpg', alt: 'Soft French', cust: 'Joy T.' }
     ];
     const s = this.state.sel, on = this.state.on;
+    const SV = ['Gel manicure', 'Gel extensions', 'Gel extensions + chrome art', 'Acrylic set', 'Nail art add-on'];
+    const DEF = [2, 0, 1, 0, 1, 0, 0, 0];
+    const cur = this.state.svc[s] != null ? this.state.svc[s] : SV[DEF[s]];
     const names = ['Chrome', 'Almond', 'Long', 'Gel extensions', 'Dark', 'Minimal'];
     return {
       photos: P.map((p, i) => ({ img: B + p.id, alt: p.alt, ring: s === i ? '0 0 0 3px #5E1720' : 'none', pick: () => this.setState({ sel: i }) })),
       sel: { img: B + P[s].id, alt: P[s].alt, cust: P[s].cust },
+      cur, svcs: SV.map((n) => ({ name: n })),
+      pickSvc: (e) => this.setState({ svc: { ...this.state.svc, [s]: e.target.value } }),
+      save: () => { if (window.KU && KU.toast) KU.toast('Saved. ' + P[s].alt + ' is linked to ' + cur + '.'); },
       tags: names.map((n) => ({ name: n, cls: on[n] ? 'on' : '', toggle: () => this.setState({ on: { ...on, [n]: !on[n] } }) }))
     };
   }

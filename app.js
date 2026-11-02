@@ -258,3 +258,95 @@
     rpick('all');
   }
 })();
+
+/* ---------- chat: one shared thread in this browser, seen live from both sides ---------- */
+(function () {
+  'use strict';
+  var root = document.getElementById('chat');
+  if (!root) return;
+  var KEY = 'kuarte.chat';
+  var PH = root.getAttribute('data-photo') || 'assets/photos/';
+  var asTech = new URLSearchParams(location.search).get('as') === 'tech';
+  var me = asTech ? 't' : 'c';
+  var SEED = [
+    { by: 'c', text: 'Hi Viper! Can the chrome be a little darker than the photo?', t: '9:02 AM' },
+    { by: 't', text: "Yes po, I'll mix a deeper wine. Do you want them a bit shorter too?", t: '9:20 AM' },
+    { by: 'c', text: 'Same length is fine. My number is 0917 555 0142 if easier', t: '9:21 AM' },
+    { by: 't', text: 'No worries, here works! See you Wednesday.', t: '9:25 AM' },
+    { by: 'c', img: PH + 'black-cherry.jpg', text: 'Idea for next time', t: '9:26 AM' }
+  ];
+  var PHONE = /(\+?63|0)\s?9\d{2}[\s-]?\d{3}[\s-]?\d{4}/;
+  function read(k, d) { try { var v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } }
+  function load() { return read(KEY, null) || SEED.slice(); }
+  function save(list) { try { localStorage.setItem(KEY, JSON.stringify(list)); } catch (e) { /* storage blocked: this tab only */ } }
+  function clock() { return new Date().toLocaleTimeString('en-PH', { hour: 'numeric', minute: '2-digit' }); }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+  /* who is on the other side */
+  var b = read('kuarte.booking', null);
+  var custName = (b && b.customer) || 'Maria Santos';
+  var other = asTech
+    ? { name: custName, ini: custName.split(' ').map(function (w) { return w[0]; }).join('').slice(0, 2).toUpperCase(), photo: null, sub: 'Your customer · first booking with you', back: 'm22-dashboard.dc.html', link: 'm21-request.dc.html', linkText: 'View request' }
+    : { name: 'Viper Cullen', ini: 'VC', photo: PH + 'tech-viper.jpg', sub: 'Usually replies in 20 min', back: 'profile.html', link: 'profile.html', linkText: 'View profile' };
+  document.querySelectorAll('[data-other-name]').forEach(function (el) { el.textContent = other.name; });
+  document.querySelectorAll('[data-other-av]').forEach(function (el) {
+    if (other.photo) { el.classList.add('ph-av'); el.innerHTML = '<img src="' + other.photo + '" alt="">'; } else { el.textContent = other.ini; }
+  });
+  document.getElementById('th-sub').textContent = other.sub;
+  document.getElementById('th-back').setAttribute('href', other.back);
+  var link = document.getElementById('th-link'); link.setAttribute('href', other.link); link.textContent = other.linkText;
+  document.getElementById('cv2-av').textContent = asTech ? 'AM' : 'KN';
+  document.getElementById('cv2-name').textContent = asTech ? 'Aria M.' : 'Killjoy Nails';
+  document.getElementById('cv2-prev').textContent = asTech ? 'Thank you! See you next month' : 'Do you have a photo of the…';
+  document.getElementById('msg').setAttribute('placeholder', 'Message ' + other.name.split(' ')[0] + '…');
+  if (b) {
+    document.getElementById('ctx-svc').textContent = b.svc || 'Gel extensions + chrome art';
+    document.getElementById('ctx-when').textContent = (b.when || '') + (b.mode ? ' · ' + b.mode : '');
+    var pill = document.getElementById('ctx-pill');
+    var LBL = { requested: ['Requested', 'wait'], accepted: ['Accepted', 'info'], confirmed: ['Confirmed', 'ok'], declined: ['Declined', 'bad'], cancelled: ['Cancelled', 'bad'] };
+    var l = LBL[b.status] || LBL.confirmed; pill.textContent = l[0]; pill.className = 'pill ' + l[1];
+  }
+  if (asTech) {
+    document.getElementById('ctx-link').setAttribute('href', 'm22-dashboard.dc.html');
+    /* the tech sees their own menu, not the customer's */
+    var nav = document.querySelector('.hnav');
+    if (nav) nav.innerHTML = '<a href="m22-dashboard.dc.html">Bookings</a><a href="m21-request.dc.html">Requests</a><a class="on" aria-current="page" href="chat.html?as=tech">Messages</a><a href="m19-camera.dc.html">Portfolio</a><a href="m24-insights.dc.html">Insights</a>';
+    var av = document.getElementById('hd-av'); if (av) av.textContent = 'VC';
+  }
+
+  var box = document.getElementById('msgs');
+  var shown = 0;
+  function render(fresh) {
+    var list = load();
+    var html = '<span class="cap day">Today</span>';
+    list.forEach(function (m, i) {
+      var mine = m.by === me, side = mine ? 'out' : 'in', isNew = fresh && i >= shown ? ' new' : '';
+      if (m.img) html += '<div class="pic ' + side + isNew + '"><div class="ph"><img src="' + esc(m.img) + '" alt="Photo sent in chat"></div><span class="cap">' + esc(m.text || '') + '</span></div>';
+      else html += '<div class="bub ' + side + isNew + '">' + esc(m.text) + '</div>';
+      html += '<span class="meta ' + side + '">' + (mine ? 'You' : esc(other.name.split(' ')[0])) + ' · ' + esc(m.t || '') + '</span>';
+      if (m.text && PHONE.test(m.text)) html += '<div class="warnbox' + isNew + '"><svg class="i s" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M12 8v4M12 16h.01"/></svg><span>Bookings made outside KuArte don\'t get refund protection, reviews or badges. Keep chatting here to stay covered.</span></div>';
+    });
+    box.innerHTML = html;
+    shown = list.length;
+    var last = list[list.length - 1];
+    document.getElementById('cv-prev').textContent = last ? (last.img ? 'Photo' : last.text) : '';
+    document.getElementById('cv-time').textContent = last ? last.t : '';
+    if (window.matchMedia('(min-width: 900px)').matches) box.scrollTop = box.scrollHeight;
+    else window.scrollTo(0, document.documentElement.scrollHeight);
+  }
+  var form = document.getElementById('composer'), input = document.getElementById('msg'), send = document.getElementById('send');
+  input.addEventListener('input', function () { send.disabled = !input.value.trim(); });
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var text = input.value.trim();
+    if (!text) return;
+    var list = load();
+    list.push({ by: me, text: text, t: clock() });
+    save(list);
+    input.value = ''; send.disabled = true;
+    render(true);
+    input.focus();
+  });
+  window.addEventListener('storage', function (e) { if (!e.key || e.key === KEY) render(true); });
+  render(false);
+})();

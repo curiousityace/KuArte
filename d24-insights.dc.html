@@ -16,26 +16,23 @@
 <template id="dc-tpl">
 <div class="dpage">
   <header class="dhead"><div class="in">
-    <a class="wm" href="d22-dashboard.dc.html">KUARTE</a><span class="badge">For nail techs</span>
+    <a class="wm" href="d22-dashboard.dc.html" aria-label="KuArte home"><img class="logo" src="./assets/photos/logo-h.png" alt="KuArte"></a><span class="badge">For nail techs</span>
     <nav class="dnav grow" aria-label="Tech"><a href="d22-dashboard.dc.html">Bookings</a><a href="d21-request.dc.html">Requests</a><a href="d19-camera.dc.html">Portfolio</a><a href="d20-availability.dc.html">Availability</a><a class="on" href="d24-insights.dc.html">Insights</a></nav>
-    <span class="av s">VC</span>
+    <button type="button" class="av s" data-soon="Account settings" data-msg="Account settings are coming soon." aria-label="Your account">VC</button>
   </div></header>
   <div class="dwrap">
-    <div class="row between" style="flex-wrap: wrap; gap: 12px"><div class="col" style="gap: 4px"><h1 class="dtitle">Insights</h1><p class="sm">October 2026 · sample data for the prototype</p></div><div class="seg" style="width: 320px"><span>Week</span><span class="on">Month</span><span>Year</span></div></div>
+    <div class="row between" style="flex-wrap: wrap; gap: 12px"><div class="col" style="gap: 4px"><h1 class="dtitle">Insights</h1><p class="sm">{{cur.sub}} · sample data for the prototype</p></div><div class="seg sl" role="radiogroup" aria-label="Period" style="--n: 3; --i: {{perI}}; width: 320px"><sc-for list="{{pers}}" as="p" hint-placeholder-count="3"><button type="button" role="radio" aria-checked="{{p.checked}}" class="{{p.cls}}" onClick="{{p.pick}}">{{p.name}}</button></sc-for></div></div>
     <div class="dgrid" style="gap: 16px">
-      <div class="card pad"><span class="cap">Profile views</span><p style="font: 700 30px/1.2 'DM Sans', system-ui, sans-serif; margin-top: 4px">1,240</p></div>
-      <div class="card pad"><span class="cap">Bookings</span><p style="font: 700 30px/1.2 'DM Sans', system-ui, sans-serif; margin-top: 4px">46</p></div>
-      <div class="card pad"><span class="cap">Booked again</span><p style="font: 700 30px/1.2 'DM Sans', system-ui, sans-serif; margin-top: 4px">38%</p></div>
-      <div class="card pad"><span class="cap">Matched reference</span><p style="font: 700 30px/1.2 'DM Sans', system-ui, sans-serif; margin-top: 4px">92%</p></div>
+      <div class="card pad"><span class="cap">Profile views</span><p style="font: 700 30px/1.2 'DM Sans', system-ui, sans-serif; margin-top: 4px">{{cur.views}}</p></div>
+      <div class="card pad"><span class="cap">Bookings</span><p style="font: 700 30px/1.2 'DM Sans', system-ui, sans-serif; margin-top: 4px">{{cur.book}}</p></div>
+      <div class="card pad"><span class="cap">Booked again</span><p style="font: 700 30px/1.2 'DM Sans', system-ui, sans-serif; margin-top: 4px">{{cur.again}}</p></div>
+      <div class="card pad"><span class="cap">Matched reference</span><p style="font: 700 30px/1.2 'DM Sans', system-ui, sans-serif; margin-top: 4px">{{cur.match}}</p></div>
     </div>
     <div class="dsplit">
       <div class="dmain">
         <div class="card pad-l" style="display: flex; flex-direction: column; gap: 14px">
-          <div class="row between"><h2 class="h2">Bookings per week</h2><span class="cap">Last 6 weeks</span></div>
-          <div class="spark" style="height: 220px; gap: 16px" role="img" aria-label="Bookings per week: 6, 8, 7, 10, 11, 13">
-            <i style="height: 46%"></i><i style="height: 62%"></i><i style="height: 54%"></i><i style="height: 77%"></i><i style="height: 85%"></i><i class="on" style="height: 100%"></i>
-          </div>
-          <div style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 16px; text-align: center" class="cap"><span>Sep 22 · 6</span><span>Sep 29 · 8</span><span>Oct 6 · 7</span><span>Oct 13 · 10</span><span>Oct 20 · 11</span><span class="strong">Oct 27 · 13</span></div>
+          <div class="row between"><h2 class="h2">{{cur.title}}</h2><span class="cap">{{cur.range}} · hover a bar for the count</span></div>
+          <div class="bars" role="group" aria-label="{{chartAria}}"><sc-for list="{{bars}}" as="x" hint-placeholder-count="6"><button type="button" class="b {{x.cls}}" style="--f: {{x.f}}" aria-label="{{x.aria}}" onClick="{{x.pick}}"><span class="tip">{{x.n}} {{x.unit}}</span><span class="fill"></span><span class="d">{{x.d}}</span></button></sc-for></div>
         </div>
         <div class="card pad-l" style="display: flex; flex-direction: column; gap: 12px">
           <h2 class="h2">Badges</h2>
@@ -50,9 +47,9 @@
       <aside class="dside">
         <div style="padding: 24px; border-radius: 20px; background: #3B0D13; color: #FFFFFF; display: flex; flex-direction: column; gap: 12px">
           <div class="row" style="gap: 8px"><svg class="i s" viewBox="0 0 24 24" aria-hidden="true" style="color: #E7C27A"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg><span class="lbl" style="color: #E7C27A">Boost</span></div>
-          <p style="font: 600 22px/1.25 'Playfair Display', serif">Show up first in Panabo searches for 3 days</p>
+          <p style="font: 600 22px/1.25 'Playfair Display', serif">Show up first in Panabo searches for {{boostDays}}</p>
           <p class="sm" style="color: #E9D3D5">Boosted spots are labeled Sponsored. Your rating and reviews still show as-is.</p>
-          <div class="seg" style="background: rgba(255,255,255,.1)"><span class="on">3 days</span><span style="color: #E9D3D5">7 days</span></div>
+          <div class="seg sl dark" role="radiogroup" aria-label="Boost length" style="--n: 2; --i: {{boostI}}"><sc-for list="{{boosts}}" as="b" hint-placeholder-count="2"><button type="button" role="radio" aria-checked="{{b.checked}}" class="{{b.cls}}" onClick="{{b.pick}}">{{b.name}}</button></sc-for></div>
           <button class="btn bgold">Boost for [BOOST PRICE]</button>
         </div>
         <div class="card pad" style="display: flex; flex-direction: column; gap: 6px">
@@ -68,7 +65,25 @@
 <div id="dc-root"></div>
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1100}}'>
 class Component extends DCLogic {
-  renderVals() { return {}; }
+  constructor(p) { super(p); this.state = { per: 1, boost: 0, tip: -1 }; }
+  renderVals() {
+    const P = [
+      { label: 'Week', sub: 'Oct 27 – Nov 2', views: '310', book: '13', again: '41%', match: '94%', title: 'Bookings per day', range: 'This week', bars: [['Mon', 1], ['Tue', 2], ['Wed', 3], ['Thu', 1], ['Fri', 2], ['Sat', 3], ['Sun', 1]] },
+      { label: 'Month', sub: 'October 2026', views: '1,240', book: '46', again: '38%', match: '92%', title: 'Bookings per week', range: 'Last 6 weeks', bars: [['Sep 22', 6], ['Sep 29', 8], ['Oct 6', 7], ['Oct 13', 10], ['Oct 20', 11], ['Oct 27', 13]] },
+      { label: 'Year', sub: '2026 so far', views: '9,860', book: '312', again: '35%', match: '91%', title: 'Bookings per month', range: 'Jan – Oct', bars: [['Jan', 15], ['Feb', 19], ['Mar', 23], ['Apr', 26], ['May', 29], ['Jun', 32], ['Jul', 36], ['Aug', 41], ['Sep', 45], ['Oct', 46]] }
+    ];
+    const st = this.state, cur = P[st.per];
+    const max = Math.max.apply(null, cur.bars.map((b) => b[1]));
+    const D = ['3 days', '7 days'];
+    return {
+      perI: st.per, cur,
+      pers: P.map((p, i) => ({ name: p.label, cls: st.per === i ? 'on' : '', checked: st.per === i ? 'true' : 'false', pick: () => this.setState({ per: i, tip: -1 }) })),
+      bars: cur.bars.map((b, i) => ({ d: b[0], n: b[1], unit: b[1] === 1 ? 'booking' : 'bookings', f: (b[1] / max).toFixed(3), cls: (i === cur.bars.length - 1 ? 'on' : '') + (st.tip === i ? ' show' : ''), pick: () => this.setState({ tip: st.tip === i ? -1 : i }), aria: b[0] + ': ' + b[1] + (b[1] === 1 ? ' booking' : ' bookings') })),
+      chartAria: cur.title + ': ' + cur.bars.map((b) => b[0] + ' ' + b[1]).join(', '),
+      boostI: st.boost, boostDays: D[st.boost],
+      boosts: D.map((n, i) => ({ name: n, cls: st.boost === i ? 'on' : '', checked: st.boost === i ? 'true' : 'false', pick: () => this.setState({ boost: i }) }))
+    };
+  }
 }
 </script>
 </body>

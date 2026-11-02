@@ -16,7 +16,7 @@
 <template id="dc-tpl">
 <div class="dpage">
   <header class="dhead"><div class="in">
-    <a class="wm" href="d16-signup.dc.html">KUARTE</a><span class="badge">For nail techs</span>
+    <a class="wm" href="d16-signup.dc.html" aria-label="KuArte home"><img class="logo" src="./assets/photos/logo-h.png" alt="KuArte"></a><span class="badge">For nail techs</span>
     <span class="grow"></span>
     <span class="cap">Setting up · saved automatically</span>
   </div></header>
@@ -36,8 +36,8 @@
       <div class="dmain" style="gap: 24px; max-width: 760px">
         <div class="col" style="gap: 4px"><h1 class="dtitle">Booking rules</h1><p class="sm">You can change these any time from your profile.</p></div>
         <div class="card pad-l" style="display: flex; flex-direction: column; gap: 14px">
-          <div class="row between"><div class="col" style="gap: 2px"><span class="ttl" style="font-size: 15px">Ask for a deposit</span><span class="cap">Paid through KuArte and sent to you after the visit</span></div><button class="tog {{depOn}}" onClick="{{toggleDep}}" aria-label="Ask for a deposit" style="border: 0; cursor: pointer"></button></div>
-          <sc-if value="{{dep}}" hint-placeholder-val="{{ true }}"><div class="seg" style="max-width: 360px"><span>₱100</span><span class="on">₱150</span><span>30%</span></div></sc-if>
+          <div class="row between"><div class="col" style="gap: 2px"><span class="ttl" style="font-size: 15px">Ask for a deposit</span><span class="cap">{{depSub}}</span></div><button class="tog {{depOn}}" type="button" role="switch" aria-checked="{{depAria}}" onClick="{{toggleDep}}" aria-label="Ask for a deposit"></button></div>
+          <div class="reveal {{depOpen}}" aria-hidden="{{depHidden}}"><div><div class="seg sl" role="radiogroup" aria-label="Deposit amount" style="--n: 3; --i: {{amtI}}; max-width: 360px; margin-top: 2px"><sc-for list="{{amts}}" as="a" hint-placeholder-count="3"><button type="button" role="radio" aria-checked="{{a.checked}}" class="{{a.cls}}" onClick="{{a.pick}}" tabindex="{{a.tab}}">{{a.name}}</button></sc-for></div><span class="cap" style="display: block; margin-top: 8px">{{amtNote}}</span></div></div>
         </div>
         <div class="col" style="gap: 10px">
           <span class="lbl">Cancellation policy</span>
@@ -51,8 +51,8 @@
           </div>
         </div>
         <div class="dgrid l" style="gap: 20px">
-          <div class="col" style="gap: 10px"><span class="lbl">Reply to requests within</span><div class="seg"><span>1 hr</span><span class="on">4 hr</span><span>12 hr</span></div><span class="cap">Unanswered requests expire and the customer is refunded.</span></div>
-          <div class="card" style="display: flex; gap: 12px; padding: 14px 16px; align-items: center"><span style="width: 40px; height: 40px; border-radius: 10px; background: #2F5FB3; color: #FFFFFF; display: flex; align-items: center; justify-content: center; flex: none"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 10h18M16 15h2"/></svg></span><div class="col grow" style="gap: 1px"><span class="sm strong">Payouts to GCash</span><span class="cap">Account ending 0187</span></div><button class="lnk" style="border: 0; background: none; cursor: pointer">Change</button></div>
+          <div class="col" style="gap: 10px"><span class="lbl">Reply to requests within</span><div class="seg sl" role="radiogroup" aria-label="Reply to requests within" style="--n: 3; --i: {{repI}}"><sc-for list="{{reps}}" as="r" hint-placeholder-count="3"><button type="button" role="radio" aria-checked="{{r.checked}}" class="{{r.cls}}" onClick="{{r.pick}}">{{r.name}}</button></sc-for></div><span class="cap">Requests you don't answer within {{repLabel}} expire and the customer is refunded.</span></div>
+          <div class="card" style="display: flex; gap: 12px; padding: 14px 16px; align-items: center"><span style="width: 40px; height: 40px; border-radius: 10px; background: #2F5FB3; color: #FFFFFF; display: flex; align-items: center; justify-content: center; flex: none"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 10h18M16 15h2"/></svg></span><div class="col grow" style="gap: 1px"><span class="sm strong">Payouts to GCash</span><span class="cap">Account ending 0187</span></div><button class="lnk" type="button" data-soon="Payout settings" data-msg="Changing your payout account is coming soon." style="border: 0; background: none; cursor: pointer">Change</button></div>
         </div>
         <p class="cap">KuArte keeps 10% of the final price on bookings made here, taken from your payout. Your first month is commission-free.</p>
         <div class="row" style="gap: 12px"><a class="btn bp" href="d19-camera.dc.html">Next: add portfolio photos</a><a class="btn bg" href="d17-setup.dc.html">Back</a></div>
@@ -64,16 +64,21 @@
 <div id="dc-root"></div>
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1100}}'>
 class Component extends DCLogic {
-  constructor(p) { super(p); this.state = { dep: true, pol: 1 }; }
+  constructor(p) { super(p); this.state = { dep: true, pol: 1, amt: 1, rep: 1 }; }
   renderVals() {
     const P = [
       { name: 'Flexible', desc: 'Free to cancel up to 2 hours before' },
       { name: 'Moderate', desc: 'Free up to 24 hours before, then 50% of the deposit back' },
       { name: 'Strict', desc: 'Free up to 48 hours before, then no refund' }
     ];
+    const A = ['₱100', '₱150', '30%'], R = ['1 hr', '4 hr', '12 hr'], st = this.state;
     return {
-      dep: this.state.dep, depOn: this.state.dep ? 'on' : '',
-      toggleDep: () => this.setState({ dep: !this.state.dep }),
+      dep: st.dep, depOn: st.dep ? 'on' : '', depOpen: st.dep ? 'open' : '', depHidden: st.dep ? 'false' : 'true', depAria: st.dep ? 'true' : 'false',
+      depSub: st.dep ? 'Paid through KuArte, sent to you after the visit' : 'Off · customers book without paying first',
+      toggleDep: () => this.setState({ dep: !st.dep }),
+      amtI: st.amt, amts: A.map((n, i) => ({ name: n, cls: st.amt === i ? 'on' : '', checked: st.amt === i ? 'true' : 'false', tab: st.dep ? '0' : '-1', pick: () => this.setState({ amt: i }) })),
+      amtNote: 'Customers pay ' + (st.amt === 2 ? '30% of the starting price' : A[st.amt]) + ' to hold a slot. Refunded in full if you cancel or don\'t show.',
+      repI: st.rep, repLabel: R[st.rep], reps: R.map((n, i) => ({ name: n, cls: st.rep === i ? 'on' : '', checked: st.rep === i ? 'true' : 'false', pick: () => this.setState({ rep: i }) })),
       policies: P.map((p, i) => ({ ...p, cls: this.state.pol === i ? 'on' : '', pick: () => this.setState({ pol: i }) }))
     };
   }
