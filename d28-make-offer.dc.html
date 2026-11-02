@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#5E1720">
-<link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="./assets/photos/favicon-64.png" type="image/png">
 <title>KuArte for techs · Make an offer (desktop)</title>
 <script src="./support.js"></script>
 <link rel="stylesheet" href="./kuarte.css">
@@ -28,7 +28,7 @@
     </div>
     <div class="dsplit">
       <aside class="dside" style="flex: 1 1 340px; max-width: 420px">
-        <div class="ph" style="height: 300px; border-radius: 18px"><img src="./assets/n7-noir-gold.svg" alt="Requested design: black nails with gold lines"></div>
+        <div class="ph" style="height: 300px; border-radius: 18px"><img src="./assets/photos/black-cherry.jpg" alt="Requested design: black nails with gold lines"></div>
         <span class="ttl">Noir and gold</span>
         <span class="sm">Gel extensions · Almond, medium · This weekend · Walk-in · 1.4 km away</span>
         <span class="sm">Budget <b class="strong">₱400–600</b></span>
@@ -89,10 +89,10 @@ class Component extends DCLogic {
     const st = this.state;
     const S = ['Sat 10:00 AM', 'Sat 2:30 PM', 'Sat 5:00 PM', 'Sun 1:00 PM', 'Sun 3:30 PM'];
     const P = [
-      { id: 'n7-noir-gold.svg', alt: 'Noir and gold' },
-      { id: 'n1-burgundy-chrome.svg', alt: 'Burgundy chrome' },
-      { id: 'n6-emerald-cateye.svg', alt: 'Emerald cat-eye' },
-      { id: 'n2-gold-leaf.svg', alt: 'Gold leaf nude' }
+      { id: 'photos/black-cherry.jpg', alt: 'Noir and gold' },
+      { id: 'photos/burgundy-gloss.jpg', alt: 'Burgundy chrome' },
+      { id: 'photos/sapphire-chrome.jpg', alt: 'Emerald cat-eye' },
+      { id: 'photos/gold-leaf-tips.jpg', alt: 'Gold leaf nude' }
     ];
     const nSlots = S.filter((s) => st.slots[s]).length;
     const nPhotos = P.filter((p, i) => st.photos[i]).length;

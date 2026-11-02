@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#5E1720">
-<link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="./assets/photos/favicon-64.png" type="image/png">
 <title>KuArte for techs · Design requests (desktop)</title>
 <script src="./support.js"></script>
 <link rel="stylesheet" href="./kuarte.css">
@@ -59,22 +59,22 @@ class Component extends DCLogic {
     const offer = KU ? KU.get('offer', null) : null;
     const bk = KU ? KU.booking() : null;
     const mine = [
-      { title: 'Classic French', img: B + 'n3-classic-french.svg', price: 350, slots: '2 times offered', status: 'Waiting', pill: 'wait' },
-      { title: 'Gold leaf nude', img: B + 'n2-gold-leaf.svg', price: 420, slots: 'Booked Sat 10:00 AM', status: 'Chosen', pill: 'ok' }
+      { title: 'Classic French', img: B + 'photos/soft-french.jpg', price: 350, slots: '2 times offered', status: 'Waiting', pill: 'wait' },
+      { title: 'Gold leaf nude', img: B + 'photos/gold-leaf-tips.jpg', price: 420, slots: 'Booked Sat 10:00 AM', status: 'Chosen', pill: 'ok' }
     ];
     if (offer) {
       const chosen = bk && bk.source === 'design';
       const me = chosen && bk.tech === 'viper';
-      mine.unshift({ title: 'Noir and gold', img: B + 'n7-noir-gold.svg', price: offer.price, slots: me ? 'Booked ' + bk.when : offer.slots.join(', '),
+      mine.unshift({ title: 'Noir and gold', img: B + 'photos/black-cherry.jpg', price: offer.price, slots: me ? 'Booked ' + bk.when : offer.slots.join(', '),
         status: me ? 'Chosen' : (chosen ? 'Not chosen' : 'Waiting'), pill: me ? 'ok' : (chosen ? 'bad' : 'wait') });
     }
     return {
       tabs: ['Open · 3', 'My offers · ' + mine.length].map((name, i) => ({ name, cls: t === i ? 'on' : '', pick: () => this.setState({ tab: i }) })),
       isOpen: t === 0, isMine: t === 1, mine,
       open: [
-        { title: 'Noir and gold', img: B + 'n7-noir-gold.svg', detail: 'Gel extensions · Almond, medium', when: 'This weekend', mode: 'Walk-in', km: '1.4 km', budget: '₱400–600', offers: (offer ? 'You offered ₱' + offer.price : '3 offers so far'), posted: '25 min ago', tag: offer ? 'Offered' : 'New', pill: offer ? 'ok' : 'wait' },
-        { title: 'Milky dots', img: B + 'n4-milky-dots.svg', detail: 'Gel manicure · Oval, short', when: 'Next week', mode: 'Home service', km: '2.8 km', budget: 'Up to ₱400', offers: '1 offer so far', posted: '1 hr ago', tag: 'Home', pill: 'info' },
-        { title: 'Autumn florals', img: B + 'n5-autumn-florals.svg', detail: 'Acrylic · Coffin, long', when: 'Sat, Nov 7', mode: 'Walk-in', km: '3.5 km', budget: '₱600+', offers: 'No offers yet', posted: '2 hr ago', tag: 'Open', pill: 'ok' }
+        { title: 'Noir and gold', img: B + 'photos/black-cherry.jpg', detail: 'Gel extensions · Almond, medium', when: 'This weekend', mode: 'Walk-in', km: '1.4 km', budget: '₱400–600', offers: (offer ? 'You offered ₱' + offer.price : '3 offers so far'), posted: '25 min ago', tag: offer ? 'Offered' : 'New', pill: offer ? 'ok' : 'wait' },
+        { title: 'Milky dots', img: B + 'photos/milky-dots.jpg', detail: 'Gel manicure · Oval, short', when: 'Next week', mode: 'Home service', km: '2.8 km', budget: 'Up to ₱400', offers: '1 offer so far', posted: '1 hr ago', tag: 'Home', pill: 'info' },
+        { title: 'Autumn florals', img: B + 'photos/rose-florals.jpg', detail: 'Acrylic · Coffin, long', when: 'Sat, Nov 7', mode: 'Walk-in', km: '3.5 km', budget: '₱600+', offers: 'No offers yet', posted: '2 hr ago', tag: 'Open', pill: 'ok' }
       ]
     };
   }

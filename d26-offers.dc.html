@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#5E1720">
-<link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="./assets/photos/favicon-64.png" type="image/png">
 <title>KuArte · Your offers (desktop)</title>
 <script src="./support.js"></script>
 <link rel="stylesheet" href="./kuarte.css">
@@ -22,7 +22,7 @@
   </div></header>
   <div class="dwrap">
     <div class="row" style="gap: 20px; flex-wrap: wrap; align-items: center">
-      <div class="ph" style="width: 88px; height: 88px; border-radius: 16px"><img src="./assets/n7-noir-gold.svg" alt="Your design: black nails with gold lines"></div>
+      <div class="ph" style="width: 88px; height: 88px; border-radius: 16px"><img src="./assets/photos/black-cherry.jpg" alt="Your design: black nails with gold lines"></div>
       <div class="col grow" style="gap: 4px; min-width: 260px">
         <h1 class="dtitle">Your design request</h1>
         <span class="sm">Noir and gold · Gel extensions · Almond, medium · This weekend · Walk-in · ₱400–600</span>
@@ -92,10 +92,10 @@ class Component extends DCLogic {
   renderVals() {
     const B = './assets/';
     const O = [
-      { id: 'viper', name: 'Viper Cullen Nail Studio', ini: 'VC', av: '', rating: '4.9', count: 38, km: 1.2, price: 480, dep: 150, badge: 'Top Rated', bcls: 'gold', img1: B + 'n7-noir-gold.svg', img2: B + 'n1-burgundy-chrome.svg', note: 'I did this exact set last month. Matte top coat, hand-drawn gold.', slots: ['Sat 10:00 AM', 'Sat 2:30 PM', 'Sun 1:00 PM'] },
-      { id: 'killjoy', name: 'Killjoy Nails', ini: 'KN', av: 'd', rating: '4.8', count: 21, km: 2.4, price: 420, dep: 0, badge: 'Reliable', bcls: '', img1: B + 'n6-emerald-cateye.svg', img2: B + 'n7-noir-gold.svg', note: 'Gold foil strips instead of paint, lasts longer.', slots: ['Sat 4:00 PM', 'Sun 10:00 AM'] },
-      { id: 'reyna', name: 'Reyna Nail Studio', ini: 'RN', av: 'c', rating: '4.7', count: 16, km: 3.1, price: 400, dep: 0, badge: 'Verified Work', bcls: '', img1: B + 'n3-classic-french.svg', img2: B + 'n4-milky-dots.svg', note: 'Can do it in about 2 hours.', slots: ['Sun 2:00 PM'] },
-      { id: 'lumi', name: 'Lumi Nails by Kat', ini: 'LK', av: 'e', rating: '5.0', count: 4, km: 3.8, price: 380, dep: 100, badge: 'New on KuArte', bcls: 'new', img1: B + 'n8-pastel-mix.svg', img2: B + 'n2-gold-leaf.svg', note: 'New here, would love to do this one!', slots: ['Sat 9:00 AM', 'Sun 11:00 AM'] }
+      { id: 'viper', name: 'Viper Cullen Nail Studio', ini: 'VC', av: '', rating: '4.9', count: 38, km: 1.2, price: 480, dep: 150, badge: 'Top Rated', bcls: 'gold', img1: B + 'photos/black-cherry.jpg', img2: B + 'photos/burgundy-gloss.jpg', note: 'I did this exact set last month. Matte top coat, hand-drawn gold.', slots: ['Sat 10:00 AM', 'Sat 2:30 PM', 'Sun 1:00 PM'] },
+      { id: 'killjoy', name: 'Killjoy Nails', ini: 'KN', av: 'd', rating: '4.8', count: 21, km: 2.4, price: 420, dep: 0, badge: 'Reliable', bcls: '', img1: B + 'photos/sapphire-chrome.jpg', img2: B + 'photos/black-cherry.jpg', note: 'Gold foil strips instead of paint, lasts longer.', slots: ['Sat 4:00 PM', 'Sun 10:00 AM'] },
+      { id: 'reyna', name: 'Reyna Nail Studio', ini: 'RN', av: 'c', rating: '4.7', count: 16, km: 3.1, price: 400, dep: 0, badge: 'Verified Work', bcls: '', img1: B + 'photos/soft-french.jpg', img2: B + 'photos/milky-dots.jpg', note: 'Can do it in about 2 hours.', slots: ['Sun 2:00 PM'] },
+      { id: 'lumi', name: 'Lumi Nails by Kat', ini: 'LK', av: 'e', rating: '5.0', count: 4, km: 3.8, price: 380, dep: 100, badge: 'New on KuArte', bcls: 'new', img1: B + 'photos/cafe-dots.jpg', img2: B + 'photos/gold-leaf-tips.jpg', note: 'New here, would love to do this one!', slots: ['Sat 9:00 AM', 'Sun 11:00 AM'] }
     ];
     const KU = window.KU;
     const myOffer = KU ? KU.get('offer', null) : null;
@@ -132,7 +132,7 @@ class Component extends DCLogic {
         if (!sel) { this.setState({ nudge: true }); return; }
         if (KU) KU.create({ source: 'design', tech: sel.id, techName: sel.name, customer: (KU.get('draft', {}).name) || 'Maria Santos',
           svc: 'Gel extensions · Noir and gold', mode: 'Walk-in', when: st.pick.slot, total: sel.price, deposit: sel.dep, rest: sel.price - sel.dep,
-          img: B + 'n7-noir-gold.svg', status: 'confirmed' });
+          img: B + 'photos/black-cherry.jpg', status: 'confirmed' });
         this.setState({ booked: true });
       }
     };

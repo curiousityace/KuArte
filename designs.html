@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>KuArte · Book by design</title>
+<meta name="description" content="Browse nail designs from completed KuArte bookings.">
+<meta name="theme-color" content="#5E1720">
+<link rel="icon" href="./assets/photos/favicon-64.png" type="image/png">
+<link rel="apple-touch-icon" href="./assets/photos/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Marcellus&amp;family=Playfair+Display:wght@600;700&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./kuarte.css">
+<link rel="stylesheet" href="./app.css">
+</head>
+<body class="pg-designs">
+<div class="pv"><span><b>Prototype</b> · sample data<span class="only-l">, no real bookings or payments</span></span><span class="pv-l"><a class="only-l" href="demo.html">Live demo</a><a href="index.html">All screens</a><a href="#" data-reset>Reset demo</a></span></div>
+<header class="hd"><div class="in">
+  <a href="home.html" aria-label="KuArte home"><img class="logo" src="assets/photos/logo-h.png" alt="KuArte" width="138" height="44"></a>
+  <nav class="hnav only-l" aria-label="Main"><a href="home.html">Explore</a><a href="designs.html" class="on" aria-current="page">Designs</a><a href="m12-status.dc.html">My bookings</a><a href="m15-chat.dc.html">Messages</a></nav>
+  <span class="sp"></span>
+  <a class="lnk only-l" href="m16-signup.dc.html">For nail techs</a>
+  <span class="av s only-l" aria-hidden="true">MS</span>
+  <a class="ib only-s" href="m12-status.dc.html" aria-label="Notifications"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9a6 6 0 0 1 12 0c0 6 2 7 2 7H4s2-1 2-7"/><path d="M10 20a2 2 0 0 0 4 0"/></svg></a>
+</div></header>
+<main class="wrap">
+
+  <section class="sec" style="gap: 20px">
+    <div class="dhead2">
+      <div class="col" style="gap: 6px"><h1 class="page-t">Book by design</h1><p class="sm" style="max-width: 560px">Every photo here came from a completed KuArte booking. Pick a look, then book the tech who made it.</p></div>
+      <span class="row sm" style="gap: 6px"><svg class="i s wine" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Near <b class="strong">Gredu, Panabo</b></span>
+    </div>
+    <div class="chips" role="group" aria-label="Filter by style"><button class="chip" type="button" data-f="All" aria-pressed="false">All</button><button class="chip" type="button" data-f="Chrome" aria-pressed="false">Chrome</button><button class="chip" type="button" data-f="French tip" aria-pressed="false">French tip</button><button class="chip" type="button" data-f="Gold leaf" aria-pressed="false">Gold leaf</button><button class="chip" type="button" data-f="Florals" aria-pressed="false">Florals</button><button class="chip" type="button" data-f="Cat-eye" aria-pressed="false">Cat-eye</button><button class="chip" type="button" data-f="Minimal" aria-pressed="false">Minimal</button></div>
+    <div class="mason">
+      <article class="tile" data-tag="Chrome">
+        <a href="design-burgundy.html">
+          <div class="ph" style="aspect-ratio: 4 / 5"><img src="assets/photos/burgundy-gloss.jpg" alt="Burgundy chrome by Viper Cullen Nail Studio" loading="lazy"><span class="ver"><svg class="i xs" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>Verified</span></div>
+          <div class="meta"><span class="sm strong">Burgundy chrome</span><span class="sm" style="white-space: nowrap">from <b class="price">₱450</b></span></div>
+          <span class="cap">Viper Cullen Nail Studio · 1.2 km</span>
+        </a>
+        <button class="fav" type="button" aria-label="Save Burgundy chrome" aria-pressed="false"><svg class="i s" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg></button>
+      </article>
+      <article class="tile" data-tag="French tip">
+        <a href="design-soft-french.html">
+          <div class="ph" style="aspect-ratio: 1 / 1"><img src="assets/photos/soft-french.jpg" alt="Soft French by Reyna Nail Studio" loading="lazy"><span class="ver"><svg class="i xs" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>Verified</span></div>
+          <div class="meta"><span class="sm strong">Soft French</span><span class="sm" style="white-space: nowrap">from <b class="price">₱320</b></span></div>
+          <span class="cap">Reyna Nail Studio · 3.1 km</span>
+        </a>
+        <button class="fav" type="button" aria-label="Save Soft French" aria-pressed="false"><svg class="i s" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg></button>
+      </article>
+      <article class="tile" data-tag="Chrome,Cat-eye">
+        <a href="design-sapphire.html">
+          <div class="ph" style="aspect-ratio: 2 / 3"><img src="assets/photos/sapphire-chrome.jpg" alt="Sapphire chrome by Killjoy Nails" loading="lazy"><span class="ver"><svg class="i xs" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>Verified</span></div>
+          <div class="meta"><span class="sm strong">Sapphire chrome</span><span class="sm" style="white-space: nowrap">from <b class="price">₱550</b></span></div>
+          <span class="cap">Killjoy Nails · 2.4 km</span>
+        </a>
+        <button class="fav" type="button" aria-label="Save Sapphire chrome" aria-pressed="false"><svg class="i s" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg></button>
+      </article>
+      <article class="tile" data-tag="Gold leaf">
+        <a href="design-gold-leaf.html">
+          <div class="ph" style="aspect-ratio: 2 / 3"><img src="assets/photos/gold-leaf-tips.jpg" alt="Gold leaf tips by Viper Cullen Nail Studio" loading="lazy"><span class="ver"><svg class="i xs" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>Verified</span></div>
+          <div class="meta"><span class="sm strong">Gold leaf tips</span><span class="sm" style="white-space: nowrap">from <b class="price">₱480</b></span></div>
+          <span class="cap">Viper Cullen Nail Studio · 1.2 km</span>
+        </a>
+        <button class="fav" type="button" aria-label="Save Gold leaf tips" aria-pressed="false"><svg class="i s" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg></button>
+      </article>
+      <article class="tile" data-tag="Minimal">
+        <a href="design-cafe-dots.html">
+          <div class="ph" style="aspect-ratio: 2 / 3"><img src="assets/photos/cafe-dots.jpg" alt="Café dots by Lumi Nails by Kat" loading="lazy"><span class="ver"><svg class="i xs" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>Verified</span></div>
+          <div class="meta"><span class="sm strong">Café dots</span><span class="sm" style="white-space: nowrap">from <b class="price">₱320</b></span></div>
+          <span class="cap">Lumi Nails by Kat · 3.8 km</span>
+        </a>
+        <button class="fav" type="button" aria-label="Save Café dots" aria-pressed="false"><svg class="i s" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg></button>
+      </article>
+      <article class="tile" data-tag="French tip">
+        <a href="design-red-french.html">
+          <div class="ph" style="aspect-ratio: 1 / 1"><img src="assets/photos/red-french.jpg" alt="Red French by Reyna Nail Studio" loading="lazy"><span class="ver"><svg class="i xs" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>Verified</span></div>
+          <div class="meta"><span class="sm strong">Red French</span><span class="sm" style="white-space: nowrap">from <b class="price">₱350</b></span></div>
+          <span class="cap">Reyna Nail Studio · 3.1 km</span>
+        </a>
+        <button class="fav" type="button" aria-label="Save Red French" aria-pressed="false"><svg class="i s" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg></button>
+      </article>
+      <article class="tile" data-tag="Florals">
+        <a href="design-rose-florals.html">
+          <div class="ph" style="aspect-ratio: 2 / 3"><img src="assets/photos/rose-florals.jpg" alt="Rose florals by Viper Cullen Nail Studio" loading="lazy"><span class="ver"><svg class="i xs" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>Verified</span></div>
+          <div class="meta"><span class="sm strong">Rose florals</span><span class="sm" style="white-space: nowrap">from <b class="price">₱500</b></span></div>
+          <span class="cap">Viper Cullen Nail Studio · 1.2 km</span>
+        </a>
+        <button class="fav" type="button" aria-label="Save Rose florals" aria-pressed="false"><svg class="i s" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg></button>
+      </article>
+      <article class="tile" data-tag="Minimal">
+        <a href="design-black-cherry.html">
+          <div class="ph" style="aspect-ratio: 3 / 5"><img src="assets/photos/black-cherry.jpg" alt="Black cherry by Killjoy Nails" loading="lazy"><span class="ver"><svg class="i xs" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>Verified</span></div>
+          <div class="meta"><span class="sm strong">Black cherry</span><span class="sm" style="white-space: nowrap">from <b class="price">₱300</b></span></div>
+          <span class="cap">Killjoy Nails · 2.4 km</span>
+        </a>
+        <button class="fav" type="button" aria-label="Save Black cherry" aria-pressed="false"><svg class="i s" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg></button>
+      </article>
+      <article class="tile" data-tag="French tip">
+        <a href="design-outline-french.html">
+          <div class="ph" style="aspect-ratio: 3 / 4"><img src="assets/photos/outline-french.jpg" alt="Outline French by Reyna Nail Studio" loading="lazy"><span class="ver"><svg class="i xs" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>Verified</span></div>
+          <div class="meta"><span class="sm strong">Outline French</span><span class="sm" style="white-space: nowrap">from <b class="price">₱350</b></span></div>
+          <span class="cap">Reyna Nail Studio · 3.1 km</span>
+        </a>
+        <button class="fav" type="button" aria-label="Save Outline French" aria-pressed="false"><svg class="i s" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg></button>
+      </article>
+      <article class="tile" data-tag="Minimal">
+        <a href="design-milky-dots.html">
+          <div class="ph" style="aspect-ratio: 2 / 3"><img src="assets/photos/milky-dots.jpg" alt="Milky dots by Viper Cullen Nail Studio" loading="lazy"><span class="ver"><svg class="i xs" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>Verified</span></div>
+          <div class="meta"><span class="sm strong">Milky dots</span><span class="sm" style="white-space: nowrap">from <b class="price">₱340</b></span></div>
+          <span class="cap">Viper Cullen Nail Studio · 1.2 km</span>
+        </a>
+        <button class="fav" type="button" aria-label="Save Milky dots" aria-pressed="false"><svg class="i s" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg></button>
+      </article>
+      <article class="tile" data-tag="Minimal">
+        <a href="design-cherry-cola.html">
+          <div class="ph" style="aspect-ratio: 4 / 5"><img src="assets/photos/cherry-cola.jpg" alt="Cherry cola by Sage Nail Bar" loading="lazy"><span class="ver"><svg class="i xs" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>Verified</span></div>
+          <div class="meta"><span class="sm strong">Cherry cola</span><span class="sm" style="white-space: nowrap">from <b class="price">₱300</b></span></div>
+          <span class="cap">Sage Nail Bar · 2.9 km</span>
+        </a>
+        <button class="fav" type="button" aria-label="Save Cherry cola" aria-pressed="false"><svg class="i s" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg></button>
+      </article>
+    </div>
+    <div class="card empty" id="empty" hidden><p class="ttl">No designs in this style yet</p><p class="sm">Try another style, or post your own design.</p></div>
+  </section>
+</main>
+<footer class="ft"><div class="in"><img class="mk" src="assets/photos/mark.png" alt="" width="34" height="29"><span>Ku, from kuko. Arte, for art. Launching in Panabo City.</span><a class="lnk" href="m16-signup.dc.html" style="color: #E7C27A">Are you a nail tech? Join free</a></div></footer>
+<nav class="tabbar only-s" aria-label="Main"><a href="home.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>Home</a><a href="designs.html" class="on" aria-current="page"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg>Designs</a><a href="m12-status.dc.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Bookings</a><a href="m15-chat.dc.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg>Messages<span class="dot"></span></a><a href="m16-signup.dc.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Account</a></nav>
+
+<script src="./app-data.js"></script>
+<script src="./app.js"></script>
+</body>
+</html>

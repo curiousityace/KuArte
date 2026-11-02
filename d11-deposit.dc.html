@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#5E1720">
-<link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="./assets/photos/favicon-64.png" type="image/png">
 <title>KuArte · Deposit (desktop)</title>
 <script src="./support.js"></script>
 <link rel="stylesheet" href="./kuarte.css">
@@ -51,7 +51,7 @@
       </div>
       <aside class="dside">
         <div class="card pad-l shadow" style="display: flex; flex-direction: column; gap: 12px">
-          <div class="row" style="gap: 12px"><div class="ph" style="width: 56px; height: 56px; border-radius: 12px"><img src="./assets/n1-burgundy-chrome.svg" alt=""></div><div class="col" style="gap: 0"><span class="sm strong">{{svcName}}</span><span class="cap">Viper Cullen · {{when}}</span></div></div>
+          <div class="row" style="gap: 12px"><div class="ph" style="width: 56px; height: 56px; border-radius: 12px"><img src="./assets/photos/burgundy-gloss.jpg" alt=""></div><div class="col" style="gap: 0"><span class="sm strong">{{svcName}}</span><span class="cap">Viper Cullen · {{when}}</span></div></div>
           <div class="hr"></div>
           <div class="row between sm"><span>Estimated price</span><span>₱{{total}}</span></div>
           <div class="row between sm"><span>First booking · KUARTE10</span><span style="color: #2F7A4E">−₱{{disc}}</span></div>
@@ -80,7 +80,7 @@ class Component extends DCLogic {
     ];
     return {
       svcName, mode, when, total, disc, rest,
-      pay: () => { if (KU) KU.create({ source: 'booking', tech: 'viper', techName: 'Viper Cullen', customer: d.name || 'Maria Santos', phone: d.phone || '', note: d.note || '', svc: svcName, mode, when, total, deposit: 150, rest, img: './assets/n1-burgundy-chrome.svg', status: 'requested' }); },
+      pay: () => { if (KU) KU.create({ source: 'booking', tech: 'viper', techName: 'Viper Cullen', customer: d.name || 'Maria Santos', phone: d.phone || '', note: d.note || '', svc: svcName, mode, when, total, deposit: 150, rest, img: './assets/photos/burgundy-gloss.jpg', status: 'requested' }); },
             methods: M.map((m, i) => ({ ...m, cls: this.state.m === i ? 'on' : '', pick: () => this.setState({ m: i }) })),
       methodName: M[this.state.m].name
     };

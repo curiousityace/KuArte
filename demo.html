@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>KuArte · Live demo</title>
 <meta name="theme-color" content="#3B0D13">
-<link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="./assets/photos/favicon-64.png" type="image/png">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Marcellus&amp;family=Playfair+Display:wght@600;700&amp;display=swap" rel="stylesheet">
 <link rel="stylesheet" href="./kuarte.css">
 <style>
@@ -53,7 +53,7 @@
   <main class="stage" id="stage">
     <section class="side" aria-label="Customer phone">
       <div class="who">Customer <span id="who-c">Maria, booking a set</span></div>
-      <div class="phone" id="pc"><iframe id="fc" title="Customer app" src="./Main.dc.html"></iframe></div>
+      <div class="phone" id="pc"><iframe id="fc" title="Customer app" src="./home.html"></iframe></div>
     </section>
     <section class="side" aria-label="Nail tech phone">
       <div class="who">Nail tech <span>Viper Cullen Nail Studio</span></div>
@@ -68,7 +68,7 @@
 (function () {
   var GUIDES = {
     booking: {
-      c: './Main.dc.html', t: './m22-dashboard.dc.html', who: 'Maria, booking a set',
+      c: './home.html', t: './m22-dashboard.dc.html', who: 'Maria, booking a set',
       html: '<h2>Booking request</h2><ol>' +
         '<li><b>Customer:</b> tap Viper\'s card, then Book appointment. Pick a service, a time, type a name, and pay the deposit.</li>' +
         '<li><b>Tech:</b> the request appears on Viper\'s dashboard. Open it and tap Accept.</li>' +

@@ -1,6 +1,11 @@
 # KuArte · clickable prototype
 
-A static website: 28 mobile screens and 28 desktop pages, with a start page at `index.html`.
+A static website with a start page at `index.html`. It is being rebuilt as one responsive page per screen, in batches.
+
+- **Responsive now (batch 1):** `home.html`, `search.html`, `filters.html`, `designs.html`, `design-*.html` (one per design), `profile.html`, `reviews.html`. They share `app.css`, `app.js` and `app-data.js`.
+- **Not yet rebuilt:** the booking flow, the nail tech side and Post a design are still separate mobile (`m…`) and desktop (`d…`) screens that switch at 900px.
+- Old links such as `Main.dc.html` or `m06-profile.dc.html` forward to the new pages.
+
 No build step and no dependencies. Fonts load from Google Fonts.
 
 ## One link, any screen
@@ -41,13 +46,13 @@ Every later upload to the repo redeploys automatically.
 | `kuarte.css` | Brand tokens, components, and the interaction and motion layer |
 | `site.css` | Phone sizing, scrolling, prototype bar, toasts, page transitions |
 | `support.js` | Small runtime that renders each screen, patches it in place on every tap, and shows success toasts |
-| `assets/` | Placeholder nail illustrations and the favicon |
+| `assets/photos/` | Photos, the logo and the favicon |
 
 ## Editing
 
 - Text and layout: edit the screen's `.dc.html` file, inside `<template id="dc-tpl">`.
 - Tap behaviour: the `<script type="text/x-dc">` block at the bottom of each screen.
 - Success messages: add `?toast=Your%20message` to any link; the next screen shows it.
-- Photos: replace the files in `assets/` with your own, keeping the same file names.
+- Photos: replace the files in `assets/photos/` with your own, keeping the same file names.
 
 All names, prices and numbers are sample data. Nothing takes real bookings or payments.
