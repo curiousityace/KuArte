@@ -38,7 +38,7 @@
       <div class="row between sm"><span>First booking · KUARTE10</span><span style="color: #2F7A4E">−₱{{disc}}</span></div>
       <div class="hr"></div>
       <div class="row between"><span class="sm strong">Deposit now</span><b class="price" style="font-size: 18px">₱150</b></div>
-      <div class="row between sm"><span>KuArte booking fee</span><span>₱20</span></div>
+      <div class="row between sm"><span>KuArte convenience fee · {{feeNote}}</span><span>₱{{fee}}</span></div>
       <div class="row between sm"><span>Pay at your visit</span><span>about ₱{{rest}}</span></div>
       <p class="cap">The Nail Technician sets the final price at your visit. Your deposit counts toward it.</p>
     </div>
@@ -54,11 +54,11 @@
     </div>
     <div class="row" style="gap: 10px; align-items: flex-start; padding: 0 2px">
       <svg class="i s" viewBox="0 0 24 24" aria-hidden="true" style="color: #2F7A4E; margin-top: 1px"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="m9 12 2 2 4-4"/></svg>
-      <p class="cap">KuArte holds your deposit. It only goes to the Nail Technician after your appointment is done. The ₱20 booking fee is refunded too if the Nail Technician cancels or doesn't show. If Viper declines or doesn't reply in 4 hours, it comes straight back.</p>
+      <p class="cap">KuArte holds your deposit. It only goes to the Nail Technician after your appointment is done. The ₱{{fee}} convenience fee is refunded too if the Nail Technician cancels or doesn't show. If Viper declines or doesn't reply in 4 hours, it comes straight back.</p>
     </div>
   </div>
   <div class="foot">
-    <a class="btn bp full" href="m12-status.dc.html?toast=Deposit%20paid.%20Your%20request%20is%20with%20Viper." onClick="{{pay}}"><svg class="i s" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Pay ₱170 and send request</a>
+    <a class="btn bp full" href="m12-status.dc.html?toast=Deposit%20paid.%20Your%20request%20is%20with%20Viper." onClick="{{pay}}"><svg class="i s" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Pay ₱{{payTotal}} and send request</a>
   </div>
 </div>
 </template>
@@ -70,12 +70,18 @@ class Component extends DCLogic {
     const KU = window.KU; const d = KU ? KU.get('draft', {}) : {};
     const svcName = d.svc || 'Gel extensions + chrome nail art', mode = d.mode || 'Walk-in', when = d.when || 'Wed, Nov 4 · 2:30 PM', total = d.total || 550, dur = d.dur || '2 hr';
     const disc = Math.round(total * 0.1), rest = total - disc - 150;
+    /* convenience fee by notice: a week or more ahead P15, a day or more P20, under 24 hours P25 (prototype "now": Wed, Nov 4, 9:00 AM) */
+    const MO = { Jan: 0, Feb: 1, Mar: 2, Apr: 3, May: 4, Jun: 5, Jul: 6, Aug: 7, Sep: 8, Oct: 9, Nov: 10, Dec: 11 };
+    const mt = /([A-Z][a-z]{2}) (\d{1,2})\D+?(\d{1,2}):(\d{2}) (AM|PM)/.exec(when);
+    const hrs = mt ? (new Date(2026, MO[mt[1]], +mt[2], (+mt[3] % 12) + (mt[5] === 'PM' ? 12 : 0), +mt[4]) - new Date(2026, 10, 4, 9, 0)) / 36e5 : 0;
+    const fee = hrs >= 168 ? 15 : (hrs >= 24 ? 20 : 25), payTotal = 150 + fee;
+    const feeNote = hrs >= 168 ? 'Booked a week or more ahead' : (hrs >= 24 ? 'Booked at least a day ahead' : 'Booked less than 24 hours ahead');
         const M = [
       { name: 'GCash', note: 'Pay in the GCash app', tint: '#2F5FB3' },
       { name: 'Maya', note: 'Pay in the Maya app', tint: '#2F7A4E' }
     ];
-    return { svcName, mode, when, total, disc, rest,
-      pay: () => { if (KU) KU.create({ source: 'booking', tech: 'viper', techName: 'Viper Cullen', customer: d.name || 'Maria Santos', phone: d.phone || '', note: d.note || '', svc: svcName, mode, when, total, deposit: 150, rest, img: './assets/photos/burgundy-gloss.jpg', status: 'requested' }); },
+    return { svcName, mode, when, total, disc, rest, fee, feeNote, payTotal,
+      pay: () => { if (KU) KU.create({ source: 'booking', tech: 'viper', techName: 'Viper Cullen', customer: d.name || 'Maria Santos', phone: d.phone || '', note: d.note || '', svc: svcName, mode, when, total, deposit: 150, fee, rest, img: './assets/photos/burgundy-gloss.jpg', status: 'requested' }); },
       methods: M.map((m, i) => ({ ...m, cls: this.state.m === i ? 'on' : '', pick: () => this.setState({ m: i }) })) };
   }
 }
