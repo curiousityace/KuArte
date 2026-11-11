@@ -19,7 +19,7 @@
   <header class="dhead"><div class="in">
     <a class="wm" href="d01-home.dc.html" aria-label="KuArte home"><img class="logo" src="./assets/photos/logo-h.png" alt="KuArte"></a>
     <nav class="dnav grow" aria-label="Main"><a href="d01-home.dc.html">Explore</a><a class="on" href="d04-designs.dc.html">Designs</a><a href="d12-status.dc.html">My bookings</a><a href="d15-chat.dc.html">Messages</a></nav>
-    <button type="button" class="av s" data-soon="Account settings" data-msg="Account settings are coming soon." aria-label="Your account">MS</button>
+    <a class="av s" href="login.html" aria-label="Log in or switch account" style="text-decoration: none">MS</a>
   </div></header>
   <div class="dwrap">
     <div class="row" style="gap: 20px; flex-wrap: wrap; align-items: center">
@@ -59,7 +59,7 @@
             <span class="ttl">{{pickLine}}</span>
             <span class="sm">{{pickPrice}}</span>
             <button class="btn bp full" onClick="{{accept}}" style="opacity: {{btnOpacity}}">{{acceptLabel}}</button>
-            <p class="cap">Accepting confirms the booking right away, because the tech already offered that time. The other techs are told you chose someone else.</p>
+            <p class="cap">Accepting confirms the booking right away, because the Nail Technician already offered that time. The other Nail Technicians are told you chose someone else.</p>
           </div>
         </aside>
       </div>
@@ -69,7 +69,7 @@
         <div class="dmain" style="gap: 16px">
           <div class="banner" role="status" style="padding: 20px 24px; border-radius: 18px; background: #E3F2E8; display: flex; flex-direction: column; gap: 6px">
             <span class="ttl">You're booked with {{chosen.name}}</span>
-            <span class="sm" style="color: #1F4D33">{{chosen.when}} · ₱{{chosen.price}} fixed quote. {{chosen.depDone}} The other techs were told you chose someone else.</span>
+            <span class="sm" style="color: #1F4D33">{{chosen.when}} · ₱{{chosen.price}} fixed quote. {{chosen.depDone}} The other Nail Technicians were told you chose someone else.</span>
           </div>
           <div class="row" style="gap: 12px; flex-wrap: wrap"><a class="btn bs" href="d15-chat.dc.html">Message</a><a class="btn bp" href="d13-checkin.dc.html">Go to check-in (demo)</a></div>
         </div>
@@ -100,7 +100,7 @@ class Component extends DCLogic {
     ];
     const KU = window.KU;
     const myOffer = KU ? KU.get('offer', null) : null;
-    if (myOffer) { O[0].price = myOffer.price; O[0].slots = myOffer.slots; O[0].note = 'Offer sent from the tech side: ' + O[0].note; }
+    if (myOffer) { O[0].price = myOffer.price; O[0].slots = myOffer.slots; O[0].note = 'Offer sent from the Nail Technician side: ' + O[0].note; }
     const bk = KU ? KU.booking() : null;
     const st = this.state;
     const sorted = O.slice().sort(st.sort === 0 ? (a, b) => a.km - b.km : st.sort === 1 ? (a, b) => a.price - b.price : (a, b) => b.rating - a.rating || b.count - a.count);

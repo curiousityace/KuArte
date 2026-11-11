@@ -134,9 +134,9 @@
     patchChildren(o, n);
   }
 
-  /* ---- demo store: one simulated booking shared by the customer and tech screens ----
+  /* ---- demo store: one simulated booking shared by the customer and Nail Technician screens ----
      Lives in this browser only. Other tabs and frames re-render when it changes, so a
-     request sent from the customer side shows up on the tech side straight away. */
+     request sent from the customer side shows up on the Nail Technician side straight away. */
   const PFX = 'kuarte.';
   function rd(k, d) { try { const v = localStorage.getItem(PFX + k); return v ? JSON.parse(v) : d; } catch (e) { return d; } }
   function wr(k, v) { try { if (v == null) localStorage.removeItem(PFX + k); else localStorage.setItem(PFX + k, JSON.stringify(v)); } catch (e) { /* storage blocked: screens fall back to sample data */ } }

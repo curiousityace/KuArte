@@ -125,7 +125,7 @@
   }
   function profileLink(t) {
     if (t.profile && KD.pages.profile) return 'href="' + KD.pages.profile + '"';
-    return 'href="#" data-soon="Tech profiles" data-msg="' + (KD.pages.profile ? 'This prototype shows Viper Cullen\'s profile. Other profiles are coming soon.' : 'Tech profiles are coming soon.') + '"';
+    return 'href="#" data-soon="Nail Technician profiles" data-msg="' + (KD.pages.profile ? 'This prototype shows Viper Cullen\'s profile. Other profiles are coming soon.' : 'Nail Technician profiles are coming soon.') + '"';
   }
 
   /* ---------- search: list, pins and sorting share one selection ---------- */
@@ -145,7 +145,7 @@
     var render = function () {
       var rows = applyFilters(f);
       if (rows.length && !rows.some(function (t) { return t.id === sel; })) sel = rows[0].id;
-      count.innerHTML = '<b class="strong">' + rows.length + ' verified tech' + (rows.length === 1 ? '' : 's') + '</b> within 5 km · sorted by ' + SORTS[f.sort].label;
+      count.innerHTML = '<b class="strong">' + rows.length + ' verified Nail Technician' + (rows.length === 1 ? '' : 's') + '</b> within 15 km · sorted by ' + SORTS[f.sort].label;
       var tags = [];
       if (f.where === 'home') tags.push('Home service');
       if (f.where === 'walkin') tags.push('Walk-in');
@@ -169,7 +169,7 @@
           '<span class="sm only-s">from <b class="price">₱' + t.price + '</b></span>' +
           '<div class="row go" style="gap: 10px"><span class="badge ' + t.bcls + '">' + t.badge + '</span><a class="lnk" ' + profileLink(t) + '>View profile</a></div></div></article>';
       }).join('');
-      if (!rows.length) list.innerHTML = '<div class="card empty"><p class="ttl">No techs match these filters</p><p class="sm">Try a higher price or turn off a filter.</p></div>';
+      if (!rows.length) list.innerHTML = '<div class="card empty"><p class="ttl">No Nail Technicians match these filters</p><p class="sm">Try a higher price or turn off a filter.</p></div>';
       pins.innerHTML = rows.map(function (t) {
         var on = t.id === sel;
         return '<button class="pin' + (on ? ' on' : '') + '" type="button" data-id="' + t.id + '" style="left: ' + t.x + '%; top: ' + t.y + '%" aria-label="' + t.name + ', from ₱' + t.price + '" aria-pressed="' + on + '">' + (on ? STAR.replace('style="color: #C49A45" ', '') : '') + '₱' + t.price + (on ? ' · ' + t.short : '') + '</button>';
@@ -204,7 +204,7 @@
       maxIn.value = ff.max;
       maxOut.textContent = ff.max >= 800 ? 'Any price' : 'Up to ₱' + ff.max;
       var n = applyFilters(ff).length;
-      show.textContent = n ? 'Show ' + n + ' tech' + (n === 1 ? '' : 's') : 'No techs match';
+      show.textContent = n ? 'Show ' + n + ' Nail Technician' + (n === 1 ? '' : 's') : 'No Nail Technicians match';
       show.setAttribute('href', KD.pages.search + filterQuery(ff, fq));
       show.classList.toggle('bg', !n); show.classList.toggle('bp', !!n);
     };
@@ -325,7 +325,7 @@
   }
   if (asTech) {
     document.getElementById('ctx-link').setAttribute('href', 'm22-dashboard.dc.html');
-    /* the tech sees their own menu, not the customer's */
+    /* the Nail Technician sees their own menu, not the customer's */
     var nav = document.querySelector('.hnav');
     if (nav) nav.innerHTML = '<a href="m22-dashboard.dc.html">Bookings</a><a href="m21-request.dc.html">Requests</a><a class="on" aria-current="page" href="chat.html?as=tech">Messages</a><a href="m19-camera.dc.html">Portfolio</a><a href="m24-insights.dc.html">Insights</a>';
     var av = document.getElementById('hd-av'); if (av) av.textContent = 'VC';
@@ -367,4 +367,46 @@
   });
   window.addEventListener('storage', function (e) { if (!e.key || e.key === KEY) render(true); });
   render(false);
+})();
+
+/* ---------- log in: customer or Nail Technician, phone + code ---------- */
+(function () {
+  'use strict';
+  var form = document.getElementById('lg');
+  var hdLogin = document.getElementById('hd-login');
+  var user = null;
+  try { user = JSON.parse(localStorage.getItem('kuarte.user') || 'null'); } catch (e) { /* storage blocked */ }
+  if (hdLogin && user) hdLogin.hidden = true;
+  if (!form) return;
+  var role = new URLSearchParams(location.search).get('as') === 'tech' ? 't' : 'c';
+  var seg = document.getElementById('lg-seg'), sub = document.getElementById('lg-sub'), alt = document.getElementById('lg-alt');
+  var phone = document.getElementById('lg-phone'), hint = document.getElementById('lg-hint'), code = document.getElementById('lg-code'), chint = document.getElementById('lg-chint');
+  var TXT = {
+    c: { sub: 'See your bookings, chat with your Nail Technician and leave reviews.', alt: 'New here? You can book walk-ins as a guest. <a class="lnk" href="#" data-soon="Customer sign-up">Create an account</a>', go: 'home.html?toast=' + encodeURIComponent('Welcome back, Maria.') },
+    t: { sub: 'Manage requests, your calendar, portfolio and payouts.', alt: 'New to KuArte? <a class="lnk" href="m16-signup.dc.html">Join free as a Nail Technician</a>', go: 'm22-dashboard.dc.html?toast=' + encodeURIComponent('Welcome back, Viper.') }
+  };
+  function set(r) {
+    role = r;
+    seg.style.setProperty('--i', r === 'c' ? 0 : 1);
+    seg.querySelectorAll('[data-role]').forEach(function (b) { var on = b.getAttribute('data-role') === r; b.classList.toggle('on', on); b.setAttribute('aria-checked', on ? 'true' : 'false'); });
+    sub.textContent = TXT[r].sub;
+    alt.innerHTML = TXT[r].alt;
+  }
+  seg.addEventListener('click', function (e) { var b = e.target.closest('[data-role]'); if (b) set(b.getAttribute('data-role')); });
+  document.getElementById('lg-send').addEventListener('click', function () {
+    var digits = phone.value.replace(/\D/g, '');
+    if (digits.length < 10) { hint.textContent = 'Enter your 10-digit mobile number, like 917 555 0142.'; hint.style.color = '#B42335'; phone.focus(); return; }
+    hint.textContent = 'Code sent to +63 ' + phone.value.trim() + '.'; hint.style.color = '';
+    code.classList.add('open');
+    var first = code.querySelector('input'); if (first) setTimeout(function () { first.focus(); }, 150);
+  });
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var c = Array.prototype.map.call(code.querySelectorAll('input'), function (i) { return i.value; }).join('');
+    if (!code.classList.contains('open')) { document.getElementById('lg-send').click(); return; }
+    if (c.length < 6) { chint.textContent = 'Type all 6 digits of the code.'; chint.style.color = '#B42335'; return; }
+    try { localStorage.setItem('kuarte.user', JSON.stringify({ role: role })); } catch (err) { /* storage blocked */ }
+    location.href = TXT[role].go;
+  });
+  set(role);
 })();

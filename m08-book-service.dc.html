@@ -93,7 +93,7 @@ class Component extends DCLogic {
       m0: st.mode === 0 ? 'on' : '', m1: st.mode === 1 ? 'on' : '',
       walkIn: () => this.setState({ mode: 0 }),
       homeSvc: () => this.setState({ mode: 1 }),
-      modeNote: st.mode === 0 ? 'At the studio in Gredu, Panabo. Exact address shows after the tech confirms.' : 'Travel fee ₱50 within Panabo. You add your address in step 3.',
+      modeNote: st.mode === 0 ? 'At the studio in Gredu, Panabo. Exact address shows after the Nail Technician confirms.' : 'Travel fee ₱50 within Panabo. You add your address in step 3.',
       total, dur: h + ' hr' + (m ? ' ' + m + ' min' : ''),
       save: () => {
         if (!window.KU) return;

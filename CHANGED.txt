@@ -1,11 +1,9 @@
 Files changed or added since the previous zip. Upload everything in this folder (except this note) to the root of your repository, replacing the old files.
 
-.vercelignore
 KuArte-explainer.pdf
+app-data.js
 app.js
 chat.html
-d08-book-service.dc.html
-d09-book-time.dc.html
 d10-guest.dc.html
 d11-deposit.dc.html
 d12-status.dc.html
@@ -40,14 +38,11 @@ designs.html
 filters.html
 home.html
 index.html
-kuarte.css
+login.html
 m08-book-service.dc.html
-m09-book-time.dc.html
 m10-guest.dc.html
 m11-deposit.dc.html
-m12-status.dc.html
 m13-checkin.dc.html
-m14-review.dc.html
 m16-signup.dc.html
 m17-setup.dc.html
 m18-rules.dc.html
@@ -64,4 +59,4 @@ m28-make-offer.dc.html
 profile.html
 reviews.html
 search.html
-shared.js
+support.js

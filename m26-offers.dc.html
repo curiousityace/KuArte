@@ -60,7 +60,7 @@
         <div class="banner" role="status" style="padding: 16px; border-radius: 16px; background: #E3F2E8; display: flex; flex-direction: column; gap: 6px">
           <span class="pill ok" style="align-self: flex-start; background: #FFFFFF">Confirmed</span>
           <p class="ttl">You're booked with {{chosen.name}}</p>
-          <p class="sm" style="color: #1F4D33">{{chosen.when}} · ₱{{chosen.price}} fixed quote. {{chosen.depDone}} The other techs were told you chose someone else.</p>
+          <p class="sm" style="color: #1F4D33">{{chosen.when}} · ₱{{chosen.price}} fixed quote. {{chosen.depDone}} The other Nail Technicians were told you chose someone else.</p>
         </div>
         <div class="card pad" style="display: flex; flex-direction: column; gap: 8px">
           <div class="row between sm"><span>Quote</span><span class="strong">₱{{chosen.price}}</span></div>
@@ -97,7 +97,7 @@ class Component extends DCLogic {
     ];
     const KU = window.KU;
     const myOffer = KU ? KU.get('offer', null) : null;
-    if (myOffer) { O[0].price = myOffer.price; O[0].slots = myOffer.slots; O[0].note = 'Offer sent from the tech side: ' + O[0].note; }
+    if (myOffer) { O[0].price = myOffer.price; O[0].slots = myOffer.slots; O[0].note = 'Offer sent from the Nail Technician side: ' + O[0].note; }
     const bk = KU ? KU.booking() : null;
     const st = this.state;
     const sorted = O.slice().sort(st.sort === 0 ? (a, b) => a.km - b.km : st.sort === 1 ? (a, b) => a.price - b.price : (a, b) => b.rating - a.rating || b.count - a.count);
